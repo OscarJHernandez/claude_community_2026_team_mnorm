@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-17T11:52:24.502Z",
+  "generated_at": "2026-10-17T12:10:40.323Z",
   "count": 94,
   "items": [
     {
@@ -538,7 +538,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "landscape",
-      "content": "images/fake/img-0001.png",
+      "content": "images/img-0001.jpg",
       "difficulty": 2,
       "difficulty_source": "claude",
       "clues": [
@@ -561,7 +561,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "landscape",
-      "content": "images/real/img-0002.jpg",
+      "content": "images/img-0002.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -584,7 +584,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "bird",
-      "content": "images/fake/img-0003.png",
+      "content": "images/img-0003.jpg",
       "difficulty": 2,
       "difficulty_source": "claude",
       "clues": [
@@ -607,7 +607,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "bird",
-      "content": "images/real/img-0004.jpg",
+      "content": "images/img-0004.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -630,7 +630,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "landscape",
-      "content": "images/fake/img-0005.png",
+      "content": "images/img-0005.jpg",
       "difficulty": 4,
       "difficulty_source": "claude",
       "clues": [
@@ -653,7 +653,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "landscape",
-      "content": "images/real/img-0006.jpg",
+      "content": "images/img-0006.jpg",
       "difficulty": 4,
       "difficulty_source": "claude",
       "clues": [
@@ -676,7 +676,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "animal",
-      "content": "images/fake/img-0007.png",
+      "content": "images/img-0007.jpg",
       "difficulty": 4,
       "difficulty_source": "claude",
       "clues": [
@@ -699,7 +699,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "animal",
-      "content": "images/real/img-0008.jpg",
+      "content": "images/img-0008.jpg",
       "difficulty": 2,
       "difficulty_source": "claude",
       "clues": [
@@ -721,7 +721,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "animal",
-      "content": "images/fake/img-0009.png",
+      "content": "images/img-0009.jpg",
       "difficulty": 4,
       "difficulty_source": "claude",
       "clues": [
@@ -744,7 +744,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "building",
-      "content": "images/real/img-0010.jpg",
+      "content": "images/img-0010.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -767,7 +767,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "food",
-      "content": "images/fake/img-0011.png",
+      "content": "images/img-0011.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -790,7 +790,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "food",
-      "content": "images/real/img-0012.jpg",
+      "content": "images/img-0012.jpg",
       "difficulty": 2,
       "difficulty_source": "claude",
       "clues": [
@@ -813,7 +813,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "bird",
-      "content": "images/fake/img-0013.png",
+      "content": "images/img-0013.jpg",
       "difficulty": 4,
       "difficulty_source": "claude",
       "clues": [
@@ -836,7 +836,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "bird",
-      "content": "images/real/img-0014.jpg",
+      "content": "images/img-0014.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -859,7 +859,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "bird",
-      "content": "images/fake/img-0015.png",
+      "content": "images/img-0015.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -882,7 +882,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "animal",
-      "content": "images/real/img-0016.jpg",
+      "content": "images/img-0016.jpg",
       "difficulty": 2,
       "difficulty_source": "claude",
       "clues": [
@@ -905,7 +905,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "bird",
-      "content": "images/fake/img-0017.png",
+      "content": "images/img-0017.jpg",
       "difficulty": 1,
       "difficulty_source": "claude",
       "clues": [
@@ -928,7 +928,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "object",
-      "content": "images/real/img-0018.jpg",
+      "content": "images/img-0018.jpg",
       "difficulty": 4,
       "difficulty_source": "claude",
       "clues": [
@@ -951,7 +951,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "building",
-      "content": "images/fake/img-0019.png",
+      "content": "images/img-0019.jpg",
       "difficulty": 4,
       "difficulty_source": "claude",
       "clues": [
@@ -974,7 +974,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "animal",
-      "content": "images/fake/img-0020.png",
+      "content": "images/img-0020.jpg",
       "difficulty": 1,
       "difficulty_source": "claude",
       "clues": [
@@ -997,7 +997,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "bird",
-      "content": "images/fake/img-0021.png",
+      "content": "images/img-0021.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -1021,7 +1021,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "bird",
-      "content": "images/real/img-0022.jpg",
+      "content": "images/img-0022.jpg",
       "difficulty": 2,
       "difficulty_source": "claude",
       "clues": [
@@ -1044,7 +1044,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "object",
-      "content": "images/fake/img-0023.png",
+      "content": "images/img-0023.jpg",
       "difficulty": 2,
       "difficulty_source": "claude",
       "clues": [
@@ -1067,7 +1067,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "object",
-      "content": "images/real/img-0024.jpg",
+      "content": "images/img-0024.jpg",
       "difficulty": 4,
       "difficulty_source": "claude",
       "clues": [
@@ -1090,7 +1090,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "landscape",
-      "content": "images/fake/img-0025.png",
+      "content": "images/img-0025.jpg",
       "difficulty": 5,
       "difficulty_source": "claude",
       "clues": [
@@ -1113,7 +1113,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "landscape",
-      "content": "images/real/img-0026.jpg",
+      "content": "images/img-0026.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -1136,7 +1136,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "vehicle",
-      "content": "images/fake/img-0027.png",
+      "content": "images/img-0027.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -1159,7 +1159,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "vehicle",
-      "content": "images/real/img-0028.jpg",
+      "content": "images/img-0028.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -1182,7 +1182,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "object",
-      "content": "images/fake/img-0029.png",
+      "content": "images/img-0029.jpg",
       "difficulty": 1,
       "difficulty_source": "claude",
       "clues": [
@@ -1205,7 +1205,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "object",
-      "content": "images/real/img-0030.jpg",
+      "content": "images/img-0030.jpg",
       "difficulty": 3,
       "difficulty_source": "claude",
       "clues": [
@@ -1229,7 +1229,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "landscape",
-      "content": "images/fake/img-0031.png",
+      "content": "images/img-0031.jpg",
       "difficulty": 5,
       "difficulty_source": "claude",
       "clues": [
@@ -1252,7 +1252,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "landscape",
-      "content": "images/real/img-0032.jpg",
+      "content": "images/img-0032.jpg",
       "difficulty": 2,
       "difficulty_source": "claude",
       "clues": [
@@ -1275,7 +1275,7 @@
       "is_real": false,
       "category": "ai-image",
       "subject": "animal",
-      "content": "images/fake/img-0033.png",
+      "content": "images/img-0033.jpg",
       "difficulty": 2,
       "difficulty_source": "claude",
       "clues": [
@@ -1299,7 +1299,7 @@
       "is_real": true,
       "category": "ai-image",
       "subject": "animal",
-      "content": "images/real/img-0034.jpg",
+      "content": "images/img-0034.jpg",
       "difficulty": 2,
       "difficulty_source": "claude",
       "clues": [

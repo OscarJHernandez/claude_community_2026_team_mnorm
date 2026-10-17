@@ -80,3 +80,10 @@ test("the real items.json loads and every image file exists", async () => {
     assert.ok(existsSync(fileURLToPath(i.src)), `missing ${i.content}`);
   }
 });
+
+test("image paths never give the answer away", async () => {
+  const items = await loadDataset();
+  for (const i of items.filter((i) => i.modality === "image")) {
+    assert.match(i.content, /^images\/img-\d{4}\.jpg$/, `${i.id} should live at images/<id>.jpg`);
+  }
+});

@@ -1,14 +1,16 @@
 // `npm run data`: turn dataset/items.csv (+ images dropped in dataset/inbox/) into dataset/items.json.
-// 1. Moves new images from inbox/ into images/real or images/fake and gives every row an id.
-// 2. Asks Claude to fill empty difficulty / clues / explanation (skipped with --no-claude or without an API key).
+// 1. Converts new images from inbox/ to small JPEGs in images/<id>.jpg and gives every row an id.
+//    (One flat folder and one file type, so the file path never gives the answer away.)
+// 2. Asks Claude to fill empty subject / difficulty / clues / explanation (skipped with --no-claude or without an API key).
 // 3. Checks every row and explains problems in plain words.
 // 4. Writes items.csv back (with the new ids/paths) and items.json for the app.
 import { existsSync } from "node:fs";
-import { mkdir, rename, writeFile } from "node:fs/promises";
+import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
 import { extname, join } from "node:path";
 import { readRows, writeRows } from "./lib/csv.mjs";
 import { DATASET_DIR, CSV_PATH } from "./lib/paths.mjs";
 import { enrichRow, claudeAvailable } from "./lib/claude.mjs";
+import { toJpeg } from "./lib/images.mjs";
 
 export const CATEGORIES = ["ai-image", "ai-vs-human", "scam-vs-legit"];
 const IMAGE_EXT = [".png", ".jpg", ".jpeg", ".webp", ".gif"];
@@ -32,10 +34,11 @@ for (const row of rows) {
   if (row.modality === "image" && real !== null && !existsSync(join(DATASET_DIR, row.content))) {
     const inbox = join(DATASET_DIR, "inbox", row.content);
     if (existsSync(inbox)) {
-      const dest = `images/${real ? "real" : "fake"}/${row.id}${extname(row.content).toLowerCase()}`;
-      await mkdir(join(DATASET_DIR, "images", real ? "real" : "fake"), { recursive: true });
-      await rename(inbox, join(DATASET_DIR, dest));
-      console.log(`Moved inbox/${row.content} -> ${dest}`);
+      const dest = `images/${row.id}.jpg`;
+      await mkdir(join(DATASET_DIR, "images"), { recursive: true });
+      await writeFile(join(DATASET_DIR, dest), await toJpeg(await readFile(inbox)));
+      await unlink(inbox);
+      console.log(`Filed inbox/${row.content} -> ${dest}`);
       row.content = dest;
     }
   }
@@ -44,11 +47,11 @@ for (const row of rows) {
 }
 
 // ---- 2. let Claude fill the gaps ----
-const needsEnrich = rows.filter((r) => !r.difficulty || !r.explanation || !r.clues);
+const needsEnrich = rows.filter((r) => !r.difficulty || !r.explanation || !r.clues || !r.subject);
 if (needsEnrich.length && useClaude) {
   if (!claudeAvailable()) {
     console.warn(
-      `⚠️  ${needsEnrich.length} row(s) have no difficulty/clues/explanation, but ANTHROPIC_API_KEY is not set. Skipping Claude.`,
+      `⚠️  ${needsEnrich.length} row(s) have no subject/difficulty/clues/explanation, but ANTHROPIC_API_KEY is not set. Skipping Claude.`,
     );
   } else {
     console.log(`Asking Claude to rate ${needsEnrich.length} row(s)...`);
@@ -59,6 +62,7 @@ if (needsEnrich.length && useClaude) {
           row.difficulty = String(out.difficulty);
           row.difficulty_source = "claude";
         }
+        row.subject ||= out.subject;
         row.clues ||= out.clues.join("; ");
         row.explanation ||= out.explanation;
         process.stdout.write(".");
