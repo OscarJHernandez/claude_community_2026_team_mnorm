@@ -72,7 +72,7 @@ it and is what the app loads. All pictures are in `dataset/images/`.
 run `npm run data:offline` and open it through `npm start` or `npm run preview`, not by double-clicking the file.
 "Port 3000 in use" means another server is still running: stop it with `Ctrl+C` or use `PORT=3001 npm start`.
 
-**Live link (if any):** <link>
+**Live link (if any):** https://rs.neurorelations.tech:8444/fenster/ (phone-friendly; the "Real or Fake?" game is at https://rs.neurorelations.tech:8444/fenster/app/#/play)
 
 ## Screenshots / demo
 | Onboarding | Feed: answer explained | "Real or Fake?" game | Scam checker |
