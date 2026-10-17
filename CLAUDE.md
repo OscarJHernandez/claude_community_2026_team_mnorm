@@ -92,3 +92,18 @@ If the team is behind, suggest cutting scope instead of working faster.
   and the video link opens for anyone.
 - Agenda, rules and judging are also in the event repo:
   https://github.com/Claude-Community-Berlin/claude-impact-lab-berlin-2026-10-17
+
+## This project: "Real or Fake?"
+A learning game dataset: players see two images or two messages and judge each as real or fake (AI image vs photo,
+AI-written vs human, scam vs legit), with difficulty 1–5, clues and an explanation per item.
+
+The full project guide (how it works, where data lives, commands, rules for changes) is in AGENTS.md, imported here:
+
+@AGENTS.md
+
+Quick reminders for Claude in this repo:
+- **Run it:** `npm install && npm run preview`, then open http://localhost:3000/dataset/preview.html
+- **Source of truth is `dataset/items.csv`.** Rebuild with `npm run data` (or `npm run data:offline` without a key)
+  and commit `items.csv`, `items.json` and any new `dataset/images/*.jpg` together.
+- **Review new images by eye** before committing (no children, nothing unsafe, no answer-revealing text, no portraits).
+- **`npm run check` must pass** before pushing. Branch, then PR into `main`.

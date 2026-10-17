@@ -6,7 +6,7 @@
 >
 > 🔑 Set your API key first: `cp .env.example .env`, then paste your key into `.env` (it's git-ignored, never commit it).
 
-# <Project name>
+# Real or Fake?
 
 **One line:** <what it does, for whom>
 
@@ -14,17 +14,50 @@
 <Who has this problem, and why it matters. 2–3 sentences.>
 
 ## What it does
-<What a user can do with it. A short list is fine.>
+- Shows the player **two images or two text messages** and asks: real or fake? (one real + one fake, both real, or both fake)
+- Three kinds of challenge: **AI image vs real photo**, **AI-written vs human message**, **scam vs legit message**
+- Every item has a **difficulty from 1 (obvious) to 5 (very hard)**, so a round can start easy and get harder
+- After each answer the player sees **what gave it away** (clues) and a short, friendly **explanation**
+- The team can add new images and messages with a spreadsheet, no coding needed ([how](dataset/HOW_TO_ADD.md))
 
 ## How Claude is used
-<What Claude does inside the product: which model, what it reads, what it produces.>
+- **Rates every item** (`claude-opus-5-5`, with vision for images): difficulty 1–5, the clues a player can spot, and a plain-language explanation. It runs in `npm run data` for any new row that is missing them.
+- **Writes the fake messages**: AI-written texts that imitate real ones, modern scams and legit notifications (`npm run generate`).
+- All prompts are in [`prompts/`](prompts/), and all API calls are in [`scripts/lib/claude.mjs`](scripts/lib/claude.mjs).
 
 ## How to run it
+You need **Node.js 20.6 or newer** ([download](https://nodejs.org)). Check with `node -v`.
+
 ```bash
-cp .env.example .env    # paste your ANTHROPIC_API_KEY into .env
-# then the commands to start it, e.g.
-# python app.py   or   npm install && npm run dev   or   open index.html
+git clone https://github.com/OscarJHernandez/claude_community_2026_team_mnorm.git
+cd claude_community_2026_team_mnorm
+npm install
+npm run preview
 ```
+
+Open **http://localhost:3000/dataset/preview.html**. Pick Images or Texts, a difficulty and a pair type, then click
+**New pair** and **Reveal answers**. Stop the server with `Ctrl+C`.
+
+**Optional, for the Claude features:** `cp .env.example .env`, paste your `ANTHROPIC_API_KEY` into `.env`, then:
+
+```bash
+npm run data                                   # Claude rates any new rows and rebuilds the dataset
+npm run generate -- --kind scam --count 5      # Claude writes 5 new scam messages (or ai-written / legit)
+```
+
+| I want to…                         | Run / open                                                        |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| add an image or message            | follow [dataset/HOW_TO_ADD.md](dataset/HOW_TO_ADD.md)             |
+| rebuild after editing `items.csv`  | `npm run data` (or `npm run data:offline` with no key)            |
+| download more images               | `npm run fetch:images -- --source eval --count 20` (AI) or `--source wikimedia` (real) |
+| check everything before a PR       | `npm run check`                                                   |
+| understand the code and data       | [AGENTS.md](AGENTS.md) (where everything lives) and [dataset/README.md](dataset/README.md) |
+
+**Where the data lives:** `dataset/items.csv` is the master list (edit this). `dataset/items.json` is generated from
+it and is what the app loads. All pictures are in `dataset/images/`.
+
+**Something not working?** "command not found: npm" means Node isn't installed. If the preview can't load items.json,
+run `npm run data:offline` and make sure you opened it through `npm run preview`, not by double-clicking the file.
 
 **Live link (if any):** <link>
 
@@ -47,7 +80,7 @@ Teams of 5 (at least 1 builder, 1 product or design, 1 domain expert; plus found
 <Open-source libraries, APIs, datasets and assets you used.>
 
 **Dataset** (details in [dataset/README.md](dataset/README.md)):
-- Fake images: [CommunityForensics-Small](https://huggingface.co/datasets/OwensLab/CommunityForensics-Small) (CC BY-NC-SA 4.0)
+- Fake images: [CommunityForensics-Small](https://huggingface.co/datasets/OwensLab/CommunityForensics-Small) and [CommunityForensics-Eval](https://huggingface.co/datasets/OwensLab/CommunityForensics-Eval) (CC BY-NC-SA 4.0, non-commercial educational use)
 - Real photos: [Wikimedia Commons](https://commons.wikimedia.org), license and author per image in `dataset/items.json`
 - Real SMS and spam: [UCI SMS Spam Collection](https://archive.ics.uci.edu/dataset/228/), Almeida & Hidalgo (2011), CC BY 4.0
-- Libraries: [@anthropic-ai/sdk](https://github.com/anthropics/anthropic-sdk-typescript), ESLint, Prettier
+- Libraries: [@anthropic-ai/sdk](https://github.com/anthropics/anthropic-sdk-typescript), [sharp](https://sharp.pixelplumbing.com), [hyparquet](https://github.com/hyparam/hyparquet), ESLint, Prettier
