@@ -24,12 +24,15 @@
     "translate": "node --env-file-if-exists=.env scripts/translate-dataset.mjs"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.135.0"
+    "@anthropic-ai/sdk": "^0.135.0",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.13.0",
     "globals": "^17.13.0",
+    "hyparquet": "^1.31.4",
+    "hyparquet-compressors": "^1.1.2",
     "prettier": "^3.9.10"
   }
 }
