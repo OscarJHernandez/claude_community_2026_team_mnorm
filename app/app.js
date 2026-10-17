@@ -250,11 +250,13 @@ async function loadContent() {
     feed?.clips ?? getRound(items, { count: 7, start: 1, end: 4 }).flatMap((p) => [`dataset:${p.left.id}`]);
   const clips = entries.map(toClip).filter(Boolean);
   if (clips.length) FEED = clips;
-  // A new day's feed starts with no answers.
-  const day = feed?.date ?? today();
+  // A new day starts with no answers (also when the demo day's feed is shown again).
+  const day = today();
   if (state.feedDay !== day) Object.assign(state, { feedDay: day, answers: {}, round: 0, scored: {} });
 }
 const score = () => FEED.filter((F, i) => state.answers[i + 1] === F.answer).length;
+// The first clip not answered yet; past the last clip (the result card) when all are done.
+const firstOpen = () => FEED.findIndex((F, i) => !state.answers[i + 1]) + 1 || FEED.length + 1;
 
 const TASKS = [
   { ico: "📧", key: "t.scam", pts: 20, to: "home/4", done: () => !!state.answers[4] },
@@ -419,7 +421,7 @@ S.home = {
     </div>`;
   },
   after: ([i]) => {
-    if (i) scrollToClip(+i, false);
+    scrollToClip(i ? +i : firstOpen(), false);
     const reel = document.getElementById("reel");
     reel.addEventListener("scroll", updateFeedHead, { passive: true });
     updateFeedHead();
@@ -642,8 +644,12 @@ S.tasks = {
     <div class="card hero stack">
       <p class="small muted">${t("home.today")}</p>
       <h2 class="h1">${t("home.todayT")}</h2>
-      <p class="muted">${t("tk.progress", { n: Object.keys(state.answers).length, total: FEED.length })} · <b>+${FEED.length * PTS}</b></p>
-      <button class="btn light" data-go="home/${Math.min(Object.keys(state.answers).length + 1, FEED.length)}">${t("home.start")} →</button>
+      <p class="muted">${t("tk.progress", { n: FEED.filter((F, i) => state.answers[i + 1]).length, total: FEED.length })} · <b>+${FEED.length * PTS}</b></p>
+      ${
+        firstOpen() > FEED.length
+          ? `<button class="btn light" data-act="freplay">🔄 ${t("f.replay")}</button>`
+          : `<button class="btn light" data-go="home/${firstOpen()}">${t("home.start")} →</button>`
+      }
     </div>
     <h2 class="h2">${t("home.tasks")}</h2>
     <div>${TASKS.map((x) => `<button class="task ${x.done() ? "done" : ""}" data-go="${x.to}"><span class="ico">${x.done() ? "✅" : x.ico}</span><span>${t(x.key)}</span><span class="badge-pts">${x.done() ? t("tk.done") : "+" + x.pts}</span></button>`).join("")}</div>
@@ -1032,8 +1038,8 @@ function render() {
   view.classList.toggle("immersive", !!scr.immersive);
   view.innerHTML = scr.render(args);
   view.scrollTop = 0;
+  scr.after?.(args);
   if (keep && !args.length) document.getElementById("reel").scrollTop = keep;
-  else if (scr.after) scr.after(args);
 
   const tabbar = document.getElementById("tabbar");
   tabbar.hidden = !scr.tab;
