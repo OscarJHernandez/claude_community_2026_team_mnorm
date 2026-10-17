@@ -169,6 +169,8 @@ const PTS = 20;
 const DS = {};
 // German for dataset items (dataset is English), from content/dataset-de.json (npm run translate).
 let DS_DE = {};
+// Lesson cards and quizzes from content/lessons.json, per lesson id and language.
+let LESSON_TEXT = {};
 const dsPhoto = (id) =>
   DS[id]
     ? `<div class="photo"><img src="${DS[id].src}" alt="${esc(t("dsi.alt"))}"></div>`
@@ -216,6 +218,7 @@ async function loadContent() {
   const items = await loadDataset();
   items.forEach((i) => (DS[i.id] = i));
   DS_DE = (await fetchJson("../content/dataset-de.json").catch(() => ({ items: {} }))).items;
+  LESSON_TEXT = (await fetchJson("../content/lessons.json").catch(() => ({ lessons: {} }))).lessons;
   const feed =
     (await fetchJson(`../content/feed/${today()}.json`).catch(() => null)) ||
     (await fetchJson(`../content/feed/${DEMO_FEED_DATE}.json`).catch(() => null));
@@ -378,10 +381,10 @@ S.home = {
   render: ([i, pick]) => {
     if (i && pick && EMBED) state.answers[+i] = pick;
     return `<div class="feed-wrap">
-      <div class="feed-top">
-        <span class="logo">${LOGO}Fenster</span>${langToggle()}
-        <span class="pill">🔥 <span id="feed-streak">${state.streak}</span></span><span class="pill">⭐ <span id="feed-pts">${state.points}</span></span>
-        <a class="pill" href="#/tasks" style="margin-left:auto">☰ ${t("f.tasks")}</a>
+      <div class="feed-head">
+        <div class="feed-progress"><span class="dots">${FEED.map((F, n) => `<i data-dot="${n + 1}" class="${state.answers[n + 1] ? "done" : ""}"></i>`).join("")}</span><span id="feed-count">${t("f.count", { n: 1, total: FEED.length })}</span></div>
+        <span class="stat-chip">⭐ <span id="feed-pts">${state.points}</span></span>
+        <a class="btn-sm" href="#/tasks">☰ ${t("f.tasks")}</a>
       </div>
       <div class="reel" id="reel">
         ${FEED.map((F, n) => `<section class="clip" data-i="${n + 1}">${clip(n + 1)}</section>`).join("")}
@@ -391,6 +394,9 @@ S.home = {
   },
   after: ([i]) => {
     if (i) scrollToClip(+i, false);
+    const reel = document.getElementById("reel");
+    reel.addEventListener("scroll", updateFeedHead, { passive: true });
+    updateFeedHead();
   },
 };
 
@@ -410,11 +416,13 @@ function clip(i) {
       <button class="btn primary" style="margin-top:.7rem" data-act="next" data-i="${i}">${last ? t("f.done") : t("f.next")} ↓</button>
     </div>`;
   return `<div class="clip-media">${F.media()}</div>
-    <div class="rail">
-      <button data-act="share" data-v="clip"><span>↗</span>${t("f.share")}</button>
-      <button data-go="lesson/${F.lesson}"><span>📖</span>${t("f.learn")}</button>
+    <div class="clip-meta">
+      <p class="cap"><b>${t(F.k + ".handle")}</b> · ${t(F.k + ".cap")}</p>
+      <div class="clip-tools">
+        <button class="btn-sm" data-act="share" data-v="clip">↗ ${t("f.share")}</button>
+        <button class="btn-sm" data-go="lesson/${F.lesson}">📖 ${t("f.learn")}</button>
+      </div>
     </div>
-    <div class="clip-meta"><span><b>${t(F.k + ".handle")}</b> · ${t(F.k + ".cap")}</span><span class="count">${t("f.count", { n: i, total: FEED.length })}</span></div>
     ${
       pick
         ? sheet
@@ -438,7 +446,14 @@ function answer(i, v) {
   document.querySelector(`.clip[data-i="${i}"]`).innerHTML = clip(i);
   document.querySelector(".clip-result").innerHTML = resultHTML(score());
   document.getElementById("feed-pts").textContent = state.points;
-  document.getElementById("feed-streak").textContent = state.streak;
+  document.querySelector(`[data-dot="${i}"]`)?.classList.add("done");
+}
+// Keeps "3 / 7" and the progress dots in the header in step with the clip on screen.
+function updateFeedHead() {
+  const n = Math.min(currentClip(), FEED.length);
+  const count = document.getElementById("feed-count");
+  if (count) count.textContent = t("f.count", { n, total: FEED.length });
+  document.querySelectorAll("[data-dot]").forEach((d) => d.classList.toggle("here", +d.dataset.dot === n));
 }
 const currentClip = () => {
   const reel = document.getElementById("reel");
@@ -503,51 +518,53 @@ S.learn = {
   </div>`,
 };
 
+// A lesson: 3 cards, then one quiz question. Content comes from content/lessons.json.
 S.lesson = {
   back: () => "learn",
   title: ([id]) => t("l." + (id || "safety")),
   render: ([id = "safety", card = "1", ans]) => {
     const L = LESSONS.find((x) => x.id === id) || LESSONS[1];
-    const cards = ["ls.s1", "ls.s2", "ls.s3"];
+    const C = LESSON_TEXT[L.id]?.[state.lang] ?? LESSON_TEXT[L.id]?.en;
+    if (!C) return `<div class="stack"><p class="muted">${t("ck.error")}</p></div>`;
+    const total = C.cards.length + 1;
     const c = +card;
-    if (c <= cards.length) {
+    const dots = `<div class="dots">${Array.from({ length: total }, (_, i) => `<i class="${i + 1 === c ? "on" : ""}"></i>`).join("")}</div>`;
+    if (c <= C.cards.length) {
+      const k = C.cards[c - 1];
       return `<div class="stack">
-        <p class="muted small">${t("ls.card", { n: c, total: cards.length + 1 })}</p>
-        <div class="card" style="min-height:14rem;display:flex;flex-direction:column;justify-content:center;gap:1rem">
-          <p style="font-size:2.6rem;line-height:1">${["🧐", "🔐", "📞"][c - 1]}</p>
-          <p style="font-size:1.15rem">${t(cards[c - 1])}</p>
+        <p class="muted small">${L.ico} ${t("ls.card", { n: c, total })}</p>
+        <div class="card lesson-card">
+          <p class="lesson-ico">${k.ico}</p>
+          <p class="lesson-text">${esc(k.text)}</p>
         </div>
-        <div class="dots">${[1, 2, 3, 4].map((i) => `<i class="${i === c ? "on" : ""}"></i>`).join("")}</div>
-        ${id !== "safety" && id !== "scams" ? `<p class="muted small">✦ ${t("ls.placeholder")}</p>` : ""}
+        ${dots}
         <button class="btn primary" data-go="lesson/${L.id}/${c + 1}">${t("c.continue")} →</button>
       </div>`;
     }
-    const opts = [
-      ["qa", 0],
-      ["qb", 1],
-      ["qc", 0],
-    ];
+    const picked = ans == null ? null : +ans;
     return `<div class="stack">
-      <p class="muted small">${t("ls.card", { n: 4, total: 4 })}</p>
-      <h1 class="h1">${t("ls.q")}</h1>
-      ${opts
-        .map(([k, right]) => {
-          const p = ans === k;
-          const st = ans
-            ? right
-              ? "border-color:var(--ok);background:var(--ok-soft)"
-              : p
-                ? "border-color:var(--bad);background:var(--bad-soft)"
-                : ""
-            : "";
-          return `<button class="choice" style="${st}" ${ans ? "" : `data-act="quiz" data-v="${L.id}/${k}"`}><b>${t("ls." + k)}</b></button>`;
+      <p class="muted small">${L.ico} ${t("ls.card", { n: total, total })}</p>
+      <h1 class="h1">${esc(C.q)}</h1>
+      ${C.options
+        .map((o, k) => {
+          const st =
+            picked == null
+              ? ""
+              : k === C.correct
+                ? "border-color:var(--ok);background:var(--ok-soft)"
+                : k === picked
+                  ? "border-color:var(--fs-gentle);background:var(--fs-gentle-soft)"
+                  : "opacity:.6";
+          return `<button class="choice" style="${st}" ${picked == null ? `data-act="quiz" data-v="${L.id}/${k}"` : ""}><b>${esc(o)}</b></button>`;
         })
         .join("")}
       ${
-        ans
-          ? `<div class="feedback ${ans === "qb" ? "ok" : "no"}"><p class="h">${ans === "qb" ? "✅ " + t("ls.ok") : "💛 " + t("g.wrong")}</p><span class="claude-tag">✦ ${t("c.byClaude")}</span></div>
-      <button class="btn primary" data-go="learn">${t("c.continue")}</button>`
-          : ""
+        picked == null
+          ? ""
+          : `<div class="feedback ${picked === C.correct ? "ok" : "careful"}"><p class="h">${picked === C.correct ? "✅ " + t("ls.okShort") : "💛 " + t("f.wrong")}</p>
+            <p class="aha" style="margin-top:.6rem">💡 <b>Aha!</b> ${esc(C.ok)}</p></div>
+      ${dots}
+      <button class="btn primary" data-go="learn">${t("ls.more")}</button>`
       }
     </div>`;
   },
@@ -860,7 +877,7 @@ function render() {
   document.getElementById("device").classList.toggle("focus", !!(scr.focus || scr.bare));
 
   const top = document.getElementById("topbar");
-  top.hidden = !!(scr.bare || scr.immersive);
+  top.hidden = !!scr.bare;
   const back = scr.back && scr.back(args);
   top.classList.toggle("plain", !back);
   top.innerHTML = back
@@ -910,7 +927,8 @@ document.addEventListener("click", (e) => {
     const [id, k] = el.dataset.v.split("/");
     if (!state.lessons.includes(id)) {
       state.lessons.push(id);
-      learned(t("ls.s1"));
+      const C = LESSON_TEXT[id]?.[state.lang] ?? LESSON_TEXT[id]?.en;
+      learned(C?.ok);
       addPoints(10);
     }
     return go(`lesson/${id}/4/${k}`);
