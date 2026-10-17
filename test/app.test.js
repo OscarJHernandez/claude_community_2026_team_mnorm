@@ -59,3 +59,20 @@ test("app texts exist in English and German", async () => {
   const { en, de } = globalThis.window.I18N;
   assert.deepEqual(Object.keys(de).sort(), Object.keys(en).sort());
 });
+
+test("every Learn lesson has its own cards and quiz in English and German", async () => {
+  const { lessons } = await json("../content/lessons.json");
+  const ids = ["what", "safety", "images", "scams", "ask", "write", "report", "phone"];
+  const firstCards = new Set();
+  for (const id of ids) {
+    for (const lang of ["en", "de"]) {
+      const L = lessons[id]?.[lang];
+      assert.ok(L, `${id}/${lang} missing`);
+      assert.equal(L.cards.length, 3, `${id}/${lang}`);
+      assert.ok(L.q && L.ok && L.options.length === 3, `${id}/${lang}`);
+      assert.ok(L.correct >= 0 && L.correct < L.options.length, `${id}/${lang}`);
+    }
+    firstCards.add(lessons[id].en.cards[0].text);
+  }
+  assert.equal(firstCards.size, ids.length, "lessons must not share content");
+});

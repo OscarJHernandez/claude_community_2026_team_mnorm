@@ -5,6 +5,7 @@ import { readFile, stat } from "node:fs/promises";
 import { extname, join, normalize, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { handleCheck, UserError } from "./server/routes/check.mjs";
+import { handleHelper } from "./server/routes/helper.mjs";
 import { claudeAvailable, MODEL } from "./server/lib/claude.mjs";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
@@ -13,6 +14,7 @@ const PORT = Number(process.env.PORT) || 3000;
 const PUBLIC_DIRS = new Set(["app", "dataset", "content", "design"]);
 const ROUTES = {
   "POST /api/check": handleCheck,
+  "POST /api/helper": handleHelper,
 };
 const TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -94,6 +96,12 @@ const server = createServer(async (req, res) => {
 });
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  server.on("error", (err) => {
+    if (err.code !== "EADDRINUSE") throw err;
+    console.error(`Port ${PORT} is already in use: Fenster (or another app) is probably already running.`);
+    console.error(`Open http://localhost:${PORT}, stop the other one, or start on another port: PORT=3001 npm start`);
+    process.exit(1);
+  });
   server.listen(PORT, () => {
     console.log(`Fenster is running: http://localhost:${PORT}`);
     console.log(

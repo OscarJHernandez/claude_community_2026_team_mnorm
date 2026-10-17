@@ -1,0 +1,389 @@
+{
+  "note": "Lesson content for the Learn tab: 3 cards + 1 quiz per lesson, EN and DE. `correct` is the index of the right option. `ok` is shown after the quiz and saved to the Aha notebook.",
+  "lessons": {
+    "what": {
+      "en": {
+        "cards": [
+          {
+            "ico": "🤖",
+            "text": "AI (artificial intelligence) is a computer program that has learned from huge amounts of text, pictures and sounds. It finds patterns and uses them to answer, write or create."
+          },
+          {
+            "ico": "📱",
+            "text": "You already meet AI every day: voice assistants, translation apps, spam filters and the photo suggestions on your phone."
+          },
+          {
+            "ico": "🧠",
+            "text": "AI does not think or feel like a person. It predicts what fits best. That is why it can sound very sure and still be wrong."
+          }
+        ],
+        "q": "Which sentence about AI is true?",
+        "options": [
+          "AI knows everything that is true.",
+          "AI predicts answers from patterns and can be wrong.",
+          "AI only works on big computers in laboratories."
+        ],
+        "correct": 1,
+        "ok": "AI is a pattern machine: very useful, but check important answers."
+      },
+      "de": {
+        "cards": [
+          {
+            "ico": "🤖",
+            "text": "KI (künstliche Intelligenz) ist ein Computerprogramm, das aus riesigen Mengen an Texten, Bildern und Tönen gelernt hat. Es erkennt Muster und nutzt sie, um zu antworten, zu schreiben oder zu gestalten."
+          },
+          {
+            "ico": "📱",
+            "text": "Sie begegnen KI schon jeden Tag: Sprachassistenten, Übersetzungs-Apps, Spamfilter und die Fotovorschläge auf Ihrem Handy."
+          },
+          {
+            "ico": "🧠",
+            "text": "KI denkt und fühlt nicht wie ein Mensch. Sie sagt voraus, was am besten passt. Deshalb kann sie sehr sicher klingen und trotzdem falsch liegen."
+          }
+        ],
+        "q": "Welcher Satz über KI stimmt?",
+        "options": [
+          "KI weiß alles, was wahr ist.",
+          "KI sagt Antworten aus Mustern voraus und kann sich irren.",
+          "KI funktioniert nur auf großen Computern im Labor."
+        ],
+        "correct": 1,
+        "ok": "KI ist eine Muster-Maschine: sehr nützlich, aber prüfen Sie wichtige Antworten."
+      }
+    },
+    "safety": {
+      "en": {
+        "cards": [
+          {
+            "ico": "🧐",
+            "text": "AI sounds sure, even when it is wrong. Check important things (health, money, law) with a person you trust."
+          },
+          {
+            "ico": "🔐",
+            "text": "Never type passwords, PINs, TANs or bank details into an AI chat. A good AI helper never needs them."
+          },
+          {
+            "ico": "🙈",
+            "text": "Think before you share private things: photos of your ID, your address, other people's names. Keep it general."
+          }
+        ],
+        "q": "Which of these should you never type into an AI chat?",
+        "options": ["A birthday message for a friend", "A question about a recipe", "Your bank PIN"],
+        "correct": 2,
+        "ok": "Your PIN, passwords and bank details never go into an AI chat."
+      },
+      "de": {
+        "cards": [
+          {
+            "ico": "🧐",
+            "text": "KI klingt sicher, auch wenn sie sich irrt. Prüfen Sie Wichtiges (Gesundheit, Geld, Recht) mit einer Person, der Sie vertrauen."
+          },
+          {
+            "ico": "🔐",
+            "text": "Geben Sie niemals Passwörter, PINs, TANs oder Bankdaten in einen KI-Chat ein. Ein guter KI-Helfer braucht sie nie."
+          },
+          {
+            "ico": "🙈",
+            "text": "Überlegen Sie, bevor Sie Privates teilen: Fotos vom Ausweis, Ihre Adresse, Namen anderer Menschen. Bleiben Sie allgemein."
+          }
+        ],
+        "q": "Was sollten Sie niemals in einen KI-Chat eingeben?",
+        "options": ["Einen Geburtstagsgruß für eine Freundin", "Eine Frage zu einem Rezept", "Ihre Bank-PIN"],
+        "correct": 2,
+        "ok": "PIN, Passwörter und Bankdaten gehören nie in einen KI-Chat."
+      }
+    },
+    "images": {
+      "en": {
+        "cards": [
+          {
+            "ico": "✋",
+            "text": "Look at hands, ears and teeth. AI often adds a finger, melts fingers together or draws strange teeth."
+          },
+          {
+            "ico": "🔤",
+            "text": "Read any writing in the picture: signs, labels, number plates. AI often makes letters that look like words but are not."
+          },
+          {
+            "ico": "✨",
+            "text": "Too perfect is suspicious: glowing eyes, plastic skin, a background that melts or repeats. Real photos are a bit messy."
+          }
+        ],
+        "q": "A photo shows a shop sign full of strange, unreadable letters. What do you think?",
+        "options": [
+          "It must be real, it is on the internet.",
+          "It could be made by AI. Check before you share it.",
+          "Signs always look like that in photos."
+        ],
+        "correct": 1,
+        "ok": "Unreadable writing is one of the clearest signs of an AI picture."
+      },
+      "de": {
+        "cards": [
+          {
+            "ico": "✋",
+            "text": "Schauen Sie auf Hände, Ohren und Zähne. KI fügt oft einen Finger hinzu, lässt Finger verschmelzen oder malt seltsame Zähne."
+          },
+          {
+            "ico": "🔤",
+            "text": "Lesen Sie die Schrift im Bild: Schilder, Etiketten, Nummernschilder. KI macht oft Buchstaben, die wie Wörter aussehen, aber keine sind."
+          },
+          {
+            "ico": "✨",
+            "text": "Zu perfekt ist verdächtig: leuchtende Augen, Haut wie Plastik, ein Hintergrund, der verschwimmt oder sich wiederholt. Echte Fotos sind etwas unordentlich."
+          }
+        ],
+        "q": "Ein Foto zeigt ein Ladenschild voller seltsamer, unlesbarer Buchstaben. Was denken Sie?",
+        "options": [
+          "Es muss echt sein, es steht ja im Internet.",
+          "Es könnte von KI sein. Erst prüfen, dann teilen.",
+          "Schilder sehen auf Fotos immer so aus."
+        ],
+        "correct": 1,
+        "ok": "Unlesbare Schrift ist eines der deutlichsten Zeichen für ein KI-Bild."
+      }
+    },
+    "scams": {
+      "en": {
+        "cards": [
+          {
+            "ico": "📞",
+            "text": "With a few seconds of someone's voice from a video, AI can copy how they sound. Scammers use this to pretend to be family."
+          },
+          {
+            "ico": "🚨",
+            "text": "The pattern is always the same: an emergency, a secret (\"don't tell Mum\") and money, fast. Panic is the scammer's tool."
+          },
+          {
+            "ico": "🔑",
+            "text": "Agree on a family code word. If a caller can't say it, hang up and call back on the number you already know."
+          }
+        ],
+        "q": "Your \"grandson\" calls from a new number and urgently needs money. What do you do?",
+        "options": [
+          "Send the money quickly",
+          "Hang up and call him on his usual number",
+          "Ask the caller to send a photo as proof"
+        ],
+        "correct": 1,
+        "ok": "Hang up and call back on a number you know: that beats every fake voice."
+      },
+      "de": {
+        "cards": [
+          {
+            "ico": "📞",
+            "text": "Mit wenigen Sekunden einer Stimme aus einem Video kann KI nachmachen, wie jemand klingt. Betrüger geben sich so als Familie aus."
+          },
+          {
+            "ico": "🚨",
+            "text": "Das Muster ist immer gleich: ein Notfall, ein Geheimnis („Sag Mama nichts“) und Geld, und zwar schnell. Panik ist das Werkzeug der Betrüger."
+          },
+          {
+            "ico": "🔑",
+            "text": "Vereinbaren Sie ein Familien-Codewort. Kennt der Anrufer es nicht: auflegen und unter der bekannten Nummer zurückrufen."
+          }
+        ],
+        "q": "Ihr „Enkel“ ruft von einer neuen Nummer an und braucht dringend Geld. Was tun Sie?",
+        "options": [
+          "Schnell das Geld schicken",
+          "Auflegen und ihn unter seiner üblichen Nummer anrufen",
+          "Den Anrufer um ein Foto als Beweis bitten"
+        ],
+        "correct": 1,
+        "ok": "Auflegen und unter einer bekannten Nummer zurückrufen: Das schlägt jede falsche Stimme."
+      }
+    },
+    "ask": {
+      "en": {
+        "cards": [
+          {
+            "ico": "🛒",
+            "text": "Before you buy something big, ask AI: \"What should I check before buying a …?\" You get a checklist in seconds."
+          },
+          {
+            "ico": "🩺",
+            "text": "Going to the doctor or the bank? Ask AI to help you write down your questions, so you don't forget any."
+          },
+          {
+            "ico": "⚖️",
+            "text": "Use AI as a second opinion, not the last word. For money, health and contracts, confirm with a person you trust."
+          }
+        ],
+        "q": "You want to buy a new TV. How can AI help you best?",
+        "options": [
+          "Ask AI what to compare, then decide yourself",
+          "Give AI your card number so it finds a deal",
+          "Let AI buy it for you"
+        ],
+        "correct": 0,
+        "ok": "Ask AI for the questions, then make the decision yourself."
+      },
+      "de": {
+        "cards": [
+          {
+            "ico": "🛒",
+            "text": "Bevor Sie etwas Teures kaufen, fragen Sie die KI: „Worauf sollte ich beim Kauf von … achten?“ In Sekunden haben Sie eine Checkliste."
+          },
+          {
+            "ico": "🩺",
+            "text": "Termin beim Arzt oder bei der Bank? Lassen Sie sich von der KI helfen, Ihre Fragen aufzuschreiben, damit Sie keine vergessen."
+          },
+          {
+            "ico": "⚖️",
+            "text": "Nutzen Sie KI als zweite Meinung, nicht als letztes Wort. Bei Geld, Gesundheit und Verträgen fragen Sie eine Person, der Sie vertrauen."
+          }
+        ],
+        "q": "Sie möchten einen neuen Fernseher kaufen. Wie hilft KI Ihnen am besten?",
+        "options": [
+          "Die KI fragen, was man vergleichen sollte, und selbst entscheiden",
+          "Der KI Ihre Kartennummer geben, damit sie ein Angebot findet",
+          "Die KI kauft ihn für Sie"
+        ],
+        "correct": 0,
+        "ok": "Lassen Sie sich von der KI die Fragen geben und entscheiden Sie selbst."
+      }
+    },
+    "write": {
+      "en": {
+        "cards": [
+          {
+            "ico": "✍️",
+            "text": "Tell AI who the message is for and how it should feel: \"A short, warm birthday message for my neighbour Gisela.\""
+          },
+          {
+            "ico": "🔁",
+            "text": "Not quite right? Just say so: \"shorter\", \"more cheerful\", \"in simpler words\". You can ask as often as you like."
+          },
+          {
+            "ico": "👀",
+            "text": "Always read it before you send it. Change names or details so it sounds like you."
+          }
+        ],
+        "q": "AI wrote a message that sounds too formal. What do you do?",
+        "options": ["Ask: \"Please make it warmer and simpler\"", "Give up, AI can't do it", "Send it anyway"],
+        "correct": 0,
+        "ok": "Just tell the AI what to change. It's like talking to a patient helper."
+      },
+      "de": {
+        "cards": [
+          {
+            "ico": "✍️",
+            "text": "Sagen Sie der KI, für wen die Nachricht ist und wie sie klingen soll: „Ein kurzer, herzlicher Geburtstagsgruß für meine Nachbarin Gisela.“"
+          },
+          {
+            "ico": "🔁",
+            "text": "Noch nicht ganz richtig? Sagen Sie es einfach: „kürzer“, „fröhlicher“, „in einfacheren Worten“. Sie können so oft fragen, wie Sie möchten."
+          },
+          {
+            "ico": "👀",
+            "text": "Lesen Sie die Nachricht immer, bevor Sie sie senden. Ändern Sie Namen oder Details, damit sie nach Ihnen klingt."
+          }
+        ],
+        "q": "Die KI hat eine Nachricht geschrieben, die zu förmlich klingt. Was tun Sie?",
+        "options": ["Sagen: „Bitte herzlicher und einfacher“", "Aufgeben, die KI kann das nicht", "Trotzdem senden"],
+        "correct": 0,
+        "ok": "Sagen Sie der KI einfach, was sie ändern soll. Wie bei einem geduldigen Helfer."
+      }
+    },
+    "report": {
+      "en": {
+        "cards": [
+          {
+            "ico": "🛑",
+            "text": "Don't reply and don't click. Take a screenshot as proof, then block the sender."
+          },
+          {
+            "ico": "🏦",
+            "text": "If you shared details or paid money, call your bank straight away, using the number on your card. They can often stop the payment."
+          },
+          {
+            "ico": "👮",
+            "text": "If you lost money, report it to the police (in Germany also online at your state's \"Onlinewache\"). And warn family and friends."
+          }
+        ],
+        "q": "You clicked a link in a fake bank message and typed in your login. What do you do first?",
+        "options": [
+          "Reply to the message to complain",
+          "Wait and see what happens",
+          "Call your bank on the number on your card"
+        ],
+        "correct": 2,
+        "ok": "Call your bank on the number on your card, right away. Quick action can stop the damage."
+      },
+      "de": {
+        "cards": [
+          {
+            "ico": "🛑",
+            "text": "Nicht antworten, nicht klicken. Machen Sie einen Screenshot als Beweis und blockieren Sie den Absender."
+          },
+          {
+            "ico": "🏦",
+            "text": "Wenn Sie Daten weitergegeben oder bezahlt haben, rufen Sie sofort Ihre Bank an, über die Nummer auf Ihrer Karte. Oft kann sie die Zahlung stoppen."
+          },
+          {
+            "ico": "👮",
+            "text": "Wenn Sie Geld verloren haben, zeigen Sie es bei der Polizei an (auch online über die „Onlinewache“ Ihres Bundeslandes). Und warnen Sie Familie und Freunde."
+          }
+        ],
+        "q": "Sie haben in einer falschen Bank-Nachricht auf einen Link geklickt und Ihre Zugangsdaten eingegeben. Was tun Sie zuerst?",
+        "options": [
+          "Auf die Nachricht antworten und sich beschweren",
+          "Abwarten, was passiert",
+          "Ihre Bank über die Nummer auf Ihrer Karte anrufen"
+        ],
+        "correct": 2,
+        "ok": "Rufen Sie sofort Ihre Bank über die Nummer auf Ihrer Karte an. Schnelles Handeln kann den Schaden stoppen."
+      }
+    },
+    "phone": {
+      "en": {
+        "cards": [
+          {
+            "ico": "🎙️",
+            "text": "The voice assistant on your phone is AI. Try: \"Set a timer for 10 minutes\" or \"Call Max\"."
+          },
+          {
+            "ico": "📷",
+            "text": "Your camera can translate a menu or sign, or tell you which plant you are looking at. That is AI, too."
+          },
+          {
+            "ico": "⚙️",
+            "text": "Check your settings: which apps may use your microphone, camera and photos? Only allow the ones you trust."
+          }
+        ],
+        "q": "Which is a safe and useful way to use AI on your phone?",
+        "options": [
+          "Translate a menu with the camera",
+          "Let every new app use your microphone",
+          "Ask the assistant to read out your bank PIN"
+        ],
+        "correct": 0,
+        "ok": "Your phone's camera and assistant are handy AI helpers. Keep your settings tidy."
+      },
+      "de": {
+        "cards": [
+          {
+            "ico": "🎙️",
+            "text": "Der Sprachassistent auf Ihrem Handy ist KI. Probieren Sie: „Stelle einen Timer auf 10 Minuten“ oder „Rufe Max an“."
+          },
+          {
+            "ico": "📷",
+            "text": "Ihre Kamera kann eine Speisekarte oder ein Schild übersetzen oder Ihnen sagen, welche Pflanze Sie sehen. Auch das ist KI."
+          },
+          {
+            "ico": "⚙️",
+            "text": "Prüfen Sie Ihre Einstellungen: Welche Apps dürfen Mikrofon, Kamera und Fotos nutzen? Erlauben Sie es nur denen, denen Sie vertrauen."
+          }
+        ],
+        "q": "Was ist eine sichere und nützliche Art, KI auf dem Handy zu nutzen?",
+        "options": [
+          "Eine Speisekarte mit der Kamera übersetzen",
+          "Jeder neuen App das Mikrofon erlauben",
+          "Den Assistenten Ihre Bank-PIN vorlesen lassen"
+        ],
+        "correct": 0,
+        "ok": "Kamera und Assistent sind praktische KI-Helfer. Halten Sie Ihre Einstellungen aufgeräumt."
+      }
+    }
+  }
+}
