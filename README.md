@@ -8,12 +8,13 @@
 
 # Real or Fake?
 
-**One line:** <what it does, for whom>
+**One line:** A TikTok-style swipe game that helps older adults on WhatsApp spot AI fakes and scam messages and try using AI themselves.
 
 ## The problem
-<Who has this problem, and why it matters. 2–3 sentences.>
+Older adults use WhatsApp every day, and that is where AI fake videos, voice clones and scams get forwarded to them. Most of them have never used AI, so they can't tell what is real and don't know AI can also help them. Warnings don't build that skill; safe practice with patient explanations does.
 
 ## What it does
+- Opens from a link in WhatsApp, no app or account needed.
 - **"Real or Fake?" game** (`#/play`, the 🎮 button on Home): 10 rounds, each with **two photos, two messages or two videos**. The player judges each one as real or fake (one real + one fake, both real, or both fake)
 - A daily feed of 7 single clips on Home, including **real vs AI videos** played in the page ([how to add videos](content/videos/README.md))
 - Four kinds of challenge: **AI image vs real photo**, **AI-written vs human message**, **scam vs legit message**, **AI video vs real video**
@@ -74,19 +75,20 @@ run `npm run data:offline` and open it through `npm start` or `npm run preview`,
 **Live link (if any):** <link>
 
 ## Screenshots / demo
-<Drop screenshots here, or link your 2-minute demo video.>
+| Onboarding | Feed: answer explained | "Real or Fake?" game | Scam checker |
+|---|---|---|---|
+| <img src="docs/screenshots/1-onboarding.jpg" width="200" alt="Onboarding: language and text size"> | <img src="docs/screenshots/2-feed-explained.jpg" width="200" alt="Feed item answered, with clues"> | <img src="docs/screenshots/3-real-or-fake-game.jpg" width="200" alt="Real or Fake? round with a scam SMS"> | <img src="docs/screenshots/4-scam-checker.jpg" width="200" alt="Scam checker result"> |
 
 ## Team
 Teams of 5 (at least 1 builder, 1 product or design, 1 domain expert; plus founder or anyone). Link each name to a GitHub or LinkedIn profile, and replace the example row with your team.
 
 | Name | Role / background |
 |---|---|
-| [Mehul Patel](https://github.com/nomadicmehul) *(example)* | Claude Ambassador, DevRel |
-| [Your name](https://www.linkedin.com/in/your-profile) | Builder / Product or design / Domain expert / Founder |
-| [Your name](https://github.com/your-username) | |
-| [Your name](https://github.com/your-username) | |
-| [Your name](https://github.com/your-username) *(optional)* | |
-| [Your name](https://github.com/your-username) *(optional)* | |
+| [Oscar J. Hernandez](https://github.com/OscarJHernandez) | Data science, Engineering |
+| [Natalia Sahagun](https://github.com/nalius-sp) | Product / Design, Consultancy and Project Management |
+| [Ruthvick Poornachandra](https://github.com/ruthvick7) | Domain expert (product) |
+| Mariia Liashchenko | Product designer |
+| [Mikhail Popov](https://github.com/mikhailpopov6) | Builder, DevRel |
 
 ## Credits
 <Open-source libraries, APIs, datasets and assets you used.>
