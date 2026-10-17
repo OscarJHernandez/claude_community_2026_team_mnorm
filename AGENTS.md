@@ -92,6 +92,7 @@ const items = await loadDataset(); // fetches dataset/items.json
 const pair = getPair(items, { modality: "image", difficulty: 2, mode: "one-fake" });
 // pair.left / pair.right: { id, is_real, src (images) | content (texts), difficulty, clues, explanation, source }
 const round = getRound(items, { modality: "text", count: 10, start: 1, end: 5 }); // easy → hard, no repeats
+const videoPairs = getFixedPairs(videos); // videos.json: a real + an AI clip that share a `pair` number (Pair ID)
 ```
 
 `mode` is `one-fake | both-real | both-fake | random`. Pairs share modality and category and prefer the same `subject`.

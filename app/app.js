@@ -15,6 +15,8 @@ const SAVED = {
   lastDay: null,
   feedDay: null,
   answers: {}, // today's feed: clip number -> "real" | "fake"
+  round: 0, // today's play-through: 0, then +1 each time the feed is replayed
+  scored: {}, // clip number -> the round it earned points in (points only once a day)
   aha: [], // things learned, newest first
   lessons: [], // finished lesson ids
   chats: 0,
@@ -248,11 +250,13 @@ async function loadContent() {
     feed?.clips ?? getRound(items, { count: 7, start: 1, end: 4 }).flatMap((p) => [`dataset:${p.left.id}`]);
   const clips = entries.map(toClip).filter(Boolean);
   if (clips.length) FEED = clips;
-  // A new day's feed starts with no answers.
-  const day = feed?.date ?? today();
-  if (state.feedDay !== day) Object.assign(state, { feedDay: day, answers: {} });
+  // A new day starts with no answers (also when the demo day's feed is shown again).
+  const day = today();
+  if (state.feedDay !== day) Object.assign(state, { feedDay: day, answers: {}, round: 0, scored: {} });
 }
 const score = () => FEED.filter((F, i) => state.answers[i + 1] === F.answer).length;
+// The first clip not answered yet; past the last clip (the result card) when all are done.
+const firstOpen = () => FEED.findIndex((F, i) => !state.answers[i + 1]) + 1 || FEED.length + 1;
 
 const TASKS = [
   { ico: "📧", key: "t.scam", pts: 20, to: "home/4", done: () => !!state.answers[4] },
@@ -417,7 +421,7 @@ S.home = {
     </div>`;
   },
   after: ([i]) => {
-    if (i) scrollToClip(+i, false);
+    scrollToClip(i ? +i : firstOpen(), false);
     const reel = document.getElementById("reel");
     reel.addEventListener("scroll", updateFeedHead, { passive: true });
     updateFeedHead();
@@ -428,9 +432,11 @@ function clip(i) {
   const F = FEED[i - 1],
     pick = state.answers[i],
     ok = pick === F.answer,
+    paid = state.scored[i] === state.round, // replays don't earn points again
     last = i === FEED.length;
   const sheet = `<div class="sheet ${ok ? "ok" : "no"}">
-      <p class="h">${ok ? "✅ " + t("f.right", { n: PTS }) : "💛 " + t("f.wrong")}</p>
+      <div class="sheet-top"><p class="h">${ok ? "✅ " + (paid ? t("f.right", { n: PTS }) : t("f.rightAgain")) : "💛 " + t("f.wrong")}</p>
+        <button class="sheet-toggle" data-act="sheet" aria-expanded="true">${t("f.hide")}</button></div>
       <p style="margin-top:.4rem"><b>${t(F.answer === "fake" ? "f.wasFake" : "f.wasReal")}</b> ${t("g.why")}:</p>
       <ul class="why">${(F.ds && DS[F.ds] ? dsText(F.ds, "clues") : [1, 2, 3].map((w) => t(whyKey(F, w)))).map((c) => `<li>${c}</li>`).join("")}</ul>
       ${F.ds && DS[F.ds] ? `<p class="aha">💡 <b>Aha!</b> ${dsText(F.ds, "explanation")}</p>` : ""}
@@ -464,7 +470,10 @@ function answer(i, v) {
   state.answers[i] = v;
   markPlayedToday();
   learned(F.ds && DS[F.ds] ? dsText(F.ds, "explanation") : t(whyKey(F, 1)));
-  if (v === F.answer) addPoints(PTS);
+  if (v === F.answer && !(i in state.scored)) {
+    state.scored[i] = state.round;
+    addPoints(PTS);
+  }
   save();
   renderSidebar();
   document.querySelector(`.clip[data-i="${i}"]`).innerHTML = clip(i);
@@ -496,8 +505,9 @@ function resultHTML(s) {
       <p style="font-size:3rem;line-height:1">${low ? "🌱" : "🎉"}</p>
       <h1 class="h1">${state.name ? t("res.title", { name: esc(state.name) }) : t("res.title0")}</h1>
       <p class="big-num">${s}/${FEED.length}</p>
-      <p>${t("res.score", { n: s, total: FEED.length })} · <b>${t("res.earned", { n: s * PTS })}</b> · ${t("res.streak", { n: Math.max(state.streak, 1) })}</p>
+      <p>${t("res.score", { n: s, total: FEED.length })} · <b>${t("res.earned", { n: Object.keys(state.scored).length * PTS })}</b> · ${t("res.streak", { n: Math.max(state.streak, 1) })}</p>
       <button class="btn primary" data-go="play">🎮 ${t("play.more")}</button>
+      <button class="btn ghost" data-act="freplay">🔄 ${t("f.replay")}</button>
       <button class="btn ghost" data-go="aha">📒 ${t("aha.count", { n: state.aha.length })}</button>
       ${low ? `<div class="card" style="text-align:left"><p>${t("res.low")}</p><button class="btn primary" style="margin-top:.7rem" data-go="lesson/scams">${t("res.lowCta")}</button></div>` : ""}
       <div class="card stack" style="text-align:left">
@@ -516,21 +526,21 @@ S.result = {
 
 // ---------- "Real or Fake?" pair game ----------
 // 10 rounds from easy to hard. Each round shows two items of the same kind (photos, messages or videos); the player
-// judges each one. A pair can be one real + one fake, both real or both fake. Pairs come from getRound/getPair in
-// dataset/loader.js; one video pair (content/videos/videos.json) is mixed in halfway.
+// judges each one. A pair can be one real + one fake, both real or both fake. Pairs come from getRound in
+// dataset/loader.js; two video pairs are mixed in. Videos are paired by their Pair ID (`pair` in
+// content/videos/videos.json, from the team's sheet) via getFixedPairs.
 const GAME_ROUNDS = 10;
+const VIDEO_ROUNDS = 2;
 let GAME = null;
 function newGame() {
-  const { getRound, getPair } = LOADER;
+  const { getRound, getFixedPairs } = LOADER;
+  const videoPairs = getFixedPairs(ITEMS.filter((i) => i.modality === "video")).slice(0, VIDEO_ROUNDS);
   const rounds = getRound(
     ITEMS.filter((i) => i.modality !== "video"),
-    { count: GAME_ROUNDS - 1, start: 1, end: 5 },
+    { count: GAME_ROUNDS - videoPairs.length, start: 1, end: 5 },
   );
-  const videoPair = getPair(
-    ITEMS.filter((i) => i.modality === "video"),
-    { difficulty: 3 },
-  );
-  if (videoPair) rounds.splice(Math.floor(rounds.length / 2), 0, videoPair);
+  // Spread the video pairs out: after about a third and two thirds of the game.
+  videoPairs.forEach((p, k) => rounds.splice(Math.round(((k + 1) * rounds.length) / (videoPairs.length + 1)), 0, p));
   return { rounds, n: 0, picks: [], right: 0 };
 }
 const truth = (item) => (item.is_real ? "real" : "fake");
@@ -634,8 +644,12 @@ S.tasks = {
     <div class="card hero stack">
       <p class="small muted">${t("home.today")}</p>
       <h2 class="h1">${t("home.todayT")}</h2>
-      <p class="muted">${t("tk.progress", { n: Object.keys(state.answers).length, total: FEED.length })} · <b>+${FEED.length * PTS}</b></p>
-      <button class="btn light" data-go="home/${Math.min(Object.keys(state.answers).length + 1, FEED.length)}">${t("home.start")} →</button>
+      <p class="muted">${t("tk.progress", { n: FEED.filter((F, i) => state.answers[i + 1]).length, total: FEED.length })} · <b>+${FEED.length * PTS}</b></p>
+      ${
+        firstOpen() > FEED.length
+          ? `<button class="btn light" data-act="freplay">🔄 ${t("f.replay")}</button>`
+          : `<button class="btn light" data-go="home/${firstOpen()}">${t("home.start")} →</button>`
+      }
     </div>
     <h2 class="h2">${t("home.tasks")}</h2>
     <div>${TASKS.map((x) => `<button class="task ${x.done() ? "done" : ""}" data-go="${x.to}"><span class="ico">${x.done() ? "✅" : x.ico}</span><span>${t(x.key)}</span><span class="badge-pts">${x.done() ? t("tk.done") : "+" + x.pts}</span></button>`).join("")}</div>
@@ -1006,6 +1020,8 @@ function renderSidebar() {
 function render() {
   const { name, args } = parse();
   const scr = S[name];
+  // A finished pair game starts over next time; one left halfway resumes.
+  if (name !== "play" && GAME && GAME.n >= GAME.rounds.length) GAME = null;
   document.documentElement.lang = state.lang;
   document.documentElement.classList.toggle("big", state.big);
   document.body.classList.toggle("wa", !!scr.bare);
@@ -1024,8 +1040,8 @@ function render() {
   view.classList.toggle("immersive", !!scr.immersive);
   view.innerHTML = scr.render(args);
   view.scrollTop = 0;
+  scr.after?.(args);
   if (keep && !args.length) document.getElementById("reel").scrollTop = keep;
-  else if (scr.after) scr.after(args);
 
   const tabbar = document.getElementById("tabbar");
   tabbar.hidden = !scr.tab;
@@ -1106,6 +1122,21 @@ document.addEventListener("click", (e) => {
     render();
     document.getElementById("view").scrollTo?.(0, 0);
     return void window.scrollTo(0, 0);
+  }
+  // Hide or show the explanation so the clip is visible again. Only a class changes: a video keeps playing.
+  if (act === "sheet") {
+    const min = el.closest(".sheet").classList.toggle("min");
+    el.setAttribute("aria-expanded", String(!min));
+    el.textContent = t(min ? "f.show" : "f.hide");
+    return;
+  }
+  // Play today's clips again: answers clear, points already earned stay (and aren't paid twice).
+  if (act === "freplay") {
+    Object.assign(state, { answers: {}, round: state.round + 1 });
+    save();
+    if (location.hash === "#/home/1") render();
+    else go("home/1");
+    return;
   }
   if (el.dataset.act === "next") {
     scrollToClip(+el.dataset.i + 1, true);

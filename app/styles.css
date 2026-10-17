@@ -1816,6 +1816,36 @@ input.field {
 .sheet.ok .h {
   color: var(--ok);
 }
+/* header row: result + Hide / Show why */
+.sheet-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.sheet-top .h {
+  flex: 1;
+  min-width: 0;
+}
+.sheet-toggle {
+  flex: none;
+  min-height: var(--tap);
+  padding: 0 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.sheet-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+/* hidden: only the result line and Next stay, so the clip is visible again */
+.sheet.min > :not(.sheet-top, [data-act="next"]) {
+  display: none;
+}
 .sheet.no .h {
   color: var(--fs-gentle);
 }
@@ -1922,6 +1952,9 @@ input.field {
     box-shadow: var(--fs-shadow);
     overflow-y: auto;
     animation: sheet-in 0.35s var(--fs-ease) both;
+  }
+  .sheet-toggle {
+    display: none;
   }
   .clip-result {
     display: block;

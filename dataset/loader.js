@@ -109,6 +109,28 @@ export function getRound(items, { count = 10, start = 1, end = 5, ...opts } = {}
   return round;
 }
 
+/**
+ * Fixed pairs: items that share a `pair` number (the Pair ID in content/videos/real_vs_ai_videos.xlsx) are shown
+ * side by side. Returns every complete pair (exactly two items) in random order, each with a random left/right.
+ */
+export function getFixedPairs(items, { rng = Math.random } = {}) {
+  const groups = {};
+  for (const i of items) if (i.pair != null) (groups[i.pair] ??= []).push(i);
+  return shuffle(
+    Object.values(groups).filter((g) => g.length === 2),
+    rng,
+  ).map(([a, b]) => {
+    const [left, right] = rng() < 0.5 ? [a, b] : [b, a];
+    return {
+      left,
+      right,
+      mode: a.is_real === b.is_real ? (a.is_real ? "both-real" : "both-fake") : "one-fake",
+      category: a.category,
+      pairDifficulty: Math.round((difficultyOf(a) + difficultyOf(b)) / 2),
+    };
+  });
+}
+
 // Closest difficulty wins; within ±1 of the target, the same subject is preferred; ties are random.
 function closest(candidates, target, subject, rng) {
   if (!candidates.length) return null;
