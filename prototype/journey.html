@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fenster · journey map</title>
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f3eee5;
+        --ink: #1c1b19;
+        --ink-2: #4a4740;
+        --line: #e2dacb;
+        --primary: #0b5d5b;
+        --soft: #e1efed;
+        --accent: #9a4a08;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+        line-height: 1.5;
+      }
+      header {
+        padding: 28px 32px 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: end;
+        justify-content: space-between;
+      }
+      h1 {
+        margin: 0;
+        font-size: 32px;
+        color: var(--primary);
+      }
+      header p {
+        margin: 4px 0 0;
+        color: var(--ink-2);
+        max-width: 70ch;
+      }
+      .lang {
+        display: inline-flex;
+        border: 2px solid var(--line);
+        border-radius: 999px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .lang button {
+        border: 0;
+        background: none;
+        padding: 8px 16px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .lang button[aria-pressed="true"] {
+        background: var(--primary);
+        color: #fff;
+      }
+      section {
+        padding: 18px 32px;
+      }
+      h2 {
+        font-size: 20px;
+        margin: 0 0 4px;
+      }
+      h2 span {
+        color: var(--accent);
+      }
+      .lead {
+        margin: 0 0 14px;
+        color: var(--ink-2);
+        max-width: 80ch;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 12px;
+        align-items: flex-start;
+      }
+      .step {
+        flex: none;
+        width: 252px;
+      }
+      .arrow {
+        flex: none;
+        align-self: center;
+        font-size: 26px;
+        color: var(--primary);
+        margin-top: -60px;
+      }
+      .phone {
+        width: 252px;
+        height: 518px;
+        border-radius: 26px;
+        overflow: hidden;
+        border: 7px solid #1c1b19;
+        background: #fff;
+        position: relative;
+      }
+      .phone iframe {
+        width: 390px;
+        height: 802px;
+        border: 0;
+        transform: scale(0.61);
+        transform-origin: 0 0;
+      }
+      .cap {
+        margin-top: 8px;
+        font-size: 14px;
+      }
+      .cap b {
+        display: block;
+        font-size: 15px;
+      }
+      .cap a {
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .note {
+        display: inline-block;
+        margin-top: 4px;
+        font-size: 12px;
+        background: #fff3b0;
+        padding: 1px 8px;
+        border-radius: 6px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 1100px;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        font-size: 15px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        background: var(--soft);
+      }
+      .s-proto {
+        color: #1d6b34;
+        font-weight: 700;
+      }
+      .s-next {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .s-later {
+        color: var(--ink-2);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Fenster · user journey &amp; features</h1>
+        <p>
+          Every phone below is the live clickable prototype (<a href="index.html">open full size</a>). Yellow tags show
+          which sticky note the screen came from.
+        </p>
+      </div>
+      <div class="lang" role="group" aria-label="Language">
+        <button data-l="en">English</button><button data-l="de">Deutsch</button>
+      </div>
+    </header>
+    <main id="map"></main>
+
+    <section>
+      <h2>Feature map (from the architecture board)</h2>
+      <p class="lead">
+        <span class="s-proto">● in prototype</span> &nbsp; <span class="s-next">● build next for the demo</span> &nbsp;
+        <span class="s-later">● later</span>
+      </p>
+      <table>
+        <tr>
+          <th>Area</th>
+          <th>Feature</th>
+          <th>Status</th>
+        </tr>
+        <tr>
+          <td rowspan="3"><b>Community</b></td>
+          <td>Anybody can join (WhatsApp invite link, no password)</td>
+          <td class="s-proto">● prototype</td>
+        </tr>
+        <tr>
+          <td>Anybody can create (own groups, turn your AI picture into a challenge)</td>
+          <td class="s-proto">● prototype (UI)</td>
+        </tr>
+        <tr>
+          <td>Share with family &amp; friends, warn my group about a scam</td>
+          <td class="s-proto">● prototype (UI)</td>
+        </tr>
+        <tr>
+          <td rowspan="4"><b>Gaming</b></td>
+          <td>Points per event, weekly leaderboard (group / everyone)</td>
+          <td class="s-proto">● prototype</td>
+        </tr>
+        <tr>
+          <td>Streaks, levels, badges / rewards</td>
+          <td class="s-proto">● prototype</td>
+        </tr>
+        <tr>
+          <td>Daily “Real or fake?” feed: 7 clips (video, newspaper, email, SMS, photo, voice note, website)</td>
+          <td class="s-next">● next: Claude generates rounds</td>
+        </tr>
+        <tr>
+          <td>Evening social game (live group quiz)</td>
+          <td class="s-later">● later (lobby screen only)</td>
+        </tr>
+        <tr>
+          <td rowspan="4"><b>Teaching</b></td>
+          <td>Low score → gentle intervention with a 2-minute lesson</td>
+          <td class="s-proto">● prototype</td>
+        </tr>
+        <tr>
+          <td>On-demand lessons, level-based (beginner / next step)</td>
+          <td class="s-proto">● prototype</td>
+        </tr>
+        <tr>
+          <td>Learning by doing: AI helper chat, picture maker, scam checker</td>
+          <td class="s-next">● next: wire chat + scam checker to Claude</td>
+        </tr>
+        <tr>
+          <td>Periodic quizzes &amp; new events</td>
+          <td class="s-later">● later (scheduled generation)</td>
+        </tr>
+        <tr>
+          <td rowspan="4"><b>Tech</b></td>
+          <td>PWA for web + phone</td>
+          <td class="s-proto">● manifest in prototype</td>
+        </tr>
+        <tr>
+          <td>English + German (i18n from day one)</td>
+          <td class="s-proto">● prototype</td>
+        </tr>
+        <tr>
+          <td>WhatsApp notifications / entry</td>
+          <td class="s-later">● later (mocked as a link)</td>
+        </tr>
+        <tr>
+          <td>Auth by phone, database</td>
+          <td class="s-later">● later (fake data now)</td>
+        </tr>
+      </table>
+    </section>
+
+    <script>
+      const PHASES = [
+        {
+          t: "1 · Entry & onboarding",
+          d: "A family member invites the older adult via WhatsApp. One tap opens the web app. No app store, no password. Big text and language are chosen first.",
+          steps: [
+            ["wa", "WhatsApp invite", "Note: “On WhatsApp: message → education web”"],
+            ["ob/1", "Language & text size", "Must: English + German"],
+            ["ob/2", "About you (level)", "Note: “level / experience based teaching”"],
+            ["ob/3", "Permissions & join group", "Note: “Onboarding + permission, invited to a group”"],
+          ],
+        },
+        {
+          t: "2 · Home = the daily game (a feed like TikTok)",
+          d: "After onboarding, a “window” opens onto Home. Home is a full-screen feed: 7 clips in different media, one after another. For each: real or fake? Claude explains how to tell. A wrong answer offers a 2-minute lesson, never a penalty.",
+          steps: [
+            ["home/1", "Intro: the window opens", "Note: plays after “Let’s start”", "&splash=1"],
+            ["home/1", "1 · AI bunny video", "Note: “guess: is it AI or not, and why”"],
+            ["home/2/fake", "2 · Fake newspaper → explained", "Note: “Identify fake news / propaganda”"],
+            ["home/3", "3 · Scam email", "Note: “Identify the fraud email”"],
+            ["home/4/fake", "4 · Real photo (dataset), wrong answer → lesson", "Note: “low score → intervention”"],
+            ["home/5", "5 · AI image (dataset)", "Note: “Identify AI image”"],
+            ["home/6", "6 · Cloned voice note", "Note: “Identify the fraud call”"],
+            ["home/7/real", "7 · Real library news", "Real items too, so it is not always “fake”"],
+            ["home/8", "Result, streak & challenge family", "Note: “challenge their friends”"],
+            ["tasks", "Tasks & group activity", "Note: “Home (tasks list)”"],
+          ],
+        },
+        {
+          t: "3 · Learn on demand",
+          d: "A small library of 2–5 minute lessons. Each ends with one quiz question. Claude writes lessons in simple English and German at the right level.",
+          steps: [
+            ["learn", "Lesson library", "Note: “On demand edu content”"],
+            ["lesson/safety", "Lesson cards", "Note: “Safety rules: AI can make mistakes”"],
+            ["lesson/safety/4/qb", "Quiz + points", "Note: “AI quiz question”"],
+          ],
+        },
+        {
+          t: "4 · Try AI yourself (learning by doing)",
+          d: "“The more they create with AI, the more they can identify others’ AI content.” Safe, guided first steps with AI.",
+          steps: [
+            ["create", "Try AI hub", "Note: “Playground / Create”"],
+            ["chat", "AI helper: good-morning message", "Note: “Create a good morning message… send on WhatsApp”"],
+            ["image", "Make a picture → make it a challenge", "Note: “Teach how to create AI content”"],
+            ["check/1", "Scam checker (copy-paste)", "Note: “copy-paste to check fraud”"],
+          ],
+        },
+        {
+          t: "5 · Community & progress",
+          d: "Weekly competition inside your own group keeps people coming back. Anyone can start a group.",
+          steps: [
+            ["rank", "Weekly ranking", "Note: “Leaderboard (weekly): score / streak”"],
+            ["me", "Profile, badges, groups, settings", "Note: “Profile”, “anybody can create / join”"],
+            ["evening", "Evening social game", "Note: “★ Evening social game”"],
+          ],
+        },
+      ];
+      let lang = new URLSearchParams(location.search).get("lang") || "en";
+      function draw() {
+        document.querySelectorAll(".lang button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.l === lang));
+        document.getElementById("map").innerHTML = PHASES.map(
+          (p) => `
+        <section><h2>${p.t}</h2><p class="lead">${p.d}</p><div class="row">
+        ${p.steps
+          .map(
+            ([route, title, note, extra = ""], i) => `${i ? '<div class="arrow">→</div>' : ""}<div class="step">
+          <div class="phone"><iframe loading="lazy" title="${title}" src="index.html?embed=1&lang=${lang}${extra}#/${route}"></iframe></div>
+          <div class="cap"><b>${title}</b><span class="note">${note}</span><br><a href="index.html?lang=${lang}#/${route}">open ↗</a></div>
+        </div>`,
+          )
+          .join("")}
+        </div></section>`,
+        ).join("");
+      }
+      document.querySelectorAll(".lang button").forEach(
+        (b) =>
+          (b.onclick = () => {
+            lang = b.dataset.l;
+            draw();
+          }),
+      );
+      draw();
+    </script>
+  </body>
+</html>
