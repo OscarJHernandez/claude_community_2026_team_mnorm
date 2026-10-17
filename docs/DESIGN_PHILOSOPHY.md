@@ -82,9 +82,34 @@ These keep every screen predictable. Anna learns the layout once and it works ev
   "Fake" always right, the AI explanation always slides up from the bottom.
 - **Spacing:** 16px screen padding, 16px between blocks, 24–32px before a new section heading.
   Group things that belong together inside one card; don't use lines to separate.
-- **Cards** have a 2px border, 18px corners and 16px padding. A card is one topic. Never a card inside a card.
+- **Cards** are white on warm paper with a 1px hairline (`--fs-line`), 20px corners (`--fs-r`), 20–24px padding
+  and a soft shadow (`--fs-shadow-sm`). A card is one topic. Never a card inside a card.
 - **Max 3 things to choose from** on one screen, 5 in a list before you split it.
-- **Desktop:** same one column, max 640px wide, centred. Bigger screen = more breathing room, not more content.
+- **Desktop:** a sidebar (brand, navigation, progress, settings) and one centred column, max 680px wide.
+  Bigger screen = more breathing room, not more content. The one exception is the game on wide screens
+  (≥ 1100px): the picture on the left, the question and the explanation in a panel on the right, so the
+  explanation never covers what she is looking at.
+
+## Visual language: "calm editorial"
+
+Anna trusts things that look like a good newspaper, a printed letter from her bank or a well-made book.
+She distrusts things that look like a slot machine. So Fenster looks **quiet, warm and well made**, not playful.
+
+| Element | Rule | Why |
+|---|---|---|
+| Paper | Warm ivory background (`--fs-bg`), white cards on top | Less glare than pure white, feels like paper |
+| Ink | Deep green-black (`--fs-ink`), secondary text still ≥ 7:1 | Older eyes need real contrast; no light-grey text |
+| Headings | Serif (**Newsreader**, `--fs-font-display`), 600 weight, slightly tight | Newspaper trust; makes each screen feel edited |
+| Body | **Atkinson Hyperlegible**, ≥ 20px | Designed for low vision; never swap it out |
+| Brand | One deep forest teal (`--fs-learn`), used with gradients only on the main button and hero cards | One confident colour reads as premium; many read as a toy |
+| Depth | Soft, warm shadows (`--fs-shadow-*`) instead of thick outlines | Calm; things that float a little look tappable |
+| Controls | Still clearly bounded: 1.5px `--fs-line-strong` border on choices and fields, ≥ 60px tall | Calm must never mean "where do I tap?" |
+| Icons | Emoji sit in a soft tinted square or circle ("icon well") | Turns emoji from clip-art into a consistent system |
+| Selected | Tinted fill **and** a ✓ tick on the right | Never colour alone |
+| Motif | The arched window from the logo, faint, on hero cards and the start screen | The brand is a window: calm view, way back |
+
+What to avoid: neon gradients, glassy "AI sparkle" everywhere, confetti on every tap, dark mode as default,
+thin grey type, icons without words, more than one loud thing per screen.
 
 ## Colour means something
 

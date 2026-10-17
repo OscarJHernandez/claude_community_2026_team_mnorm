@@ -3,7 +3,7 @@
   "short_name": "Fenster",
   "start_url": "./index.html#/home",
   "display": "standalone",
-  "background_color": "#FAF6EF",
-  "theme_color": "#0B5D5B",
+  "background_color": "#F6F2EA",
+  "theme_color": "#0F4C47",
   "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
 }
