@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Real or Fake? Dataset preview</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        color: #222;
+      }
+      .controls {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: end;
+        margin-bottom: 1.5rem;
+      }
+      label {
+        display: grid;
+        gap: 0.25rem;
+        font-size: 0.9rem;
+      }
+      select,
+      button {
+        font-size: 1rem;
+        padding: 0.4rem 0.6rem;
+      }
+      .pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .card {
+        border: 2px solid #ddd;
+        border-radius: 12px;
+        padding: 1rem;
+      }
+      .card img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .card blockquote {
+        font-size: 1.15rem;
+        background: #f4f4f6;
+        border-radius: 12px;
+        padding: 1rem;
+        margin: 0;
+        min-height: 5rem;
+      }
+      .answer {
+        display: none;
+        margin-top: 0.75rem;
+      }
+      .revealed .answer {
+        display: block;
+      }
+      .revealed .card.real {
+        border-color: #2a8a4a;
+      }
+      .revealed .card.fake {
+        border-color: #c0392b;
+      }
+      .tag {
+        font-weight: 700;
+      }
+      .meta {
+        color: #666;
+        font-size: 0.8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Real or Fake? Dataset preview</h1>
+    <p>This page uses <code>dataset/loader.js</code> exactly like the app would. Pick options, then <b>New pair</b>.</p>
+
+    <div class="controls">
+      <label
+        >Type
+        <select id="modality">
+          <option value="image">Images</option>
+          <option value="text">Texts</option>
+        </select>
+      </label>
+      <label
+        >Category
+        <select id="category">
+          <option value="">Any</option>
+          <option value="ai-image">AI image vs photo</option>
+          <option value="ai-vs-human">AI-written vs human</option>
+          <option value="scam-vs-legit">Scam vs legit</option>
+        </select>
+      </label>
+      <label
+        >Difficulty
+        <select id="difficulty">
+          <option>1</option>
+          <option>2</option>
+          <option selected>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </label>
+      <label
+        >Pair type
+        <select id="mode">
+          <option value="random">Random</option>
+          <option value="one-fake">One real, one fake</option>
+          <option value="both-real">Both real</option>
+          <option value="both-fake">Both fake</option>
+        </select>
+      </label>
+      <button id="next">New pair</button>
+      <button id="reveal">Reveal answers</button>
+    </div>
+
+    <p id="status" class="meta"></p>
+    <div id="pair" class="pair"></div>
+
+    <script type="module">
+      import { loadDataset, getPair } from "./loader.js";
+
+      const $ = (id) => document.getElementById(id);
+      const status = $("status");
+      let items = [];
+
+      try {
+        items = await loadDataset();
+        status.textContent = `${items.length} items loaded.`;
+      } catch (err) {
+        status.textContent = `Could not load items.json. Run "npm run data" and serve the repo (npm run preview). ${err.message}`;
+      }
+
+      function label(item) {
+        if (item.category === "scam-vs-legit") return item.is_real ? "Legit" : "Scam";
+        if (item.category === "ai-vs-human") return item.is_real ? "Human-written" : "AI-written";
+        return item.is_real ? "Real photo" : "AI-generated";
+      }
+
+      function card(item) {
+        const el = document.createElement("div");
+        el.className = `card ${item.is_real ? "real" : "fake"}`;
+        const body =
+          item.modality === "image"
+            ? `<img src="${item.src}" alt="Is this real or fake?">`
+            : `<blockquote></blockquote>`;
+        el.innerHTML = `${body}
+          <div class="answer">
+            <p class="tag"></p><p class="explanation"></p><ul class="clues"></ul>
+            <p class="meta"></p>
+          </div>`;
+        if (item.modality === "text") el.querySelector("blockquote").textContent = item.content;
+        el.querySelector(".tag").textContent = `${label(item)} · difficulty ${item.difficulty ?? "?"}`;
+        el.querySelector(".explanation").textContent = item.explanation ?? "";
+        for (const c of item.clues)
+          el.querySelector(".clues").append(Object.assign(document.createElement("li"), { textContent: c }));
+        const s = item.source;
+        el.querySelector(".meta").textContent = [item.id, s.dataset, s.generator, s.license, s.author]
+          .filter(Boolean)
+          .join(" · ");
+        return el;
+      }
+
+      function next() {
+        const pair = getPair(items, {
+          modality: $("modality").value,
+          category: $("category").value || undefined,
+          difficulty: Number($("difficulty").value),
+          mode: $("mode").value,
+        });
+        const box = $("pair");
+        box.classList.remove("revealed");
+        box.replaceChildren();
+        if (!pair) {
+          status.textContent = "No pair fits these options. Try another category or pair type.";
+          return;
+        }
+        status.textContent = `Pair type: ${pair.mode} · category: ${pair.category} · pair difficulty: ${pair.pairDifficulty}`;
+        box.append(card(pair.left), card(pair.right));
+      }
+
+      $("next").onclick = next;
+      $("reveal").onclick = () => $("pair").classList.add("revealed");
+      $("modality").onchange = () => ($("category").value = "");
+      if (items.length) next();
+    </script>
+  </body>
+</html>

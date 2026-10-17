@@ -1,0 +1,33 @@
+{
+  "name": "real-or-fake-dataset",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Starter dataset + loader for a 'Real or Fake?' AI-literacy game (images and text messages, rated by difficulty).",
+  "type": "module",
+  "engines": {
+    "node": ">=20.6"
+  },
+  "scripts": {
+    "fetch": "npm run fetch:texts && npm run fetch:images",
+    "fetch:texts": "node scripts/fetch-texts.mjs",
+    "fetch:images": "node scripts/fetch-images.mjs",
+    "generate": "node --env-file-if-exists=.env scripts/generate-texts.mjs",
+    "data": "node --env-file-if-exists=.env scripts/build.mjs",
+    "data:offline": "node scripts/build.mjs --no-claude",
+    "preview": "npx --yes serve -l 3000 .",
+    "test": "node --test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run lint && npm run format:check && npm test"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10"
+  }
+}

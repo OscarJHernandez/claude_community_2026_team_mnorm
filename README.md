@@ -45,3 +45,9 @@ Teams of 5 (at least 1 builder, 1 product or design, 1 domain expert; plus found
 
 ## Credits
 <Open-source libraries, APIs, datasets and assets you used.>
+
+**Dataset** (details in [dataset/README.md](dataset/README.md)):
+- Fake images: [CommunityForensics-Small](https://huggingface.co/datasets/OwensLab/CommunityForensics-Small) (CC BY-NC-SA 4.0)
+- Real photos: [Wikimedia Commons](https://commons.wikimedia.org), license and author per image in `dataset/items.json`
+- Real SMS and spam: [UCI SMS Spam Collection](https://archive.ics.uci.edu/dataset/228/), Almeida & Hidalgo (2011), CC BY 4.0
+- Libraries: [@anthropic-ai/sdk](https://github.com/anthropics/anthropic-sdk-typescript), ESLint, Prettier
