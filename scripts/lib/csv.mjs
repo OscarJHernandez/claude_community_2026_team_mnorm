@@ -1,5 +1,5 @@
 // Tiny CSV reader/writer (RFC 4180: quotes, commas and newlines inside quotes). No dependencies.
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rmdir, writeFile } from "node:fs/promises";
 
 export const COLUMNS = [
   "id",
@@ -16,6 +16,7 @@ export const COLUMNS = [
   "source_license",
   "source_author",
   "source_generator",
+  "source_prompt",
   "source_original_id",
   "added_by",
 ];
@@ -83,6 +84,28 @@ export async function writeRows(path, rows) {
 
 /** Append rows, skipping any whose source_original_id + category already exist (makes fetch scripts re-runnable). */
 export async function appendRows(path, newRows) {
+  return withLock(`${path}.lock`, () => appendUnlocked(path, newRows));
+}
+
+// A lock folder, so two scripts running at the same time can't overwrite each other's rows.
+async function withLock(lockDir, fn) {
+  for (let n = 0; ; n++) {
+    try {
+      await mkdir(lockDir);
+      break;
+    } catch (err) {
+      if (err.code !== "EEXIST" || n > 200) throw err;
+      await new Promise((r) => setTimeout(r, 50));
+    }
+  }
+  try {
+    return await fn();
+  } finally {
+    await rmdir(lockDir);
+  }
+}
+
+async function appendUnlocked(path, newRows) {
   const rows = await readRows(path);
   const seen = new Set(rows.map((r) => `${r.category}|${r.source_original_id || r.content}`));
   let added = 0;

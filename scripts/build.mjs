@@ -115,6 +115,7 @@ for (const [n, row] of rows.entries()) {
       license: row.source_license || null,
       author: row.source_author || null,
       generator: row.source_generator || null,
+      prompt: row.source_prompt || null,
       original_id: row.source_original_id || null,
     },
     added_by: row.added_by,

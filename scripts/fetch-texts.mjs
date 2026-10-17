@@ -39,8 +39,12 @@ const ok = (m) => readable(m) && familyFriendly(m);
 
 // Hand-reviewed line numbers in the UCI file.
 const CURATED = {
-  ham: [5309, 1050, 244, 4778, 5337, 2280, 2883, 1594, 558, 611, 2245, 3275, 1582, 1271, 304],
-  spam: [4113, 3676, 711, 5465, 5295, 320, 4374, 5459],
+  ham: [
+    5309, 1050, 244, 4778, 5337, 2280, 2883, 1594, 558, 611, 2245, 3275, 1582, 1271, 304,
+    // second batch
+    1000, 2115, 1945, 280, 263, 1908, 2021, 238, 4866, 3013, 5218, 2266, 385, 3131, 1383,
+  ],
+  spam: [4113, 3676, 711, 5465, 5295, 320, 4374, 5459, 2497, 1253, 5369, 2298, 3317],
 };
 const random = process.argv.includes("--random");
 const byLine = new Map(messages.map((m) => [m.lineNo, m]));
