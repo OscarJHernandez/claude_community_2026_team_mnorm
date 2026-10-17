@@ -1020,6 +1020,8 @@ function renderSidebar() {
 function render() {
   const { name, args } = parse();
   const scr = S[name];
+  // A finished pair game starts over next time; one left halfway resumes.
+  if (name !== "play" && GAME && GAME.n >= GAME.rounds.length) GAME = null;
   document.documentElement.lang = state.lang;
   document.documentElement.classList.toggle("big", state.big);
   document.body.classList.toggle("wa", !!scr.bare);
