@@ -111,7 +111,7 @@ Daily feed of 7: start easy, mix media types (video, article, email/SMS, photo, 
 
 ## 11. Recording the demo video
 
-1. `npm start`, open http://localhost:3000/?demo=1 in a clean browser window (no bookmarks bar, zoom 100%).
+1. `npm start`, open http://localhost:3000/ in a clean browser window (no bookmarks bar, zoom 100%).
 2. Use a phone-sized window (about 400 × 860) or the browser's device mode.
 3. Follow the script: WhatsApp invite → onboarding (choose Deutsch, bigger text) → window intro → swipe 3 clips
    (one wrong answer → gentle help + lesson) → scam checker with Claude live → result → share with family.

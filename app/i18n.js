@@ -110,6 +110,12 @@ window.I18N = {
     "s4.w3": "It matches something you already know: choir practice.",
     "p5.handle": "@street.photos",
     "p5.cap": "Morning at the bakery 🥐 #nofilter",
+    "dsi.handle": "@photo.of.the.day",
+    "dsi.cap": "Shared in a group chat today",
+    "dsi.alt": "Photo to judge: real or made by AI?",
+    "dst.handle": "@messages",
+    "dst.cap": "A text message you received this morning",
+    "dst.from": "SMS",
     "d4.handle": "@home.office.cat",
     "d4.cap": "My colleague today 🐱 #workfromhome",
     "d5.handle": "@cute.pets.daily",
@@ -227,6 +233,15 @@ window.I18N = {
     "im.go": "Create picture",
     "im.look": "Look closely: AI pictures often have strange hands, blurry writing or skin that is too perfect.",
     "im.challenge": "Turn it into a “Real or AI?” challenge for my group",
+    "ck.examples": "Or try an example:",
+    "ck.ex1": "Parcel fee",
+    "ck.ex2": "“Hi Mum, new number”",
+    "ck.ex3": "Choir friend",
+    "ck.checking": "The AI is checking…",
+    "ck.aiLabel": "AI answer · Claude",
+    "ck.offline": "Quick check without AI (the AI is not connected right now).",
+    "ck.again": "Check another message",
+    "ck.error": "Something didn't work. Please try again.",
     "ck.title": "Is this a scam?",
     "ck.label": "Paste the message here",
     "ck.sample":
@@ -393,6 +408,12 @@ window.I18N = {
     "s4.w3": "Es passt zu dem, was Sie schon wissen: Chorprobe.",
     "p5.handle": "@strassen.fotos",
     "p5.cap": "Morgens beim Bäcker 🥐 #ohnefilter",
+    "dsi.handle": "@foto.des.tages",
+    "dsi.cap": "Heute in einem Gruppenchat geteilt",
+    "dsi.alt": "Foto zum Beurteilen: echt oder von KI?",
+    "dst.handle": "@nachrichten",
+    "dst.cap": "Eine SMS, die Sie heute Morgen bekommen haben",
+    "dst.from": "SMS",
     "d4.handle": "@homeoffice.katze",
     "d4.cap": "Meine Kollegin heute 🐱 #homeoffice",
     "d5.handle": "@suesse.tiere.taeglich",
@@ -513,6 +534,15 @@ window.I18N = {
     "im.look":
       "Schauen Sie genau hin: KI-Bilder haben oft seltsame Hände, verschwommene Schrift oder zu perfekte Haut.",
     "im.challenge": "Daraus ein „Echt oder KI?“-Rätsel für meine Gruppe machen",
+    "ck.examples": "Oder probieren Sie ein Beispiel:",
+    "ck.ex1": "Paketgebühr",
+    "ck.ex2": "„Hallo Mama, neue Nummer“",
+    "ck.ex3": "Chorfreundin",
+    "ck.checking": "Die KI prüft…",
+    "ck.aiLabel": "KI-Antwort · Claude",
+    "ck.offline": "Schnelle Prüfung ohne KI (die KI ist gerade nicht verbunden).",
+    "ck.again": "Eine andere Nachricht prüfen",
+    "ck.error": "Das hat nicht geklappt. Bitte versuchen Sie es noch einmal.",
     "ck.title": "Ist das Betrug?",
     "ck.label": "Fügen Sie die Nachricht hier ein",
     "ck.sample":
@@ -567,18 +597,5 @@ window.I18N = {
     "ev.joined": "Schon dabei",
     "ev.remind": "Um 18:55 Uhr erinnern",
     "ev.practice": "Jetzt üben",
-  },
-};
-
-// German text for dataset items (dataset/items.json is English).
-// In the real build, `npm run data` asks Claude for these; here two are hand-translated.
-window.DATASET_DE = {
-  "img-0034": {
-    clues: ["Die Schrift auf dem Stift ist lesbar", "Echtes, unregelmäßiges Fell"],
-    explanation: "Lesbare Schrift ist ein starkes Zeichen für ein echtes Foto. KI schreibt oft Kauderwelsch.",
-  },
-  "img-0033": {
-    clues: ["Die Augen leuchten unnatürlich hellblau", "Das Fell sieht aufgemalt aus", "Die Pfoten sind seltsam"],
-    explanation: "Zu perfekte, leuchtende Augen und gemalt wirkendes Fell sind typische KI-Merkmale.",
   },
 };

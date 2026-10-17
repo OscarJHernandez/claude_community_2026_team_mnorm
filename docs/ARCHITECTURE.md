@@ -75,6 +75,16 @@ Claude does the heavy work **before** the demo (rating, clues, explanations, Ger
 daily 7). A person reviews the result in a PR. At runtime most answers are already in the JSON, so the demo is
 fast and works even if the network is slow.
 
+## What is built so far
+
+- `server.mjs`: static files (only `app/`, `dataset/`, `content/`, `design/`) + `POST /api/check`. `npm start`.
+- `server/lib/claude.mjs`, `server/routes/check.mjs`, `prompts/check.md`: the scam checker, with a rule-based
+  offline fallback (`content/ai-fallback/check.json`) that the UI labels as "without AI".
+- `app/`: the app, grown from the v0 prototype (still one `app.js` + `i18n.js`; split into `js/screens/` as it grows).
+- Feed: `content/feed/2026-10-17.json` mixes showcase clips and dataset items; German for dataset items in
+  `content/dataset-de.json` (`npm run translate` fills the rest).
+- Tests in `test/app.test.js`: private files are not served, offline checker, feed files valid, EN/DE keys match.
+
 ## Folder structure (target)
 
 ```
@@ -110,7 +120,6 @@ prompts/                  (from main) + check.md, helper.md, why.md, translate-i
 scripts/                  (from main) + build-feed.mjs
 design/                   tokens.css, index.html (design system)
 docs/                     this file, BEST_PRACTICES.md, DESIGN_PHILOSOPHY.md, PROPOSAL.md
-prototype/                v0 clickable prototype (reference, frozen)
 test/                     node --test: loader, feed builder, progress, api fallbacks
 ```
 
@@ -165,7 +174,7 @@ progress.reset()                  // used by ?demo=1
 Today it uses `localStorage` (wrapped in try/catch). Later the same functions call a database; nothing else in
 the app changes.
 
-## Demo mode (for screen recording)
+## Demo mode (for screen recording, `?demo=1` planned, not built yet)
 
 - `npm start` → http://localhost:3000
 - `?demo=1` resets progress, fixes the date to the demo feed, and uses saved AI answers if the API is slow.
@@ -192,3 +201,5 @@ the app changes.
 | 2026-10-17 | Home = 7-clip feed (dataset + showcase clips) | Feels like the social apps people already scroll; mixes media types |
 | 2026-10-17 | `claude-opus-5-5` everywhere, `effort: "low"` on live routes | Same model as the dataset scripts; low effort keeps answers fast |
 | 2026-10-17 | Claude work mostly at build time, reviewed in PRs | Fast, reliable demo; a person checks what users see |
+| 2026-10-17 | `prototype/` renamed to `app/` and grown in place | Fastest path to a working demo; split into modules later |
+| 2026-10-17 | `npm start` on port 3000; German dataset text in `content/dataset-de.json` | Doesn't change the team's dataset build scripts |

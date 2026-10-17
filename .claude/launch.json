@@ -2,14 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "prototype",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": [
-        "-m",
-        "http.server",
-        "8765"
-      ],
-      "port": 8765
+      "name": "fenster",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"],
+      "port": 3000
     }
   ]
 }

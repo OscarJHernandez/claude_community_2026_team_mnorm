@@ -1578,3 +1578,22 @@ input.field {
     animation: none;
   }
 }
+
+/* scam checker */
+.feedback.careful {
+  background: #fff4d6;
+  border-color: #7a4e00;
+}
+.ai-label {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #5b3fa6;
+  background: #eee9fa;
+  border-radius: 999px;
+  padding: 0.1rem 0.7rem;
+}
+.btn[disabled] {
+  opacity: 0.7;
+  cursor: progress;
+}
