@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0B5D5B" />
+    <title>Fenster · prototype</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=7" />
+  </head>
+  <body>
+    <div class="stage">
+      <aside class="proto-panel" aria-label="Prototype navigation">
+        <div class="proto-brand">Fenster</div>
+        <p class="proto-note" data-t="proto.note"></p>
+        <h2 data-t="proto.title"></h2>
+        <button class="proto-replay" data-act="splash">▶ Replay intro</button>
+        <nav id="proto-links"></nav>
+        <a class="proto-journey" href="journey.html" data-t="proto.journey"></a>
+      </aside>
+
+      <div class="device" id="device">
+        <header class="topbar" id="topbar"></header>
+        <main class="view" id="view" tabindex="-1"></main>
+        <nav class="tabbar" id="tabbar" aria-label="Main"></nav>
+      </div>
+    </div>
+
+    <script src="i18n.js?v=7"></script>
+    <script src="app.js?v=7"></script>
+  </body>
+</html>

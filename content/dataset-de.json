@@ -1,0 +1,23 @@
+{
+  "note": "German text for dataset/items.json, keyed by item id. Fill the rest with `npm run translate` (needs ANTHROPIC_API_KEY). The entries below were translated by Claude while writing the app.",
+  "items": {
+    "img-0034": {
+      "clues": ["Die Schrift auf dem Stift ist lesbar", "Echtes, unregelmäßiges Fell"],
+      "explanation": "Lesbare Schrift ist ein starkes Zeichen für ein echtes Foto. KI schreibt oft Kauderwelsch."
+    },
+    "img-0033": {
+      "clues": ["Die Augen leuchten unnatürlich hellblau", "Das Fell sieht aufgemalt aus", "Die Pfoten sind seltsam"],
+      "explanation": "Zu perfekte, leuchtende Augen und gemalt wirkendes Fell sind typische KI-Merkmale."
+    },
+    "txt-0040": {
+      "content": "SICHERHEITSWARNUNG: Ein neues Gerät hat sich in Ihr Bankkonto eingeloggt. Wenn Sie das nicht waren, bestätigen Sie sofort Ihre Identität unter secure-bank-verify.com",
+      "clues": ["Eine Warnung, die Angst macht", "Ein dringender Link zu einer nachgemachten Webseite"],
+      "explanation": "Banken bitten Sie nie, sich über einen Link zu „bestätigen“. Öffnen Sie lieber selbst Ihre Banking-App."
+    },
+    "txt-0050": {
+      "content": "Bank: Sie haben 42,10 € bei GreenGrocer Market bezahlt. Wenn Sie das nicht kennen, öffnen Sie Ihre Banking-App oder rufen Sie die Nummer auf der Rückseite Ihrer Karte an.",
+      "clues": ["Sie werden zur App oder zur Nummer auf Ihrer Karte geschickt, nicht zu einem Link"],
+      "explanation": "Echte Banken schicken Sie in ihre App oder zur Nummer auf Ihrer Karte, nie zu einem Link in der Nachricht."
+    }
+  }
+}

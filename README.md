@@ -20,11 +20,18 @@
 <What Claude does inside the product: which model, what it reads, what it produces.>
 
 ## How to run it
+Needs Node 20.6+.
 ```bash
-cp .env.example .env    # paste your ANTHROPIC_API_KEY into .env
-# then the commands to start it, e.g.
-# python app.py   or   npm install && npm run dev   or   open index.html
+npm install
+cp .env.example .env    # paste your ANTHROPIC_API_KEY into .env (optional: without it the scam checker uses a simple offline check)
+npm start               # then open http://localhost:3000
 ```
+- `http://localhost:3000/?lang=de` or `?lang=en` to pick the language.
+- `http://localhost:3000/app/journey.html` shows every screen side by side.
+- `http://localhost:3000/design/` is the design system.
+- `npm run check` runs lint, format check and tests. `npm run translate` adds German text for the dataset (needs the key).
+
+Docs: [design philosophy](docs/DESIGN_PHILOSOPHY.md) · [architecture](docs/ARCHITECTURE.md) · [best practices](docs/BEST_PRACTICES.md)
 
 **Live link (if any):** <link>
 
@@ -50,4 +57,5 @@ Teams of 5 (at least 1 builder, 1 product or design, 1 domain expert; plus found
 - Fake images: [CommunityForensics-Small](https://huggingface.co/datasets/OwensLab/CommunityForensics-Small) (CC BY-NC-SA 4.0)
 - Real photos: [Wikimedia Commons](https://commons.wikimedia.org), license and author per image in `dataset/items.json`
 - Real SMS and spam: [UCI SMS Spam Collection](https://archive.ics.uci.edu/dataset/228/), Almeida & Hidalgo (2011), CC BY 4.0
+- Font: [Atkinson Hyperlegible](https://www.brailleinstitute.org/freefont/) by the Braille Institute (SIL Open Font License), via Google Fonts
 - Libraries: [@anthropic-ai/sdk](https://github.com/anthropics/anthropic-sdk-typescript), ESLint, Prettier

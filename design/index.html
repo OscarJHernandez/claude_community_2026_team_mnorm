@@ -1,0 +1,1482 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fenster Design System</title>
+    <link rel="icon" href="../app/icon.svg" type="image/svg+xml" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="tokens.css" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--fs-bg);
+        color: var(--fs-ink);
+        font-family: var(--fs-font);
+        line-height: var(--fs-leading);
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+      :focus-visible {
+        outline: 4px solid var(--fs-focus);
+        outline-offset: 2px;
+      }
+      .wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      /* page chrome (docs page only, not part of the app) */
+      .hero {
+        background: var(--fs-learn);
+        color: #fff;
+        padding: 40px 0 36px;
+      }
+      .hero .wrap {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .hero h1 {
+        font-size: var(--fs-display);
+        line-height: 1.05;
+      }
+      .hero p {
+        opacity: 0.9;
+        max-width: 56ch;
+        margin-top: 8px;
+      }
+      .hero .tools {
+        margin-left: auto;
+        display: flex;
+        gap: 8px;
+      }
+      .hero .tools button {
+        min-height: 2.4rem;
+        border-radius: var(--fs-r-pill);
+        border: 2px solid #fff;
+        background: transparent;
+        color: #fff;
+        font: inherit;
+        font-weight: 700;
+        padding: 0 16px;
+        cursor: pointer;
+      }
+      .hero .tools button[aria-pressed="true"] {
+        background: #fff;
+        color: var(--fs-learn);
+      }
+      nav.toc {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: var(--fs-surface);
+        border-bottom: 2px solid var(--fs-line);
+      }
+      nav.toc .wrap {
+        display: flex;
+        gap: 4px;
+        overflow-x: auto;
+        padding: 8px 16px;
+      }
+      nav.toc a {
+        white-space: nowrap;
+        padding: 6px 12px;
+        border-radius: var(--fs-r-pill);
+        color: var(--fs-ink-2);
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+      nav.toc a:hover {
+        background: var(--fs-surface-2);
+      }
+      section {
+        padding: 48px 0 8px;
+      }
+      section > .wrap > h2 {
+        font-size: var(--fs-h1);
+        line-height: 1.2;
+      }
+      section > .wrap > h2 small {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--fs-ink-2);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .lede {
+        color: var(--fs-ink-2);
+        max-width: 68ch;
+        margin: 8px 0 24px;
+      }
+      .grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      }
+      .grid.wide {
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      }
+      .label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--fs-ink-2);
+        margin-bottom: 8px;
+      }
+      .spec {
+        font:
+          12px/1.4 ui-monospace,
+          Menlo,
+          monospace;
+        color: var(--fs-ink-2);
+        margin-top: 8px;
+      }
+      .panel {
+        background: var(--fs-surface-2);
+        border-radius: var(--fs-r);
+        padding: 20px;
+      }
+
+      /* ===== app components (copy these into the app) ===== */
+      .card {
+        background: var(--fs-surface);
+        border: 2px solid var(--fs-line);
+        border-radius: var(--fs-r);
+        padding: 16px;
+      }
+      .stack > * + * {
+        margin-top: 12px;
+      }
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        min-height: var(--fs-tap);
+        padding: 10px 20px;
+        border-radius: var(--fs-r-pill);
+        border: 2px solid transparent;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .btn.primary {
+        background: var(--fs-learn);
+        color: #fff;
+      }
+      .btn.secondary {
+        background: var(--fs-surface);
+        color: var(--fs-learn);
+        border-color: var(--fs-learn);
+      }
+      .btn.ai {
+        background: var(--fs-ai);
+        color: #fff;
+      }
+      .btn.protect {
+        background: var(--fs-protect);
+        color: #fff;
+      }
+      .btn.share {
+        background: var(--fs-share);
+        color: #fff;
+      }
+      .btn.community {
+        background: var(--fs-community-soft);
+        color: var(--fs-community);
+        border-color: var(--fs-community);
+      }
+      .btn.text {
+        background: none;
+        color: var(--fs-learn);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .back {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        min-height: 2.4rem;
+        padding: 0 16px 0 10px;
+        border: 2px solid var(--fs-line);
+        border-radius: var(--fs-r-pill);
+        background: var(--fs-surface);
+        font: inherit;
+        font-weight: 700;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: var(--fs-r-pill);
+        padding: 2px 12px;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      .pillar {
+        border-radius: var(--fs-r);
+        padding: 20px;
+        border: 2px solid;
+      }
+      .pillar .ico {
+        font-size: 2rem;
+        line-height: 1;
+      }
+      .pillar h3 {
+        font-size: var(--fs-text-lg);
+        margin: 10px 0 4px;
+      }
+      .pillar.learn {
+        background: var(--fs-learn-soft);
+        border-color: var(--fs-learn);
+      }
+      .pillar.learn h3 {
+        color: var(--fs-learn);
+      }
+      .pillar.ai {
+        background: var(--fs-ai-soft);
+        border-color: var(--fs-ai);
+      }
+      .pillar.ai h3 {
+        color: var(--fs-ai);
+      }
+      .pillar.protect {
+        background: var(--fs-protect-soft);
+        border-color: var(--fs-protect);
+      }
+      .pillar.protect h3 {
+        color: var(--fs-protect);
+      }
+
+      .swatch {
+        border-radius: var(--fs-r);
+        overflow: hidden;
+        border: 2px solid var(--fs-line);
+        background: var(--fs-surface);
+      }
+      .swatch .chipc {
+        height: 72px;
+        display: flex;
+        align-items: flex-end;
+        padding: 8px 12px;
+        color: #fff;
+        font-weight: 700;
+      }
+      .swatch .chipc.lightc {
+        color: var(--fs-ink);
+      }
+      .swatch .meta {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+      }
+      .swatch .meta b {
+        display: block;
+        font-size: 0.9rem;
+      }
+      .aa {
+        display: inline-block;
+        margin-top: 4px;
+        font:
+          700 11px/1 ui-monospace,
+          Menlo,
+          monospace;
+        padding: 3px 6px;
+        border-radius: 6px;
+        background: var(--fs-success-soft);
+        color: var(--fs-success);
+      }
+      .aa.fail {
+        background: var(--fs-danger-soft);
+        color: var(--fs-danger);
+      }
+
+      .type-row {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        gap: 16px;
+        align-items: baseline;
+        padding: 14px 0;
+        border-bottom: 2px solid var(--fs-line);
+      }
+
+      /* AI */
+      .ai-bubble {
+        background: var(--fs-ai-soft);
+        border: 2px solid var(--fs-ai);
+        border-radius: 18px 18px 18px 4px;
+        padding: 14px 16px;
+      }
+      .ai-label {
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--fs-ai);
+        margin-bottom: 6px;
+      }
+      .ai-note {
+        font-size: 0.8rem;
+        color: var(--fs-ink-2);
+        margin-top: 8px;
+      }
+      .me-bubble {
+        background: var(--fs-learn);
+        color: #fff;
+        border-radius: 18px 18px 4px 18px;
+        padding: 12px 16px;
+        margin-left: auto;
+        max-width: 85%;
+      }
+      .made-ai {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+      }
+      .made-ai .stamp {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        background: var(--fs-ai);
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 700;
+        border-radius: var(--fs-r-pill);
+        padding: 2px 10px;
+      }
+      .mode-banner {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        border-radius: var(--fs-r);
+        padding: 12px 16px;
+        background: var(--fs-ai-soft);
+        color: var(--fs-ai);
+        font-weight: 700;
+      }
+
+      /* protect */
+      .verdict {
+        border-radius: var(--fs-r);
+        padding: 16px;
+        border: 2px solid;
+      }
+      .verdict .h {
+        font-weight: 700;
+        font-size: var(--fs-text-lg);
+      }
+      .verdict.danger {
+        background: var(--fs-danger-soft);
+        border-color: var(--fs-danger);
+      }
+      .verdict.careful {
+        background: var(--fs-gentle-soft);
+        border-color: var(--fs-gentle);
+      }
+      .verdict.safe {
+        background: var(--fs-success-soft);
+        border-color: var(--fs-success);
+      }
+      .mantra {
+        display: flex;
+        gap: 8px;
+      }
+      .mantra div {
+        flex: 1;
+        text-align: center;
+        background: var(--fs-protect);
+        color: #fff;
+        border-radius: 14px;
+        padding: 12px 6px;
+        font-weight: 700;
+      }
+      .mantra div span {
+        display: block;
+        font-size: 1.5rem;
+      }
+
+      /* motivation */
+      .fb {
+        border-radius: var(--fs-r);
+        padding: 16px;
+        border-top: 6px solid;
+        background: var(--fs-surface);
+        box-shadow: var(--fs-shadow);
+      }
+      .fb.ok {
+        border-color: var(--fs-success);
+      }
+      .fb.not {
+        border-color: var(--fs-gentle);
+      }
+      .fb .h {
+        font-weight: 700;
+        font-size: var(--fs-text-lg);
+      }
+      .aha {
+        background: var(--fs-reward-soft);
+        border: 2px solid var(--fs-reward-fill);
+        border-radius: var(--fs-r);
+        padding: 16px;
+      }
+      .aha .h {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        font-size: var(--fs-text-lg);
+        color: var(--fs-reward);
+      }
+      .aha.reveal {
+        animation: aha-in var(--fs-dur-celebrate) var(--fs-ease) both;
+      }
+      @keyframes aha-in {
+        0% {
+          opacity: 0;
+          transform: scale(0.92) translateY(10px);
+        }
+        60% {
+          opacity: 1;
+          transform: scale(1.02);
+        }
+        100% {
+          transform: none;
+        }
+      }
+      .stat-row {
+        display: flex;
+        gap: 12px;
+      }
+      .stat {
+        flex: 1;
+        background: var(--fs-surface);
+        border: 2px solid var(--fs-line);
+        border-radius: var(--fs-r);
+        padding: 12px 14px;
+      }
+      .stat b {
+        display: block;
+        font-size: var(--fs-h2);
+        line-height: 1.1;
+      }
+      .stat.gold b {
+        color: var(--fs-reward);
+      }
+      .bar {
+        height: 14px;
+        background: var(--fs-surface-2);
+        border-radius: 99px;
+        overflow: hidden;
+        border: 2px solid var(--fs-line);
+      }
+      .bar i {
+        display: block;
+        height: 100%;
+        background: var(--fs-reward-fill);
+      }
+      .bar.together i {
+        background: var(--fs-community);
+      }
+      .levels {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .levels span {
+        border: 2px solid var(--fs-line);
+        border-radius: var(--fs-r-pill);
+        padding: 4px 12px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        background: var(--fs-surface);
+      }
+      .levels span.on {
+        background: var(--fs-reward-fill);
+        border-color: var(--fs-reward-fill);
+      }
+      .levels span.done {
+        color: var(--fs-ink-2);
+      }
+      .pop {
+        position: relative;
+        display: inline-block;
+      }
+      .pop .plus {
+        position: absolute;
+        left: 50%;
+        top: -6px;
+        transform: translateX(-50%);
+        font-weight: 700;
+        color: var(--fs-reward);
+        opacity: 0;
+        white-space: nowrap;
+      }
+      .pop.go .plus {
+        animation: plus var(--fs-dur-celebrate) var(--fs-ease) both;
+      }
+      @keyframes plus {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, 10px) scale(0.8);
+        }
+        30% {
+          opacity: 1;
+          transform: translate(-50%, -14px) scale(1.15);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -40px);
+        }
+      }
+      .badges {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .badge {
+        width: 92px;
+        text-align: center;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+      .badge .medal {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 4px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 1.8rem;
+        background: var(--fs-reward-soft);
+        border: 3px solid var(--fs-reward-fill);
+      }
+      .badge.locked {
+        opacity: 0.45;
+      }
+      .badge.locked .medal {
+        border-style: dashed;
+        filter: grayscale(1);
+      }
+      .levelup {
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .confetti i {
+        position: absolute;
+        top: -10px;
+        width: 8px;
+        height: 14px;
+        border-radius: 2px;
+        opacity: 0;
+      }
+      .levelup.go .confetti i {
+        animation: fall 1s ease-in both;
+      }
+      @keyframes fall {
+        0% {
+          opacity: 1;
+          transform: translateY(0) rotate(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(220px) rotate(300deg);
+        }
+      }
+
+      /* community */
+      .wa-prev {
+        background: #ece5dd;
+        border-radius: var(--fs-r);
+        padding: 14px;
+      }
+      .wa-msg {
+        background: #dcf8c6;
+        border-radius: 10px 10px 2px 10px;
+        padding: 8px 10px;
+        margin-left: auto;
+        max-width: 92%;
+        font-size: 0.85rem;
+      }
+      .wa-card {
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 6px;
+      }
+      .wa-card .img {
+        background: var(--fs-learn);
+        color: #fff;
+        padding: 14px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-weight: 700;
+      }
+      .wa-card .url {
+        padding: 4px 10px;
+        font-size: 0.7rem;
+        color: #666;
+      }
+      .cheers {
+        display: flex;
+        gap: 8px;
+      }
+      .cheers button {
+        flex: 1;
+        min-height: var(--fs-tap);
+        border-radius: var(--fs-r);
+        border: 2px solid var(--fs-community);
+        background: var(--fs-community-soft);
+        font: inherit;
+        font-weight: 700;
+        color: var(--fs-community);
+        cursor: pointer;
+      }
+      .person {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: var(--fs-surface);
+        border: 2px solid var(--fs-line);
+      }
+      .person + .person {
+        margin-top: 6px;
+      }
+      .person.me {
+        border-color: var(--fs-learn);
+        background: var(--fs-learn-soft);
+      }
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-weight: 700;
+        flex: none;
+      }
+      .person .n {
+        flex: 1;
+        font-weight: 700;
+      }
+      .person .v {
+        font-weight: 700;
+        color: var(--fs-reward);
+      }
+
+      /* layout demo */
+      .phone {
+        width: 300px;
+        border: 8px solid var(--fs-ink);
+        border-radius: 34px;
+        overflow: hidden;
+        background: var(--fs-bg);
+        font-size: 15px;
+        flex: none;
+      }
+      .zone {
+        position: relative;
+        padding: 10px 12px;
+      }
+      .zone.z1 {
+        border-bottom: 2px dashed var(--fs-learn);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .zone.z2 {
+        min-height: 330px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .zone.z3 {
+        border-top: 2px dashed var(--fs-learn);
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--fs-ink-2);
+      }
+      .tag {
+        position: absolute;
+        right: 6px;
+        top: 6px;
+        background: var(--fs-learn);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        border-radius: 99px;
+        padding: 1px 7px;
+      }
+      .rules {
+        flex: 1;
+        min-width: 280px;
+      }
+      .rules li {
+        margin-bottom: 10px;
+      }
+      .do-dont {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .do,
+      .dont {
+        border-radius: var(--fs-r);
+        padding: 14px;
+        border: 2px solid;
+      }
+      .do {
+        border-color: var(--fs-success);
+        background: var(--fs-success-soft);
+      }
+      .dont {
+        border-color: var(--fs-danger);
+        background: var(--fs-danger-soft);
+      }
+      .do b,
+      .dont b {
+        display: block;
+        margin-bottom: 6px;
+      }
+      table.tone {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--fs-surface);
+        border-radius: var(--fs-r);
+        overflow: hidden;
+        font-size: 0.85rem;
+      }
+      table.tone th,
+      table.tone td {
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 2px solid var(--fs-line);
+        vertical-align: top;
+      }
+      table.tone th {
+        background: var(--fs-surface-2);
+      }
+      footer {
+        padding: 40px 0 60px;
+        color: var(--fs-ink-2);
+        font-size: 0.8rem;
+      }
+      @media (max-width: 640px) {
+        .type-row {
+          grid-template-columns: 1fr;
+          gap: 2px;
+        }
+        .do-dont {
+          grid-template-columns: 1fr;
+        }
+        .hero .tools {
+          margin-left: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <svg width="76" height="92" viewBox="0 0 76 92" aria-hidden="true">
+          <rect x="3" y="3" width="70" height="86" rx="9" fill="none" stroke="#fff" stroke-width="4" />
+          <rect x="9" y="9" width="27" height="74" rx="3" fill="none" stroke="#fff" stroke-width="3" />
+          <rect x="40" y="9" width="27" height="74" rx="3" fill="none" stroke="#fff" stroke-width="3" />
+          <path d="M9 46h27M40 46h27" stroke="#fff" stroke-width="3" />
+        </svg>
+        <div>
+          <h1>Fenster<br />Design System</h1>
+          <p>
+            Your window into AI. Version 0.1, for adults 60+. Calm, clear, big and honest about AI. Read the
+            <a href="../docs/DESIGN_PHILOSOPHY.md" style="color: #fff">design philosophy</a> first.
+          </p>
+        </div>
+        <div class="tools" role="group" aria-label="Preview text size">
+          <button id="sz-n" aria-pressed="true">Normal text</button
+          ><button id="sz-b" aria-pressed="false">Bigger text</button>
+        </div>
+      </div>
+    </header>
+    <nav class="toc" aria-label="Sections">
+      <div class="wrap">
+        <a href="#pillars">Pillars</a><a href="#principles">Principles</a><a href="#layout">Layout</a
+        ><a href="#colour">Colour</a><a href="#type">Type</a> <a href="#components">Components</a
+        ><a href="#ai">AI is visible</a><a href="#protect">Protect</a><a href="#motivation">Motivation & Aha</a>
+        <a href="#community">Community</a><a href="#motion">Motion</a><a href="#voice">Voice</a>
+      </div>
+    </nav>
+
+    <!-- PILLARS -->
+    <section id="pillars">
+      <div class="wrap">
+        <h2><small>01 · What Fenster is</small>Three pillars: every screen belongs to one</h2>
+        <p class="lede">
+          Users learn <b>about</b> AI, learn by <b>using</b> AI (with Claude as their helper), and learn to
+          <b>protect</b> themselves from AI misuse. Each pillar has its own colour and icon, so people always know which
+          mode they are in.
+        </p>
+        <div class="grid">
+          <div class="pillar learn">
+            <div class="ico">📖</div>
+            <h3>Learn about AI</h3>
+            <p>Short lessons, the daily Real-or-fake feed, the Aha notebook.</p>
+            <p class="spec">--fs-learn · tab "Learn", "Home"</p>
+          </div>
+          <div class="pillar ai">
+            <div class="ico">✦</div>
+            <h3>Use AI, with AI</h3>
+            <p>The AI helper (Claude) writes messages, answers questions, makes pictures. Always labelled.</p>
+            <p class="spec">--fs-ai · tab "Try AI"</p>
+          </div>
+          <div class="pillar protect">
+            <div class="ico">🛡️</div>
+            <h3>Protect yourself</h3>
+            <p>Scam checker, safety rules, how to report. "Stop. Check. Call back."</p>
+            <p class="spec">--fs-protect · scam checker, safety lessons</p>
+          </div>
+        </div>
+        <p class="lede" style="margin-top: 16px">
+          Two supporting colours keep people going: <b style="color: var(--fs-community)">Together</b> (family, groups,
+          sharing) and <b style="color: var(--fs-reward)">Reward</b> (points, levels, badges).
+        </p>
+      </div>
+    </section>
+
+    <!-- PRINCIPLES -->
+    <section id="principles">
+      <div class="wrap">
+        <h2><small>02 · Philosophy</small>Seven principles</h2>
+        <p class="lede">
+          We design for Anna, 72: she's clever and curious, reads with glasses, and does not want to feel stupid. When
+          two rules clash, the higher one wins.
+        </p>
+        <div class="grid">
+          <div class="card">
+            <p class="label">1</p>
+            <b>Clear before clever</b>
+            <p class="muted">One screen, one idea, one main action. Swiping is a shortcut, never the only way.</p>
+          </div>
+          <div class="card">
+            <p class="label">2</p>
+            <b>Calm and clean</b>
+            <p>Space, few elements, quiet colour. Only one loud thing per screen. Remove before you add.</p>
+          </div>
+          <div class="card">
+            <p class="label">3</p>
+            <b>Big, readable, tappable</b>
+            <p>20px text, 60px targets, a word next to every icon, bigger text one tap away.</p>
+          </div>
+          <div class="card">
+            <p class="label">4</p>
+            <b>Always say it's AI</b>
+            <p>Everything Claude made is violet, marked ✦ AI, and says "AI can be wrong too."</p>
+          </div>
+          <div class="card">
+            <p class="label">5</p>
+            <b>Never blame, always explain</b>
+            <p>"Not quite" in warm honey, never red. Every answer ends with an Aha.</p>
+          </div>
+          <div class="card">
+            <p class="label">6</p>
+            <b>Celebrate effort, together</b>
+            <p>Reward showing up. Cheer with family. No "last place".</p>
+          </div>
+          <div class="card">
+            <p class="label">7</p>
+            <b>Always a way back</b>
+            <p>"‹ Back" top-left on every screen. Nothing is lost by going back.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LAYOUT -->
+    <section id="layout">
+      <div class="wrap">
+        <h2><small>03 · Layout</small>Same three zones on every screen</h2>
+        <p class="lede">
+          Anna learns the layout once and it works everywhere. One column, most important thing first, the main action
+          at the bottom in reach of the thumb.
+        </p>
+        <div style="display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start">
+          <div class="phone">
+            <div class="zone z1">
+              <span class="tag">1 · top bar</span
+              ><span class="back" style="font-size: 13px; min-height: 30px">‹ Back</span
+              ><b style="flex: 1; font-size: 13px">Lesson</b
+              ><span class="chip" style="background: var(--fs-learn); color: #fff">EN | DE</span>
+            </div>
+            <div class="zone z2">
+              <span class="tag">2 · content</span>
+              <p class="label" style="margin: 0">Card 1 of 4</p>
+              <b style="font-size: 20px; line-height: 1.2">AI can sound sure, even when it's wrong</b>
+              <p>Check important things with a person you trust.</p>
+              <div class="card" style="flex: 1; display: grid; place-items: center; font-size: 40px">🧐</div>
+              <span class="btn primary" style="min-height: 44px">Continue →</span>
+              <span class="btn secondary" style="min-height: 44px">Ask the AI helper</span>
+            </div>
+            <div class="zone z3">
+              <span class="tag" style="top: -10px">3 · tabs</span><span>Home</span><span>Learn</span><span>Try AI</span
+              ><span>Ranking</span><span>Me</span>
+            </div>
+          </div>
+          <ul class="rules">
+            <li><b>One column.</b> Side by side only for equal choices (Real | Fake) or small stats.</li>
+            <li>
+              <b>Reading order = importance.</b> Heading → what to look at → what to do. Nothing important below the
+              main button.
+            </li>
+            <li><b>One filled button per screen</b>, full width, at the bottom. Others are outlined or text.</li>
+            <li>
+              <b>Same thing, same place.</b> Back top-left, language top-right, tabs at the bottom, "Real" left and
+              "Fake" right, explanations slide up from the bottom.
+            </li>
+            <li>
+              <b>Spacing:</b> 16px screen padding, 16px between blocks, 24–32px before a new heading. Group with cards,
+              not lines.
+            </li>
+            <li><b>Cards:</b> 2px border, 18px corners, 16px padding, one topic. Never a card in a card.</li>
+            <li><b>At most 3 choices</b> on a screen, 5 list items before you split.</li>
+            <li><b>Desktop:</b> same single column, max 640px, centred. More space, not more content.</li>
+          </ul>
+        </div>
+        <div class="do-dont" style="margin-top: 24px">
+          <div class="do"><b>✓ Do</b>One heading, one picture, one big "Continue" button. Lots of space.</div>
+          <div class="dont">
+            <b>✗ Don't</b>Two buttons of equal weight, small grey links, text over busy pictures, icons without words.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLOUR -->
+    <section id="colour">
+      <div class="wrap">
+        <h2><small>04 · Colour</small>Every colour has one meaning</h2>
+        <p class="lede">
+          Colour never works alone: always with an icon and a word. Contrast against white is checked live below (AA ≥
+          4.5, AAA ≥ 7).
+        </p>
+        <div class="grid" id="swatches"></div>
+      </div>
+    </section>
+
+    <!-- TYPE -->
+    <section id="type">
+      <div class="wrap">
+        <h2><small>05 · Type</small>Atkinson Hyperlegible, big and steady</h2>
+        <p class="lede">
+          Designed by the Braille Institute for readers with low vision: letters like I, l and 1 never look alike. Base
+          size 20px (23px with "Bigger text"). Line height 1.5. Bold for emphasis, never italics or all-caps sentences.
+        </p>
+        <div>
+          <div class="type-row">
+            <span class="spec">display · 52px</span
+            ><span style="font-size: var(--fs-display); font-weight: 700; line-height: 1.1; color: var(--fs-reward)"
+              >6 / 7</span
+            >
+          </div>
+          <div class="type-row">
+            <span class="spec">h1 · 35px</span
+            ><span style="font-size: var(--fs-h1); font-weight: 700; line-height: 1.2">Real or fake?</span>
+          </div>
+          <div class="type-row">
+            <span class="spec">h2 · 28px</span
+            ><span style="font-size: var(--fs-h2); font-weight: 700">Challenge your family</span>
+          </div>
+          <div class="type-row">
+            <span class="spec">large · 24px</span
+            ><span style="font-size: var(--fs-text-lg)">Well spotted! +20 points</span>
+          </div>
+          <div class="type-row">
+            <span class="spec">body · 20px</span
+            ><span>Readable writing on things usually means a real photo. AI often writes gibberish.</span>
+          </div>
+          <div class="type-row">
+            <span class="spec">meta · 17px</span
+            ><span style="font-size: var(--fs-text-sm); color: var(--fs-ink-2)"
+              >Photo: Wikimedia Commons · CC BY-SA 4.0 (only for meta, never body text)</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPONENTS -->
+    <section id="components">
+      <div class="wrap">
+        <h2><small>06 · Components</small>Buttons, choices, navigation</h2>
+        <p class="lede">
+          All buttons are at least 60px tall, full width on phones, with a word (and an icon where it helps). The colour
+          of a button tells you which pillar the action belongs to.
+        </p>
+        <div class="grid">
+          <div class="panel stack">
+            <p class="label">Main & secondary</p>
+            <button class="btn primary">Continue →</button><button class="btn secondary">Not now</button
+            ><button class="btn text">Skip this step</button>
+          </div>
+          <div class="panel stack">
+            <p class="label">By pillar</p>
+            <button class="btn ai">✦ Ask the AI helper</button><button class="btn protect">🛡️ Check this message</button
+            ><button class="btn community">👨‍👩‍👧 Challenge my family</button>
+          </div>
+          <div class="panel stack">
+            <p class="label">Share & answer</p>
+            <button class="btn share">Share on WhatsApp</button>
+            <div style="display: flex; gap: 10px">
+              <button class="btn" style="background: var(--fs-success-soft); color: var(--fs-success)">✓ Real</button
+              ><button class="btn" style="background: var(--fs-danger-soft); color: var(--fs-danger)">
+                ⚠ Fake / AI
+              </button>
+            </div>
+            <p class="spec">Real is always left, Fake always right.</p>
+          </div>
+          <div class="panel stack">
+            <p class="label">Top bar</p>
+            <div style="display: flex; align-items: center; gap: 8px">
+              <span class="back">‹ Back</span><b style="flex: 1">Scam check</b
+              ><span class="chip" style="border: 2px solid var(--fs-line); background: #fff"
+                >EN | <b style="color: var(--fs-learn)">DE</b></span
+              >
+            </div>
+            <p class="label" style="margin-top: 16px">Choice</p>
+            <div
+              class="card"
+              style="
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                border-color: var(--fs-learn);
+                background: var(--fs-learn-soft);
+              "
+            >
+              <span style="font-size: 1.5rem">🌱</span
+              ><span
+                ><b>Never</b><br /><span style="font-size: 0.85rem; color: var(--fs-ink-2)"
+                  >Perfectly fine. We start at the beginning.</span
+                ></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI -->
+    <section id="ai">
+      <div class="wrap">
+        <h2><small>07 · Transparency</small>It is always clear when AI is involved</h2>
+        <p class="lede">
+          Fenster teaches people to use AI <b>with</b> AI. So the user must always see three different voices:
+          <b>themselves</b> (teal, right), <b>Claude</b> (violet, left, ✦ AI) and <b>Fenster explaining</b> (plain
+          cards). AI answers always end with "AI can be wrong too."
+        </p>
+        <div class="grid wide">
+          <div class="panel stack">
+            <p class="label">AI helper conversation</p>
+            <div class="mode-banner">✦ You are using AI now. The AI helper is Claude.</div>
+            <div class="me-bubble">Write a good-morning message for my grandchildren.</div>
+            <div class="ai-bubble">
+              <div class="ai-label">✦ AI answer · Claude</div>
+              Good morning, my darlings! ☀️ Have a wonderful day at school. Love, Grandma 💛
+              <p class="ai-note">AI can be wrong too. Read it before you send it.</p>
+            </div>
+          </div>
+          <div class="panel stack">
+            <p class="label">"Explained by Claude" tag & AI-made picture</p>
+            <div class="card">
+              <b>How to tell:</b>
+              <ul style="margin: 6px 0 8px; padding-left: 20px">
+                <li>The sender address is strange.</li>
+                <li>It asks for your PIN.</li>
+              </ul>
+              <span class="chip" style="background: var(--fs-ai-soft); color: var(--fs-ai)"
+                >✦ Explained by Claude (AI)</span
+              >
+            </div>
+            <div class="made-ai">
+              <span class="stamp">✦ Made with AI</span>
+              <div style="height: 120px; background: linear-gradient(135deg, #f4ecd9, #d2425a55, #9cc48e)"></div>
+            </div>
+            <p class="spec">Every picture made in Fenster carries the "Made with AI" stamp, also when shared.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROTECT -->
+    <section id="protect">
+      <div class="wrap">
+        <h2><small>08 · Protect</small>Calm warnings with a clear next step</h2>
+        <p class="lede">
+          Red is reserved for real danger. Every warning says what it is, why, and exactly what to do. The habit we
+          repeat everywhere: <b>Stop. Check. Call back.</b>
+        </p>
+        <div class="grid">
+          <div class="verdict danger">
+            <p class="h">⚠️ Very likely a scam</p>
+            <p>A strange link and time pressure.</p>
+            <p style="margin-top: 8px"><b>Do:</b> don't click, delete it.</p>
+          </div>
+          <div class="verdict careful">
+            <p class="h">🤔 Be careful</p>
+            <p>We're not sure. Ask someone you trust before you reply.</p>
+          </div>
+          <div class="verdict safe">
+            <p class="h">✅ Looks safe</p>
+            <p>Known sender, no link, no money. Still: trust your feeling.</p>
+          </div>
+          <div class="panel">
+            <p class="label">The habit</p>
+            <div class="mantra">
+              <div><span>✋</span>Stop</div>
+              <div><span>🔍</span>Check</div>
+              <div><span>📞</span>Call back</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOTIVATION -->
+    <section id="motivation">
+      <div class="wrap">
+        <h2><small>09 · Motivation</small>Encouragement and Aha moments</h2>
+        <p class="lede">
+          What keeps Anna coming back: she learns something every time (Aha!), she sees her progress in her own words,
+          she is never shamed, and small wins are celebrated. Tap the buttons to see the moments.
+        </p>
+        <div class="grid wide">
+          <div class="panel stack">
+            <p class="label">Answer feedback</p>
+            <div class="fb ok">
+              <p class="h">
+                ✅ Well spotted! <span class="pop" id="pop">+20 ⭐<span class="plus">+20 ⭐</span></span>
+              </p>
+              <p>This was made by AI.</p>
+            </div>
+            <div class="fb not">
+              <p class="h">💛 Not quite. That's okay, this one is tricky.</p>
+              <p>This one is real. Here's how to tell…</p>
+              <button class="btn text" style="justify-content: flex-start; padding-left: 0">
+                📖 Open the 2-minute lesson
+              </button>
+            </div>
+            <button class="btn secondary" id="play-pop">▶ Play "+20" pop</button>
+          </div>
+          <div class="panel stack">
+            <p class="label">The Aha moment</p>
+            <div class="aha" id="aha">
+              <p class="h">💡 Aha!</p>
+              <p style="margin-top: 6px">
+                Readable writing on things usually means a real photo. AI often writes gibberish.
+              </p>
+              <div style="display: flex; gap: 8px; margin-top: 12px">
+                <button class="btn secondary" style="min-height: 2.4rem">📒 Save to my Aha notebook</button>
+              </div>
+            </div>
+            <button class="btn secondary" id="play-aha">▶ Replay Aha reveal</button>
+            <p class="spec">
+              Every answer ends with one sentence to reuse. Saved Aha moments become a notebook she can share.
+            </p>
+          </div>
+          <div class="panel stack">
+            <p class="label">Progress in her words</p>
+            <div class="stat-row">
+              <div class="stat"><b>🔥 6</b><span style="font-size: 0.8rem">days in a row</span></div>
+              <div class="stat gold"><b>⭐ 340</b><span style="font-size: 0.8rem">points</span></div>
+            </div>
+            <div class="card">
+              <b>You spotted 23 fakes this month.</b>
+              <p style="color: var(--fs-ink-2)">That's 23 times you protected yourself. 🛡️</p>
+            </div>
+            <div class="card" style="background: var(--fs-reward-soft); border-color: var(--fs-reward-fill)">
+              🌙 You missed yesterday. <b>Your streak is safe</b>, you used a rest day.
+            </div>
+            <p class="label">Kind levels</p>
+            <div class="levels">
+              <span class="done">1 Curious ✓</span><span class="done">2 Explorer ✓</span
+              ><span class="on">3 Fake spotter</span><span>4 AI helper</span><span>5 Family AI expert</span>
+            </div>
+            <div class="bar"><i style="width: 68%"></i></div>
+            <p style="font-size: 0.8rem; color: var(--fs-ink-2)">160 points to "AI helper"</p>
+          </div>
+          <div class="panel stack">
+            <p class="label">Badges & level-up</p>
+            <div class="badges">
+              <div class="badge">
+                <div class="medal">🎮</div>
+                First game
+              </div>
+              <div class="badge">
+                <div class="medal">🔥</div>
+                5-day streak
+              </div>
+              <div class="badge">
+                <div class="medal">🕵️</div>
+                Fake spotter
+              </div>
+              <div class="badge locked">
+                <div class="medal">🎓</div>
+                Explain AI to a friend
+              </div>
+            </div>
+            <div class="card levelup" id="levelup">
+              <div class="confetti" aria-hidden="true"></div>
+              <p style="font-size: 2.4rem">🎉</p>
+              <p style="font-size: var(--fs-h2); font-weight: 700">You're a Fake spotter now!</p>
+              <p style="color: var(--fs-ink-2)">Level 3 of 5. Your family will be proud.</p>
+              <button class="btn share" style="margin-top: 12px">Share with my family</button>
+            </div>
+            <button class="btn secondary" id="play-lvl">▶ Play level-up</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY -->
+    <section id="community">
+      <div class="wrap">
+        <h2><small>10 · Together</small>Share with friends and family</h2>
+        <p class="lede">
+          Sharing is a gift ("look what I learned"), not a brag. The family group works towards one goal together, and
+          the ranking only ever shows your own group, with no "last place".
+        </p>
+        <div class="grid wide">
+          <div class="panel stack">
+            <p class="label">What the family sees on WhatsApp</p>
+            <div class="wa-prev">
+              <div class="wa-msg">
+                <div class="wa-card">
+                  <div class="img">
+                    <svg width="26" height="32" viewBox="0 0 76 92">
+                      <rect x="3" y="3" width="70" height="86" rx="9" fill="none" stroke="#fff" stroke-width="6" />
+                      <path d="M38 6v80M6 46h64" stroke="#fff" stroke-width="5" /></svg
+                    >Can you spot the fake? I got 6 of 7!
+                  </div>
+                  <div class="url">fenster.app/play/7-clips</div>
+                </div>
+                I just learned how to spot AI pictures 💡 Your turn, Max! 😊
+              </div>
+            </div>
+            <button class="btn share">Share on WhatsApp</button>
+          </div>
+          <div class="panel stack">
+            <p class="label">Family group goal (together, not against)</p>
+            <div class="card stack">
+              <b>👨‍👩‍👧 Family Quiz Club this week</b>
+              <div class="bar together"><i style="width: 82%"></i></div>
+              <p>Together: <b>412 of 500</b> fakes spotted. Almost there!</p>
+            </div>
+            <p class="label">Cheer each other on</p>
+            <div class="card stack">
+              <p><b>Ingrid</b> finished today's game · 7 of 7 ✓</p>
+              <div class="cheers"><button>👏 Bravo</button><button>❤️ Love</button><button>😂 Haha</button></div>
+            </div>
+          </div>
+          <div class="panel stack">
+            <p class="label">Friendly ranking (your group only)</p>
+            <div class="person">
+              <div class="avatar" style="background: #7a4fa0">I</div>
+              <span class="n">Ingrid</span><span class="v">520 ⭐</span>
+            </div>
+            <div class="person">
+              <div class="avatar" style="background: #2b6cb0">M</div>
+              <span class="n">Max</span><span class="v">470 ⭐</span>
+            </div>
+            <div class="person me">
+              <div class="avatar" style="background: var(--fs-learn)">A</div>
+              <span class="n">Anna (you)</span><span class="v">340 ⭐</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--fs-ink-2)">
+              130 points to pass Max. Everyone starts fresh on Monday.
+            </p>
+            <button class="btn community">+ Invite family and friends</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOTION -->
+    <section id="motion">
+      <div class="wrap">
+        <h2><small>11 · Motion</small>Calm, short, and only with a reason</h2>
+        <div class="grid">
+          <div class="card">
+            <b>Everyday · 250ms</b>
+            <p>Panels slide up, screens fade. Ease-out. Nothing bounces.</p>
+            <p class="spec">--fs-dur · --fs-ease</p>
+          </div>
+          <div class="card">
+            <b>Celebrate · 900ms</b>
+            <p>"+20 ⭐", Aha reveal, level-up confetti (max 1s). Never during reading.</p>
+            <p class="spec">--fs-dur-celebrate</p>
+          </div>
+          <div class="card">
+            <b>Reduce motion</b>
+            <p>If the phone asks for less motion, everything appears instantly. No autoplay sound, ever.</p>
+            <p class="spec">prefers-reduced-motion</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VOICE -->
+    <section id="voice">
+      <div class="wrap">
+        <h2><small>12 · Voice</small>Warm, plain, respectful</h2>
+        <p class="lede">
+          German uses "Sie". Short sentences, one idea each, no jargon. Every message says what happened and what she
+          can do next.
+        </p>
+        <table class="tone">
+          <tr>
+            <th>Moment</th>
+            <th>English</th>
+            <th>Deutsch</th>
+          </tr>
+          <tr>
+            <td>Right answer</td>
+            <td>Well spotted! +20 points</td>
+            <td>Gut erkannt! +20 Punkte</td>
+          </tr>
+          <tr>
+            <td>Wrong answer</td>
+            <td>Not quite. That's okay, this one is tricky.</td>
+            <td>Knapp daneben. Kein Problem, das war schwer.</td>
+          </tr>
+          <tr>
+            <td>Coming back</td>
+            <td>Welcome back, Anna! We saved your place.</td>
+            <td>Schön, dass Sie wieder da sind, Anna! Wir haben Ihren Platz gemerkt.</td>
+          </tr>
+          <tr>
+            <td>Missed a day</td>
+            <td>Your streak is safe. You used a rest day.</td>
+            <td>Ihre Serie bleibt. Sie haben einen Ruhetag genutzt.</td>
+          </tr>
+          <tr>
+            <td>Level up</td>
+            <td>You're a Fake spotter now!</td>
+            <td>Sie sind jetzt Fälschungs-Entdeckerin!</td>
+          </tr>
+          <tr>
+            <td>Error</td>
+            <td>Something didn't work. Please try again.</td>
+            <td>Das hat nicht geklappt. Bitte versuchen Sie es noch einmal.</td>
+          </tr>
+          <tr>
+            <td>AI note</td>
+            <td>AI can be wrong too.</td>
+            <td>Auch KI kann sich irren.</td>
+          </tr>
+        </table>
+        <div class="do-dont" style="margin-top: 16px">
+          <div class="do"><b>✓ Say</b>"made by AI", "Make a picture", "Check it", "Continue"</div>
+          <div class="dont">
+            <b>✗ Avoid</b>"generated", "synthetic", "deepfake detected", "Submit", "Oops!", "Wrong!"
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        Fenster design system v0.1 · tokens in <code>design/tokens.css</code> · rules in
+        <code>docs/DESIGN_PHILOSOPHY.md</code> · font: Atkinson Hyperlegible (SIL Open Font License, Braille Institute).
+      </div>
+    </footer>
+
+    <script>
+      // Colour swatches with live contrast check against white.
+      const SW = [
+        ["--fs-learn", "Learn · brand", "lessons, main buttons"],
+        ["--fs-ai", "AI made this ✦", "Claude answers, AI pictures"],
+        ["--fs-protect", "Protect 🛡", "scam checker, safety"],
+        ["--fs-community", "Together", "family, groups, cheers"],
+        ["--fs-reward", "Reward (text)", "points, levels"],
+        ["--fs-reward-fill", "Reward (fill)", "stars, progress bars", true],
+        ["--fs-success", "Right / safe", "correct, looks safe"],
+        ["--fs-gentle", "Not quite 💛", "gentle feedback"],
+        ["--fs-danger", "Real danger ⚠", "scams only"],
+        ["--fs-share", "Share", "WhatsApp button"],
+        ["--fs-ink", "Ink", "body text"],
+        ["--fs-ink-2", "Ink 2", "secondary text"],
+        ["--fs-bg", "Paper", "app background", true],
+        ["--fs-line", "Line", "borders", true],
+      ];
+      const css = getComputedStyle(document.documentElement);
+      const lum = (hex) => {
+        const c = hex
+          .replace("#", "")
+          .match(/../g)
+          .map((x) => {
+            const v = parseInt(x, 16) / 255;
+            return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+          });
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+      };
+      const ratio = (a, b) => {
+        const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p);
+        return (x + 0.05) / (y + 0.05);
+      };
+      document.getElementById("swatches").innerHTML = SW.map(([v, name, use, light]) => {
+        const hex = css.getPropertyValue(v).trim();
+        const r = ratio(hex, "#FFFFFF");
+        const grade = r >= 7 ? "AAA" : r >= 4.5 ? "AA" : "fill only";
+        return `<div class="swatch"><div class="chipc ${light ? "lightc" : ""}" style="background:${hex}">${name}</div><div class="meta"><b>${hex}</b>${use}<br><span class="spec">${v}</span><br><span class="aa ${r < 4.5 ? "fail" : ""}">${r.toFixed(1)}:1 on white · ${grade}</span></div></div>`;
+      }).join("");
+
+      // Text size preview
+      const setBig = (b) => {
+        document.documentElement.classList.toggle("big", b);
+        document.getElementById("sz-b").setAttribute("aria-pressed", b);
+        document.getElementById("sz-n").setAttribute("aria-pressed", !b);
+      };
+      document.getElementById("sz-n").onclick = () => setBig(false);
+      document.getElementById("sz-b").onclick = () => setBig(true);
+
+      // Motivation demos
+      const replay = (el, cls) => {
+        el.classList.remove(cls);
+        void el.offsetWidth;
+        el.classList.add(cls);
+      };
+      document.getElementById("play-pop").onclick = () => replay(document.getElementById("pop"), "go");
+      document.getElementById("play-aha").onclick = () => replay(document.getElementById("aha"), "reveal");
+      const conf = document.querySelector(".confetti");
+      const COLS = ["#F6C453", "#0B5D5B", "#A8326E", "#5B3FA6", "#177A40"];
+      conf.innerHTML = Array.from(
+        { length: 22 },
+        (_, i) => `<i style="left:${(i * 37) % 100}%;background:${COLS[i % 5]};animation-delay:${(i % 6) * 60}ms"></i>`,
+      ).join("");
+      document.getElementById("play-lvl").onclick = () => replay(document.getElementById("levelup"), "go");
+    </script>
+  </body>
+</html>

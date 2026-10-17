@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-17",
+  "note": "Today's 7 clips. 'showcase:' = hand-made clips in app/app.js, 'dataset:' = dataset/items.json. Mix 2-3 real items.",
+  "clips": [
+    "showcase:v1",
+    { "id": "dataset:img-0034", "caption": "d4" },
+    "showcase:a2",
+    "dataset:txt-0040",
+    { "id": "dataset:img-0033", "caption": "d5" },
+    "showcase:v6",
+    "dataset:txt-0050"
+  ]
+}

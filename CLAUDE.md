@@ -92,3 +92,10 @@ If the team is behind, suggest cutting scope instead of working faster.
   and the video link opens for anyone.
 - Agenda, rules and judging are also in the event repo:
   https://github.com/Claude-Community-Berlin/claude-impact-lab-berlin-2026-10-17
+
+## Project docs (read before building or changing a feature)
+- `docs/DESIGN_PHILOSOPHY.md`: who we design for (adults 60+), the 7 principles, layout rules, colours, voice.
+- `design/index.html` + `design/tokens.css`: the visual design system. Use the `--fs-*` tokens, never raw colours.
+- `docs/ARCHITECTURE.md`: stack (plain JS PWA + small Node server + Claude), folders, data in git, no auth/DB.
+- `docs/BEST_PRACTICES.md`: AI transparency, safety, prompts, i18n, motivation, definition of done.
+- `dataset/README.md`: the Real-or-Fake dataset that feeds the game.

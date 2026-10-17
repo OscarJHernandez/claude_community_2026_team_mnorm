@@ -1,0 +1,58 @@
+{
+  "en": {
+    "headline": {
+      "scam": "This is very likely a scam.",
+      "careful": "Be careful. Something here looks unusual.",
+      "safe": "This looks normal. No warning signs found."
+    },
+    "signs": {
+      "link": "It contains a link. Scammers use links to fake websites.",
+      "urgent": "It puts you under time pressure.",
+      "money": "It talks about money or a payment.",
+      "secret": "It asks you to confirm a PIN, password or your identity.",
+      "family": "Someone says they are family with a new number.",
+      "none": "No link, no time pressure, no request for money or secrets."
+    },
+    "todo": {
+      "scam": [
+        "Don't click any link, don't pay and don't reply.",
+        "Check through a way you already know: your app, or the number on your card.",
+        "Delete the message."
+      ],
+      "careful": ["Don't act right away.", "Ask someone you trust, or check through your app or a number you know."],
+      "safe": ["You can treat it like a normal message.", "Still: never share a PIN or password."]
+    },
+    "report": "Tell your bank or phone provider using a number you already know. If you lost money, tell the police."
+  },
+  "de": {
+    "headline": {
+      "scam": "Das ist sehr wahrscheinlich Betrug.",
+      "careful": "Vorsicht. Hier wirkt etwas ungewöhnlich.",
+      "safe": "Das wirkt normal. Keine Warnzeichen gefunden."
+    },
+    "signs": {
+      "link": "Sie enthält einen Link. Betrüger nutzen Links zu falschen Webseiten.",
+      "urgent": "Sie setzt Sie unter Zeitdruck.",
+      "money": "Es geht um Geld oder eine Zahlung.",
+      "secret": "Sie sollen eine PIN, ein Passwort oder Ihre Identität bestätigen.",
+      "family": "Jemand gibt sich als Familie mit neuer Nummer aus.",
+      "none": "Kein Link, kein Zeitdruck, keine Bitte um Geld oder Geheimnisse."
+    },
+    "todo": {
+      "scam": [
+        "Klicken Sie auf keinen Link, zahlen Sie nichts und antworten Sie nicht.",
+        "Prüfen Sie es auf einem Weg, den Sie kennen: Ihre App oder die Nummer auf Ihrer Karte.",
+        "Löschen Sie die Nachricht."
+      ],
+      "careful": [
+        "Handeln Sie nicht sofort.",
+        "Fragen Sie eine Person, der Sie vertrauen, oder prüfen Sie es über Ihre App oder eine bekannte Nummer."
+      ],
+      "safe": [
+        "Sie können sie wie eine normale Nachricht behandeln.",
+        "Trotzdem: Geben Sie nie eine PIN oder ein Passwort weiter."
+      ]
+    },
+    "report": "Informieren Sie Ihre Bank oder Ihren Mobilfunkanbieter über eine Nummer, die Sie kennen. Wenn Sie Geld verloren haben, gehen Sie zur Polizei."
+  }
+}
