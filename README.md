@@ -23,7 +23,8 @@
 ## How Claude is used
 - **Rates every item** (`claude-opus-5-5`, with vision for images): difficulty 1–5, the clues a player can spot, and a plain-language explanation. It runs in `npm run data` for any new row that is missing them.
 - **Writes the fake messages**: AI-written texts that imitate real ones, modern scams and legit notifications (`npm run generate`).
-- All prompts are in [`prompts/`](prompts/), and all API calls are in [`scripts/lib/claude.mjs`](scripts/lib/claude.mjs).
+- **Scam checker in the app**: the user pastes a message and Claude explains whether it looks like a scam and why ([`prompts/check.md`](prompts/check.md), [`server/routes/check.mjs`](server/routes/check.mjs)).
+- All prompts are in [`prompts/`](prompts/). Dataset API calls are in [`scripts/lib/claude.mjs`](scripts/lib/claude.mjs), app calls in [`server/lib/claude.mjs`](server/lib/claude.mjs).
 
 ## How to run it
 You need **Node.js 20.6 or newer** ([download](https://nodejs.org)). Check with `node -v`.
@@ -32,13 +33,21 @@ You need **Node.js 20.6 or newer** ([download](https://nodejs.org)). Check with 
 git clone https://github.com/OscarJHernandez/claude_community_2026_team_mnorm.git
 cd claude_community_2026_team_mnorm
 npm install
-npm run preview
+cp .env.example .env    # optional: paste your ANTHROPIC_API_KEY (without it the scam checker uses a simple offline check)
+npm start               # then open http://localhost:3000
 ```
+- `http://localhost:3000/?lang=de` or `?lang=en` to pick the language.
+- `http://localhost:3000/app/journey.html` shows every screen side by side.
+- `http://localhost:3000/design/` is the design system.
+- `npm run check` runs lint, format check and tests. `npm run translate` adds German text for the dataset (needs the key).
 
-Open **http://localhost:3000/dataset/preview.html**. Pick Images or Texts, a difficulty and a pair type, then click
-**New pair** and **Reveal answers**. Stop the server with `Ctrl+C`.
+Docs: [design philosophy](docs/DESIGN_PHILOSOPHY.md) · [architecture](docs/ARCHITECTURE.md) · [best practices](docs/BEST_PRACTICES.md)
 
-**Optional, for the Claude features:** `cp .env.example .env`, paste your `ANTHROPIC_API_KEY` into `.env`, then:
+**Just the dataset:** `npm run preview` (stop `npm start` first, both use port 3000), then open
+**http://localhost:3000/dataset/preview.html**. Pick Images or Texts, a difficulty and a pair type, then click
+**New pair** and **Reveal answers**. Stop either server with `Ctrl+C`.
+
+**Claude features for the dataset** (need the key in `.env`):
 
 ```bash
 npm run data                                   # Claude rates any new rows and rebuilds the dataset
@@ -57,7 +66,8 @@ npm run generate -- --kind scam --count 5      # Claude writes 5 new scam messag
 it and is what the app loads. All pictures are in `dataset/images/`.
 
 **Something not working?** "command not found: npm" means Node isn't installed. If the preview can't load items.json,
-run `npm run data:offline` and make sure you opened it through `npm run preview`, not by double-clicking the file.
+run `npm run data:offline` and open it through `npm start` or `npm run preview`, not by double-clicking the file.
+"Port 3000 in use" means another server is still running: stop it with `Ctrl+C` or use `PORT=3001 npm start`.
 
 **Live link (if any):** <link>
 
@@ -83,4 +93,5 @@ Teams of 5 (at least 1 builder, 1 product or design, 1 domain expert; plus found
 - Fake images: [CommunityForensics-Small](https://huggingface.co/datasets/OwensLab/CommunityForensics-Small) and [CommunityForensics-Eval](https://huggingface.co/datasets/OwensLab/CommunityForensics-Eval) (CC BY-NC-SA 4.0, non-commercial educational use)
 - Real photos: [Wikimedia Commons](https://commons.wikimedia.org), license and author per image in `dataset/items.json`
 - Real SMS and spam: [UCI SMS Spam Collection](https://archive.ics.uci.edu/dataset/228/), Almeida & Hidalgo (2011), CC BY 4.0
+- Font: [Atkinson Hyperlegible](https://www.brailleinstitute.org/freefont/) by the Braille Institute (SIL Open Font License), via Google Fonts
 - Libraries: [@anthropic-ai/sdk](https://github.com/anthropics/anthropic-sdk-typescript), [sharp](https://sharp.pixelplumbing.com), [hyparquet](https://github.com/hyparam/hyparquet), ESLint, Prettier

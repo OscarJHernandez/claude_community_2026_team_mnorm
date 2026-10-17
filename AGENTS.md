@@ -6,7 +6,10 @@ works, where the data lives and how to run everything. Event rules (deadline, ju
 
 ## What this is
 
-A **"Real or Fake?" learning game** dataset for everyday people. The player sees **two images or two text messages**
+**Fenster** is a plain-JS PWA for adults 60+ (served by a small Node server). It has a "Real or Fake?" feed and a
+scam checker that uses Claude. The app design and architecture are in [docs/](docs/) and [design/](design/). This guide
+focuses on how to run things and on the **Real-or-Fake dataset** that feeds the game: a
+**"Real or Fake?" learning game** dataset for everyday people. The player sees **two images or two text messages**
 and judges each one as real or fake. A pair can be one real + one fake, both real, or both fake. Every item has a
 **difficulty from 1 (obvious) to 5 (very hard)**, **clues** and a short **explanation** shown after answering, so the
 game can start easy and teach as it goes.
@@ -26,15 +29,23 @@ Requires **Node.js 20.6+** (`node -v`).
 ```bash
 git pull
 npm install
-npm run preview        # then open http://localhost:3000/dataset/preview.html
+npm start              # the app: http://localhost:3000  (?lang=de or ?lang=en)
+npm run preview        # or just the dataset: http://localhost:3000/dataset/preview.html (stop npm start first)
 ```
 
-Optional, to let Claude rate new items or write new messages: `cp .env.example .env` and paste an
-`ANTHROPIC_API_KEY`. Everything else works without a key.
+Optional: `cp .env.example .env` and paste an `ANTHROPIC_API_KEY`. That turns on the live scam checker in the app, lets
+Claude rate new dataset items, and lets it write new messages. Everything else works without a key.
 
 ## Where things live
 
 ```
+server.mjs         The app server (node:http): serves the app and /api/* routes. `npm start`.
+server/            routes/check.mjs (scam checker), lib/claude.mjs (Claude client for the app).
+app/               The Fenster PWA: index.html, app.js, i18n.js (English + German), styles.css, journey.html.
+content/           App content in git: feed/<date>.json (the 7 clips of the day: "showcase:" or "dataset:<id>"),
+                   dataset-de.json (German clues/explanations per dataset id, `npm run translate`), ai-fallback/.
+docs/              PROPOSAL, ARCHITECTURE, DESIGN_PHILOSOPHY, BEST_PRACTICES. Read before changing the app.
+design/            Design system: tokens.css (use the --fs-* tokens) and index.html (visual reference).
 dataset/
   items.csv        SOURCE OF TRUTH. One row per image or message. Edit this (Excel, Numbers, GitHub web editor).
   items.json       GENERATED from items.csv by `npm run data`. The app loads this. Never edit by hand.
@@ -44,15 +55,17 @@ dataset/
   preview.html     Small page to browse pairs (uses loader.js exactly like the app would).
   README.md        Dataset details: item format, sources, licenses, how content was checked.
   HOW_TO_ADD.md    Step-by-step for non-developers adding images or messages.
-prompts/           Every prompt sent to Claude (rate-item.md, write-texts.md). Tweak wording here, not in code.
+prompts/           Every prompt sent to Claude: check.md (app scam checker), rate-item.md and write-texts.md
+                   (dataset tooling). Tweak wording here, not in code.
 scripts/
   build.mjs        `npm run data`: inbox → images, ids, Claude fills gaps, validation, writes items.json.
   fetch-images.mjs Downloads more images: --source eval (AI fakes) or --source wikimedia (real photos).
   fetch-texts.mjs  Pulls the hand-reviewed real SMS from the UCI collection (line numbers in CURATED).
   generate-texts.mjs  Claude writes new messages: --kind ai-written | scam | legit.
+  translate-dataset.mjs  `npm run translate`: German text for dataset items into content/dataset-de.json.
   lib/             csv.mjs (CSV read/write + column list), claude.mjs (all Claude API calls, model, schemas),
                    images.mjs (toJpeg), paths.mjs, util.mjs
-test/              node:test tests for the loader and dataset integrity.
+test/              node:test tests: loader + dataset integrity (loader.test.js), app + feed + i18n (app.test.js).
 .cache/            Download caches (git-ignored). Safe to delete.
 ```
 
@@ -86,7 +99,9 @@ Image subjects: `animal, bird, landscape, water, plant, food, building, interior
 
 | Command                                              | What it does                                              |
 | ---------------------------------------------------- | --------------------------------------------------------- |
+| `npm start`                                          | run the app on http://localhost:3000                      |
 | `npm run preview`                                    | serve the repo; open `/dataset/preview.html`              |
+| `npm run translate`                                  | German clues/explanations for new dataset items (key)     |
 | `npm run data`                                       | rebuild `items.json` (Claude fills gaps if a key is set)  |
 | `npm run data:offline`                               | rebuild without calling Claude                            |
 | `npm run fetch:images -- --source eval --count 50`   | download 50 more AI images (spread over ~20 generators)   |
@@ -99,6 +114,8 @@ Image subjects: `animal, bird, landscape, water, plant, food, building, interior
 ## Rules for changes
 
 - **Edit `dataset/items.csv`, never `items.json`.** Run `npm run data` (or `data:offline`) after editing, and commit both.
+- **Never renumber or delete dataset ids** that `content/feed/*.json` or `content/dataset-de.json` use (tests check this).
+  New items without German text fall back to English until `npm run translate` runs.
 - **Look at every new image before committing.** No children, no nudity or gore, no readable text or watermark that
   gives the answer away. Real people: only adults in public scenes, never a portrait. Never store a person's name.
 - **Keep licenses.** Every row records `source_dataset`, `source_license` and `source_author` where known. Only
