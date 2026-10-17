@@ -15,6 +15,8 @@ const SAVED = {
   lastDay: null,
   feedDay: null,
   answers: {}, // today's feed: clip number -> "real" | "fake"
+  round: 0, // today's play-through: 0, then +1 each time the feed is replayed
+  scored: {}, // clip number -> the round it earned points in (points only once a day)
   aha: [], // things learned, newest first
   lessons: [], // finished lesson ids
   chats: 0,
@@ -250,7 +252,7 @@ async function loadContent() {
   if (clips.length) FEED = clips;
   // A new day's feed starts with no answers.
   const day = feed?.date ?? today();
-  if (state.feedDay !== day) Object.assign(state, { feedDay: day, answers: {} });
+  if (state.feedDay !== day) Object.assign(state, { feedDay: day, answers: {}, round: 0, scored: {} });
 }
 const score = () => FEED.filter((F, i) => state.answers[i + 1] === F.answer).length;
 
@@ -428,9 +430,10 @@ function clip(i) {
   const F = FEED[i - 1],
     pick = state.answers[i],
     ok = pick === F.answer,
+    paid = state.scored[i] === state.round, // replays don't earn points again
     last = i === FEED.length;
   const sheet = `<div class="sheet ${ok ? "ok" : "no"}">
-      <div class="sheet-top"><p class="h">${ok ? "✅ " + t("f.right", { n: PTS }) : "💛 " + t("f.wrong")}</p>
+      <div class="sheet-top"><p class="h">${ok ? "✅ " + (paid ? t("f.right", { n: PTS }) : t("f.rightAgain")) : "💛 " + t("f.wrong")}</p>
         <button class="sheet-toggle" data-act="sheet" aria-expanded="true">${t("f.hide")}</button></div>
       <p style="margin-top:.4rem"><b>${t(F.answer === "fake" ? "f.wasFake" : "f.wasReal")}</b> ${t("g.why")}:</p>
       <ul class="why">${(F.ds && DS[F.ds] ? dsText(F.ds, "clues") : [1, 2, 3].map((w) => t(whyKey(F, w)))).map((c) => `<li>${c}</li>`).join("")}</ul>
@@ -465,7 +468,10 @@ function answer(i, v) {
   state.answers[i] = v;
   markPlayedToday();
   learned(F.ds && DS[F.ds] ? dsText(F.ds, "explanation") : t(whyKey(F, 1)));
-  if (v === F.answer) addPoints(PTS);
+  if (v === F.answer && !(i in state.scored)) {
+    state.scored[i] = state.round;
+    addPoints(PTS);
+  }
   save();
   renderSidebar();
   document.querySelector(`.clip[data-i="${i}"]`).innerHTML = clip(i);
@@ -497,8 +503,9 @@ function resultHTML(s) {
       <p style="font-size:3rem;line-height:1">${low ? "🌱" : "🎉"}</p>
       <h1 class="h1">${state.name ? t("res.title", { name: esc(state.name) }) : t("res.title0")}</h1>
       <p class="big-num">${s}/${FEED.length}</p>
-      <p>${t("res.score", { n: s, total: FEED.length })} · <b>${t("res.earned", { n: s * PTS })}</b> · ${t("res.streak", { n: Math.max(state.streak, 1) })}</p>
+      <p>${t("res.score", { n: s, total: FEED.length })} · <b>${t("res.earned", { n: Object.keys(state.scored).length * PTS })}</b> · ${t("res.streak", { n: Math.max(state.streak, 1) })}</p>
       <button class="btn primary" data-go="play">🎮 ${t("play.more")}</button>
+      <button class="btn ghost" data-act="freplay">🔄 ${t("f.replay")}</button>
       <button class="btn ghost" data-go="aha">📒 ${t("aha.count", { n: state.aha.length })}</button>
       ${low ? `<div class="card" style="text-align:left"><p>${t("res.low")}</p><button class="btn primary" style="margin-top:.7rem" data-go="lesson/scams">${t("res.lowCta")}</button></div>` : ""}
       <div class="card stack" style="text-align:left">
@@ -1113,6 +1120,14 @@ document.addEventListener("click", (e) => {
     const min = el.closest(".sheet").classList.toggle("min");
     el.setAttribute("aria-expanded", String(!min));
     el.textContent = t(min ? "f.show" : "f.hide");
+    return;
+  }
+  // Play today's clips again: answers clear, points already earned stay (and aren't paid twice).
+  if (act === "freplay") {
+    Object.assign(state, { answers: {}, round: state.round + 1 });
+    save();
+    if (location.hash === "#/home/1") render();
+    else go("home/1");
     return;
   }
   if (el.dataset.act === "next") {
