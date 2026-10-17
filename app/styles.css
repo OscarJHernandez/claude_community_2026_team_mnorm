@@ -1656,6 +1656,69 @@ input.field {
   max-height: 100%;
   display: flex;
 }
+/* Real vs AI videos: an embedded Canva / TikTok player in a phone-shaped box. */
+.video {
+  aspect-ratio: 9 / 16;
+  height: 100%;
+  max-width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--ink);
+}
+.video iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Feed header: the game button shows only its icon on narrow phones. */
+@media (max-width: 480px) {
+  .feed-head .wide-only {
+    display: none;
+  }
+}
+
+/* "Real or Fake?" pair game: two cards, stacked on a phone, side by side on a wide screen. */
+.play-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+.pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 720px) {
+  .pair {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.pair-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.pair-label {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+.pair-media {
+  display: flex;
+  justify-content: center;
+}
+.pair-media > .photo img {
+  max-height: 22rem;
+}
+.pair-media > .video {
+  height: 26rem;
+}
+.play .q {
+  text-align: center;
+  font-weight: 700;
+}
+
 .aha {
   margin-top: 0.6rem;
   padding: 0.6rem 0.8rem;

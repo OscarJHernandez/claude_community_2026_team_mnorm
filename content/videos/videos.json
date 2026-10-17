@@ -24,7 +24,11 @@
         ],
         "explanation": "In einem echten Video bleibt der Text auf einer Seite von Bild zu Bild gleich. KI-Videos schaffen es noch schlecht, kleine Schrift ruhig zu halten."
       },
-      "source": { "author": "Team Fenster", "license": "shared by the team", "dataset": "Canva" },
+      "source": {
+        "author": "Team Fenster",
+        "license": "shared by the team",
+        "dataset": "Canva"
+      },
       "added_by": "nalius-sp"
     },
     {
@@ -36,24 +40,30 @@
       "title": "AI singer Nyla Stone",
       "content": "https://www.tiktok.com/player/v1/7641332729954536726?description=0&music_info=0&rel=0",
       "link": "https://www.tiktok.com/@nyla.stonesb/video/7641332729954536726",
-      "difficulty": 3,
+      "difficulty": 1,
       "clues": [
+        "TikTok itself shows the label \"Creator labeled as AI-generated\": look for labels like this",
         "the lips do not quite match the sound",
         "teeth and mouth shape change in odd ways",
         "hair and skin look too smooth, like plastic",
         "hands and background shift or melt slightly"
       ],
-      "explanation": "\"Nyla Stone\" is an AI singer: the person does not exist. Look at the mouth, teeth and hands. AI faces are too perfect and the lips drift away from the song.",
+      "explanation": "\"Nyla Stone\" is an AI singer: the person does not exist. The app even labels it as AI-generated, so always check for labels first. Without a label, look at the mouth, teeth and hands: AI faces are too perfect and the lips drift away from the song.",
       "de": {
         "clues": [
+          "TikTok zeigt selbst den Hinweis \"Creator labeled as AI-generated\" (vom Ersteller als KI-generiert gekennzeichnet): Achten Sie auf solche Hinweise",
           "die Lippen passen nicht ganz zum Ton",
           "Zähne und Mundform verändern sich seltsam",
           "Haare und Haut wirken zu glatt, wie Plastik",
           "Hände und Hintergrund verschieben oder verformen sich leicht"
         ],
-        "explanation": "„Nyla Stone“ ist eine KI-Sängerin: Diese Person gibt es nicht. Achten Sie auf Mund, Zähne und Hände. KI-Gesichter sind zu perfekt, und die Lippen laufen dem Lied davon."
+        "explanation": "„Nyla Stone“ ist eine KI-Sängerin: Diese Person gibt es nicht. Die App kennzeichnet das Video sogar als KI-generiert, also achten Sie zuerst auf solche Hinweise. Ohne Hinweis: Schauen Sie auf Mund, Zähne und Hände. KI-Gesichter sind zu perfekt, und die Lippen laufen dem Lied davon."
       },
-      "source": { "author": "@nyla.stonesb", "license": "TikTok embed", "dataset": "TikTok" },
+      "source": {
+        "author": "@nyla.stonesb",
+        "license": "TikTok embed",
+        "dataset": "TikTok"
+      },
       "added_by": "nalius-sp"
     },
     {
@@ -80,7 +90,11 @@
         ],
         "explanation": "Echte Sängerinnen und Sänger atmen, blinzeln und machen kleine Fehler. Diese kleinen Unvollkommenheiten sind ein gutes Zeichen, dass das Video echt ist."
       },
-      "source": { "author": "Team Fenster", "license": "shared by the team", "dataset": "Canva" },
+      "source": {
+        "author": "Team Fenster",
+        "license": "shared by the team",
+        "dataset": "Canva"
+      },
       "added_by": "nalius-sp"
     },
     {
@@ -107,7 +121,11 @@
         ],
         "explanation": "Dieses Video wurde von KI erstellt. Halten Sie bei einer Seite an: Sind die Buchstaben Unsinn oder verschmelzen die Seiten, wurde es erzeugt, nicht gefilmt."
       },
-      "source": { "author": "Team Fenster", "license": "shared by the team", "dataset": "Canva" },
+      "source": {
+        "author": "Team Fenster",
+        "license": "shared by the team",
+        "dataset": "Canva"
+      },
       "added_by": "nalius-sp"
     }
   ]

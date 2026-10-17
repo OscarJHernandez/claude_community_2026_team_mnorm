@@ -19,6 +19,7 @@ const SAVED = {
   lessons: [], // finished lesson ids
   chats: 0,
   checks: 0,
+  games: 0, // finished "Real or Fake?" pair games
 };
 function load() {
   try {
@@ -108,7 +109,8 @@ const LOGO = `<svg viewBox="0 0 60 72" aria-hidden="true"><path d="M4 70V22Q30 2
 // ---------- the daily feed ----------
 // Home is a TikTok-style feed of 7 clips in different media. For each one: real or fake?
 // The order comes from content/feed/<date>.json. "showcase:" clips are hand-made below (media the dataset
-// doesn't have: video, newspaper, voice note); "dataset:" clips come from dataset/items.json.
+// doesn't have: newspaper, voice note); "dataset:" clips come from dataset/items.json and "video:" clips from
+// content/videos/videos.json (real vs AI videos, played in an embedded player).
 const SHOWCASE = Object.fromEntries(
   [
     {
@@ -179,6 +181,12 @@ const dsSms = (id) => `<div class="chat">
     <div class="chat-h"><div class="avatar" style="background:#888">💬</div><b>${t("dst.from")}</b></div>
     <div class="chat-b"><div class="bub">${esc(dsText(id, "content"))}<small>09:12</small></div></div>
   </div>`;
+// Real vs AI videos (Canva / TikTok players). No link to the original before answering: it gives the answer away.
+const vidEmbed = (id) => `<div class="video"><iframe src="${esc(DS[id].content)}" title="${esc(t("dsv.alt"))}"
+    loading="lazy" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen
+    referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
+const dsMedia = (id) => ({ image: dsPhoto, video: vidEmbed })[DS[id]?.modality]?.(id) ?? dsSms(id);
+const dsLesson = (id) => (DS[id]?.modality === "text" ? "scams" : "images");
 function dsText(id, field) {
   const de = state.lang === "de" && DS_DE[id]?.[field];
   return de || DS[id]?.[field];
@@ -188,21 +196,27 @@ function dsCredit(id) {
   if (!src) return "";
   return [src.author, src.license, src.dataset].filter(Boolean).join(" · ");
 }
+/** "📷 author · license · source", plus a link to the original for videos. Shown after answering. */
+function dsCreditHTML(id) {
+  const link = DS[id]?.link
+    ? ` · <a href="${esc(DS[id].link)}" target="_blank" rel="noopener">${t("dsv.open")}</a>`
+    : "";
+  return `<p class="credit">${DS[id]?.modality === "video" ? "🎬" : "📷"} ${esc(dsCredit(id))}${link}</p>`;
+}
 
-/** Turn a feed entry ("showcase:v1", "dataset:img-0034" or { id, caption }) into a clip. */
+/** Turn a feed entry ("showcase:v1", "dataset:img-0034", "video:vid-0002" or { id, caption }) into a clip. */
 function toClip(entry) {
   const { id, caption } = typeof entry === "string" ? { id: entry } : entry;
   const [kind, key] = id.split(":");
   if (kind === "showcase") return SHOWCASE[key];
   const item = DS[key];
   if (!item) return null;
-  const image = item.modality === "image";
   return {
-    k: caption || (image ? "dsi" : "dst"),
+    k: caption || { image: "dsi", video: "dsv" }[item.modality] || "dst",
     ds: key,
     answer: item.is_real ? "real" : "fake",
-    lesson: image ? "images" : "scams",
-    media: () => (image ? dsPhoto(key) : dsSms(key)),
+    lesson: dsLesson(key),
+    media: () => dsMedia(key),
   };
 }
 
@@ -212,12 +226,20 @@ async function fetchJson(url) {
   return res.json();
 }
 
-/** Load the dataset, German texts and today's feed (falls back to the demo day, then to a dataset round). */
+// For the "Real or Fake?" pair game: getRound/getPair from dataset/loader.js and every item (dataset + videos).
+let LOADER = null;
+let ITEMS = [];
+
+/** Load the dataset, videos, German texts and today's feed (falls back to the demo day, then to a dataset round). */
 async function loadContent() {
-  const { loadDataset, getRound } = await import("../dataset/loader.js");
+  LOADER = await import("../dataset/loader.js");
+  const { loadDataset, getRound } = LOADER;
   const items = await loadDataset();
-  items.forEach((i) => (DS[i.id] = i));
+  const videos = (await fetchJson("../content/videos/videos.json").catch(() => ({ items: [] }))).items;
+  ITEMS = [...items, ...videos];
+  ITEMS.forEach((i) => (DS[i.id] = i));
   DS_DE = (await fetchJson("../content/dataset-de.json").catch(() => ({ items: {} }))).items;
+  videos.forEach((v) => v.de && (DS_DE[v.id] = v.de));
   LESSON_TEXT = (await fetchJson("../content/lessons.json").catch(() => ({ lessons: {} }))).lessons;
   const feed =
     (await fetchJson(`../content/feed/${today()}.json`).catch(() => null)) ||
@@ -234,6 +256,7 @@ const score = () => FEED.filter((F, i) => state.answers[i + 1] === F.answer).len
 
 const TASKS = [
   { ico: "📧", key: "t.scam", pts: 20, to: "home/4", done: () => !!state.answers[4] },
+  { ico: "🎮", key: "t.play", pts: 20, to: "play", done: () => state.games >= 1 },
   { ico: "☀️", key: "t.morning", pts: 15, to: "chat", done: () => state.chats >= 1 },
   { ico: "🔍", key: "t.check", pts: 10, to: "check", done: () => state.checks >= 1 },
   { ico: "🗣️", key: "t.explain", pts: 10, to: "lesson/what", done: () => state.lessons.includes("what") },
@@ -384,6 +407,7 @@ S.home = {
       <div class="feed-head">
         <div class="feed-progress"><span class="dots">${FEED.map((F, n) => `<i data-dot="${n + 1}" class="${state.answers[n + 1] ? "done" : ""}"></i>`).join("")}</span><span id="feed-count">${t("f.count", { n: 1, total: FEED.length })}</span></div>
         <span class="stat-chip">⭐ <span id="feed-pts">${state.points}</span></span>
+        <a class="btn-sm" href="#/play" aria-label="${t("play.cta")}">🎮<span class="wide-only"> ${t("play.cta")}</span></a>
         <a class="btn-sm" href="#/tasks">☰ ${t("f.tasks")}</a>
       </div>
       <div class="reel" id="reel">
@@ -411,7 +435,7 @@ function clip(i) {
       <ul class="why">${(F.ds && DS[F.ds] ? dsText(F.ds, "clues") : [1, 2, 3].map((w) => t(whyKey(F, w)))).map((c) => `<li>${c}</li>`).join("")}</ul>
       ${F.ds && DS[F.ds] ? `<p class="aha">💡 <b>Aha!</b> ${dsText(F.ds, "explanation")}</p>` : ""}
       <span class="claude-tag">✦ ${t("c.byClaude")}</span>
-      ${F.ds && DS[F.ds] ? `<p class="credit">📷 ${esc(dsCredit(F.ds))}</p>` : ""}
+      ${F.ds && DS[F.ds] ? dsCreditHTML(F.ds) : ""}
       ${ok ? "" : `<button class="btn ghost" style="margin-top:.7rem" data-go="lesson/${F.lesson}">📖 ${t("g.helpCta")}</button>`}
       <button class="btn primary" style="margin-top:.7rem" data-act="next" data-i="${i}">${last ? t("f.done") : t("f.next")} ↓</button>
     </div>`;
@@ -473,6 +497,7 @@ function resultHTML(s) {
       <h1 class="h1">${state.name ? t("res.title", { name: esc(state.name) }) : t("res.title0")}</h1>
       <p class="big-num">${s}/${FEED.length}</p>
       <p>${t("res.score", { n: s, total: FEED.length })} · <b>${t("res.earned", { n: s * PTS })}</b> · ${t("res.streak", { n: Math.max(state.streak, 1) })}</p>
+      <button class="btn primary" data-go="play">🎮 ${t("play.more")}</button>
       <button class="btn ghost" data-go="aha">📒 ${t("aha.count", { n: state.aha.length })}</button>
       ${low ? `<div class="card" style="text-align:left"><p>${t("res.low")}</p><button class="btn primary" style="margin-top:.7rem" data-go="lesson/scams">${t("res.lowCta")}</button></div>` : ""}
       <div class="card stack" style="text-align:left">
@@ -488,6 +513,116 @@ S.result = {
   render: ([forced]) =>
     `<div class="stack">${resultHTML(forced != null ? +forced : score())}<button class="btn ghost" data-go="home">${t("c.home")}</button></div>`,
 };
+
+// ---------- "Real or Fake?" pair game ----------
+// 10 rounds from easy to hard. Each round shows two items of the same kind (photos, messages or videos); the player
+// judges each one. A pair can be one real + one fake, both real or both fake. Pairs come from getRound/getPair in
+// dataset/loader.js; one video pair (content/videos/videos.json) is mixed in halfway.
+const GAME_ROUNDS = 10;
+let GAME = null;
+function newGame() {
+  const { getRound, getPair } = LOADER;
+  const rounds = getRound(
+    ITEMS.filter((i) => i.modality !== "video"),
+    { count: GAME_ROUNDS - 1, start: 1, end: 5 },
+  );
+  const videoPair = getPair(
+    ITEMS.filter((i) => i.modality === "video"),
+    { difficulty: 3 },
+  );
+  if (videoPair) rounds.splice(Math.floor(rounds.length / 2), 0, videoPair);
+  return { rounds, n: 0, picks: [], right: 0 };
+}
+const truth = (item) => (item.is_real ? "real" : "fake");
+
+S.play = {
+  back: () => "home",
+  title: () => t("play.title"),
+  render: () => {
+    if (!LOADER) return `<p class="muted">${t("play.loading")}</p>`;
+    GAME ??= newGame();
+    if (!GAME.rounds.length) return `<div class="feedback careful"><p>${t("play.empty")}</p></div>`;
+    if (GAME.n >= GAME.rounds.length) return playResultHTML();
+    const P = GAME.rounds[GAME.n];
+    return `<div class="stack play">
+      <div class="play-head">
+        <span class="stat-chip">${t("play.round", { n: GAME.n + 1, total: GAME.rounds.length })}</span>
+        <span class="stat-chip">⭐ <span id="play-pts">${state.points}</span></span>
+      </div>
+      ${GAME.n === 0 ? `<p class="muted">${t("play.intro")}</p>` : ""}
+      <div class="pair">${pairCard(P.left, "left")}${pairCard(P.right, "right")}</div>
+      <div id="play-foot">${playFoot()}</div>
+    </div>`;
+  },
+};
+
+function pairCard(item, side) {
+  const id = item.id,
+    pick = GAME.picks[GAME.n]?.[side],
+    ok = pick === truth(item);
+  const answered = `<div class="feedback ${ok ? "ok" : "no"}">
+      <p class="h">${ok ? "✅ " + t("f.right", { n: PTS }) : "💛 " + t("f.wrong")}</p>
+      <p style="margin-top:.4rem"><b>${t(item.is_real ? "f.wasReal" : "f.wasFake")}</b> ${t("g.why")}:</p>
+      <ul class="why">${(dsText(id, "clues") ?? []).map((c) => `<li>${esc(c)}</li>`).join("")}</ul>
+      ${dsText(id, "explanation") ? `<p class="aha">💡 <b>Aha!</b> ${esc(dsText(id, "explanation"))}</p>` : ""}
+      <span class="claude-tag">✦ ${t("c.byClaude")}</span>
+      ${dsCreditHTML(id)}
+      ${ok ? "" : `<button class="btn ghost" style="margin-top:.7rem" data-go="lesson/${dsLesson(id)}">📖 ${t("g.helpCta")}</button>`}
+    </div>`;
+  return `<div class="card pair-card" data-card="${side}">
+      <p class="pair-label">${t(side === "left" ? "play.a" : "play.b")}</p>
+      <div class="pair-media">${dsMedia(id)}</div>
+      ${
+        pick
+          ? answered
+          : `<div class="ans-row">
+        <button class="ans real" data-act="gpick" data-v="${side}:real">✓ ${t("f.real")}</button>
+        <button class="ans fake" data-act="gpick" data-v="${side}:fake">⚠ ${t("f.fake")}</button></div>`
+      }
+    </div>`;
+}
+
+function playFoot() {
+  const picks = GAME.picks[GAME.n] ?? {};
+  if (!picks.left || !picks.right) return `<p class="q center">${t("play.q")}</p>`;
+  const last = GAME.n === GAME.rounds.length - 1;
+  return `<button class="btn primary" data-act="gnext">${last ? t("f.done") : t("play.next")} →</button>`;
+}
+
+// Only the card that was answered is redrawn, so a video in the other card keeps playing.
+function gamePick(side, v) {
+  const picks = (GAME.picks[GAME.n] ??= {});
+  if (picks[side]) return;
+  picks[side] = v;
+  const item = GAME.rounds[GAME.n][side];
+  markPlayedToday();
+  learned(dsText(item.id, "explanation"));
+  if (v === truth(item)) {
+    GAME.right++;
+    addPoints(PTS);
+  }
+  if (GAME.picks[GAME.n].left && GAME.picks[GAME.n].right && GAME.n === GAME.rounds.length - 1) state.games++;
+  save();
+  renderSidebar();
+  document.querySelector(`[data-card="${side}"]`).outerHTML = pairCard(item, side);
+  document.getElementById("play-foot").innerHTML = playFoot();
+  document.getElementById("play-pts").textContent = state.points;
+}
+
+function playResultHTML() {
+  const total = GAME.rounds.length * 2,
+    low = GAME.right < total * 0.6;
+  return `<div class="stack center result-in">
+      <p style="font-size:3rem;line-height:1">${low ? "🌱" : "🎉"}</p>
+      <h1 class="h1">${t("play.result")}</h1>
+      <p class="big-num">${GAME.right}/${total}</p>
+      <p><b>${t("res.earned", { n: GAME.right * PTS })}</b></p>
+      ${low ? `<div class="card" style="text-align:left"><p>${t("res.low")}</p><button class="btn primary" style="margin-top:.7rem" data-go="lesson/images">${t("res.lowCta")}</button></div>` : ""}
+      <button class="btn primary" data-act="gagain">🔄 ${t("play.again")}</button>
+      <button class="btn ghost" data-go="aha">📒 ${t("aha.count", { n: state.aha.length })}</button>
+      <button class="btn ghost" data-go="home">${t("c.home")}</button>
+    </div>`;
+}
 
 // The former home: greeting, tasks and group activity. Opened from "Tasks" in the feed.
 S.tasks = {
@@ -963,6 +1098,14 @@ document.addEventListener("click", (e) => {
   if (el.dataset.act === "ckagain") {
     Object.assign(state.check, { text: "", status: "idle", result: null, error: null });
     return render();
+  }
+  if (act === "gpick") return void gamePick(...el.dataset.v.split(":"));
+  if (act === "gnext" || act === "gagain") {
+    if (act === "gnext") GAME.n++;
+    else GAME = newGame();
+    render();
+    document.getElementById("view").scrollTo?.(0, 0);
+    return void window.scrollTo(0, 0);
   }
   if (el.dataset.act === "next") {
     scrollToClip(+el.dataset.i + 1, true);
