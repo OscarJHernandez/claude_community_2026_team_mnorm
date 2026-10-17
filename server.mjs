@@ -94,6 +94,12 @@ const server = createServer(async (req, res) => {
 });
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  server.on("error", (err) => {
+    if (err.code !== "EADDRINUSE") throw err;
+    console.error(`Port ${PORT} is already in use: Fenster (or another app) is probably already running.`);
+    console.error(`Open http://localhost:${PORT}, stop the other one, or start on another port: PORT=3001 npm start`);
+    process.exit(1);
+  });
   server.listen(PORT, () => {
     console.log(`Fenster is running: http://localhost:${PORT}`);
     console.log(
