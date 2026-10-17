@@ -45,14 +45,48 @@ async function askJson({ system, content, schema, maxTokens = 4000 }) {
   return JSON.parse(text);
 }
 
+// Coarse subjects: items with the same subject get paired together (bird with bird, bank with bank).
+export const SUBJECTS = {
+  image: [
+    "animal",
+    "bird",
+    "landscape",
+    "water",
+    "plant",
+    "food",
+    "building",
+    "interior",
+    "street",
+    "vehicle",
+    "object",
+    "people",
+  ],
+  text: [
+    "sms-casual",
+    "delivery",
+    "bank",
+    "family",
+    "prize",
+    "phone-plan",
+    "account",
+    "appointment",
+    "code",
+    "tax",
+    "job",
+    "travel",
+    "shopping",
+  ],
+};
+
 const RATING_SCHEMA = {
   type: "object",
   properties: {
+    subject: { type: "string", enum: [...SUBJECTS.image, ...SUBJECTS.text] },
     difficulty: { type: "integer", enum: [1, 2, 3, 4, 5] },
     clues: { type: "array", items: { type: "string" } },
     explanation: { type: "string" },
   },
-  required: ["difficulty", "clues", "explanation"],
+  required: ["subject", "difficulty", "clues", "explanation"],
   additionalProperties: false,
 };
 
@@ -82,7 +116,7 @@ export async function enrichRow(row, datasetDir) {
   } else {
     content.push({ type: "text", text: `<message>\n${row.content}\n</message>` });
   }
-  content.push({ type: "text", text: facts });
+  content.push({ type: "text", text: `${facts}\nPick subject from: ${SUBJECTS[row.modality].join(", ")}` });
   return askJson({ system: await prompt("rate-item.md"), content, schema: RATING_SCHEMA });
 }
 

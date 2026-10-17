@@ -99,3 +99,21 @@ If the team is behind, suggest cutting scope instead of working faster.
 - `docs/ARCHITECTURE.md`: stack (plain JS PWA + small Node server + Claude), folders, data in git, no auth/DB.
 - `docs/BEST_PRACTICES.md`: AI transparency, safety, prompts, i18n, motivation, definition of done.
 - `dataset/README.md`: the Real-or-Fake dataset that feeds the game.
+
+## This project: "Real or Fake?"
+The app is **Fenster** (`npm start`, http://localhost:3000): a PWA for adults 60+ with a "Real or Fake?"
+feed and a Claude scam checker. It is fed by the **Real-or-Fake dataset**: players see two images or two messages and
+judge each as real or fake (AI image vs photo, AI-written vs human, scam vs legit), with difficulty 1–5, clues and an
+explanation per item.
+
+The full project guide (how it works, where data lives, commands, rules for changes) is in AGENTS.md, imported here:
+
+@AGENTS.md
+
+Quick reminders for Claude in this repo:
+- **Run it:** `npm install && npm start`, then open http://localhost:3000 (dataset only: `npm run preview`, then
+  http://localhost:3000/dataset/preview.html)
+- **Source of truth is `dataset/items.csv`.** Rebuild with `npm run data` (or `npm run data:offline` without a key)
+  and commit `items.csv`, `items.json` and any new `dataset/images/*.jpg` together.
+- **Review new images by eye** before committing (no children, nothing unsafe, no answer-revealing text, no portraits).
+- **`npm run check` must pass** before pushing. Branch, then PR into `main`.

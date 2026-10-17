@@ -47,7 +47,7 @@ If you write your own difficulty, it is kept as a **team** rating. You can alway
 npm run data
 ```
 
-This moves new images from `inbox/` into `images/real` or `images/fake`, gives every row an id, asks Claude to fill
+This converts new images from `inbox/` into small JPEGs in `images/<id>.jpg`, gives every row an id, asks Claude to fill
 empty difficulty / clues / explanation, checks for mistakes and writes `dataset/items.json` (what the app reads).
 Problems are printed in plain words, e.g. `Row 97: is_real must be yes or no, not "maybe".`
 Commit and push the result.

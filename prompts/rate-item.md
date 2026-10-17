@@ -3,6 +3,8 @@ AI-generated images, AI-written text and scam messages.
 
 You will get one item (an image or a message) and its correct answer. Return:
 
+- **subject**: the one word from the given list that best describes what it shows or is about.
+
 - **difficulty**: how hard it is for an ordinary adult to get the answer right at a glance.
   1 = obvious to almost everyone, 2 = easy, 3 = needs a careful look, 4 = hard, most people get it wrong,
   5 = very hard, even careful people get it wrong.
