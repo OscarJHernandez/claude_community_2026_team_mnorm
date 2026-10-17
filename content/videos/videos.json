@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "note": "Real vs AI video clips. Written by hand from real_vs_ai_videos.xlsx (see README.md). Same shape as dataset items, so the game can pair them. Never renumber ids.",
+  "items": [
+    {
+      "id": "vid-0001",
+      "modality": "video",
+      "is_real": true,
+      "category": "ai-video",
+      "subject": "book",
+      "title": "Person flipping through a book",
+      "content": "https://www.canva.com/design/DAHYQ-41ETE/aW2YhoPrndPUeFRKcQqktw/view?embed",
+      "link": "https://canva.link/cfc47ntu4v1pzd3",
+      "difficulty": 2,
+      "clues": [
+        "the writing on the pages stays sharp and readable",
+        "hands and paper move naturally, every page turns in one piece"
+      ],
+      "explanation": "In a real video, the text on a page stays the same from frame to frame. AI video still struggles to keep small writing steady.",
+      "de": {
+        "clues": [
+          "die Schrift auf den Seiten bleibt scharf und lesbar",
+          "Hände und Papier bewegen sich natürlich, jede Seite blättert als Ganzes um"
+        ],
+        "explanation": "In einem echten Video bleibt der Text auf einer Seite von Bild zu Bild gleich. KI-Videos schaffen es noch schlecht, kleine Schrift ruhig zu halten."
+      },
+      "source": { "author": "Team Fenster", "license": "shared by the team", "dataset": "Canva" },
+      "added_by": "nalius-sp"
+    },
+    {
+      "id": "vid-0002",
+      "modality": "video",
+      "is_real": false,
+      "category": "ai-video",
+      "subject": "singing",
+      "title": "AI singer Nyla Stone",
+      "content": "https://www.tiktok.com/player/v1/7641332729954536726?description=0&music_info=0&rel=0",
+      "link": "https://www.tiktok.com/@nyla.stonesb/video/7641332729954536726",
+      "difficulty": 3,
+      "clues": [
+        "the lips do not quite match the sound",
+        "teeth and mouth shape change in odd ways",
+        "hair and skin look too smooth, like plastic",
+        "hands and background shift or melt slightly"
+      ],
+      "explanation": "\"Nyla Stone\" is an AI singer: the person does not exist. Look at the mouth, teeth and hands. AI faces are too perfect and the lips drift away from the song.",
+      "de": {
+        "clues": [
+          "die Lippen passen nicht ganz zum Ton",
+          "Zähne und Mundform verändern sich seltsam",
+          "Haare und Haut wirken zu glatt, wie Plastik",
+          "Hände und Hintergrund verschieben oder verformen sich leicht"
+        ],
+        "explanation": "„Nyla Stone“ ist eine KI-Sängerin: Diese Person gibt es nicht. Achten Sie auf Mund, Zähne und Hände. KI-Gesichter sind zu perfekt, und die Lippen laufen dem Lied davon."
+      },
+      "source": { "author": "@nyla.stonesb", "license": "TikTok embed", "dataset": "TikTok" },
+      "added_by": "nalius-sp"
+    },
+    {
+      "id": "vid-0003",
+      "modality": "video",
+      "is_real": true,
+      "category": "ai-video",
+      "subject": "singing",
+      "title": "Person singing",
+      "content": "https://www.canva.com/design/DAHYROiwOXg/USQWTm0d9IsmV2sH6cieXw/view?embed",
+      "link": "https://canva.link/xe99uhkpzjqa1xg",
+      "difficulty": 3,
+      "clues": [
+        "you can see natural breathing between lines",
+        "the mouth matches the sound exactly",
+        "small imperfections in the skin and in the movement"
+      ],
+      "explanation": "Real singers breathe, blink and make small mistakes. Those little imperfections are a good sign the video is real.",
+      "de": {
+        "clues": [
+          "man sieht natürliches Atmen zwischen den Zeilen",
+          "der Mund passt genau zum Ton",
+          "kleine Unregelmäßigkeiten in der Haut und in der Bewegung"
+        ],
+        "explanation": "Echte Sängerinnen und Sänger atmen, blinzeln und machen kleine Fehler. Diese kleinen Unvollkommenheiten sind ein gutes Zeichen, dass das Video echt ist."
+      },
+      "source": { "author": "Team Fenster", "license": "shared by the team", "dataset": "Canva" },
+      "added_by": "nalius-sp"
+    },
+    {
+      "id": "vid-0004",
+      "modality": "video",
+      "is_real": false,
+      "category": "ai-video",
+      "subject": "book",
+      "title": "AI person flipping through a book",
+      "content": "https://www.canva.com/design/DAHYRG_YvoY/h6OZ_J2ukeO1k4XHdHSkOQ/view?embed",
+      "link": "https://canva.link/2tssdsi9yqi3xu1",
+      "difficulty": 2,
+      "clues": [
+        "the text on the pages warps or turns into gibberish",
+        "pages merge or bend in impossible ways",
+        "watch the fingers: extra or missing ones"
+      ],
+      "explanation": "This video was made by AI. Pause on a page: if the letters are nonsense or the pages melt together, it was generated, not filmed.",
+      "de": {
+        "clues": [
+          "der Text auf den Seiten verzieht sich oder wird zu Kauderwelsch",
+          "Seiten verschmelzen oder biegen sich unmöglich",
+          "achten Sie auf die Finger: zu viele oder zu wenige"
+        ],
+        "explanation": "Dieses Video wurde von KI erstellt. Halten Sie bei einer Seite an: Sind die Buchstaben Unsinn oder verschmelzen die Seiten, wurde es erzeugt, nicht gefilmt."
+      },
+      "source": { "author": "Team Fenster", "license": "shared by the team", "dataset": "Canva" },
+      "added_by": "nalius-sp"
+    }
+  ]
+}
