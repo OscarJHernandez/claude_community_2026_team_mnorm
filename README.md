@@ -14,8 +14,9 @@
 <Who has this problem, and why it matters. 2–3 sentences.>
 
 ## What it does
-- Shows the player **two images or two text messages** and asks: real or fake? (one real + one fake, both real, or both fake)
-- Three kinds of challenge: **AI image vs real photo**, **AI-written vs human message**, **scam vs legit message**
+- **"Real or Fake?" game** (`#/play`, the 🎮 button on Home): 10 rounds, each with **two photos, two messages or two videos**. The player judges each one as real or fake (one real + one fake, both real, or both fake)
+- A daily feed of 7 single clips on Home, including **real vs AI videos** played in the page ([how to add videos](content/videos/README.md))
+- Four kinds of challenge: **AI image vs real photo**, **AI-written vs human message**, **scam vs legit message**, **AI video vs real video**
 - Every item has a **difficulty from 1 (obvious) to 5 (very hard)**, so a round can start easy and get harder
 - After each answer the player sees **what gave it away** (clues) and a short, friendly **explanation**
 - The team can add new images and messages with a spreadsheet, no coding needed ([how](dataset/HOW_TO_ADD.md))
@@ -36,6 +37,7 @@ npm install
 cp .env.example .env    # optional: paste your ANTHROPIC_API_KEY (without it the scam checker uses a simple offline check)
 npm start               # then open http://localhost:3000
 ```
+- `http://localhost:3000/#/play` opens the "Real or Fake?" game directly.
 - `http://localhost:3000/?lang=de` or `?lang=en` to pick the language.
 - `http://localhost:3000/app/journey.html` shows every screen side by side.
 - `http://localhost:3000/design/` is the design system.
@@ -92,6 +94,7 @@ Teams of 5 (at least 1 builder, 1 product or design, 1 domain expert; plus found
 **Dataset** (details in [dataset/README.md](dataset/README.md)):
 - Fake images: [CommunityForensics-Small](https://huggingface.co/datasets/OwensLab/CommunityForensics-Small) and [CommunityForensics-Eval](https://huggingface.co/datasets/OwensLab/CommunityForensics-Eval) (CC BY-NC-SA 4.0, non-commercial educational use)
 - Real photos: [Wikimedia Commons](https://commons.wikimedia.org), license and author per image in `dataset/items.json`
+- Videos ([content/videos/](content/videos/README.md)): real and AI clips made and shared by the team on [Canva](https://www.canva.com), and the AI singer "Nyla Stone" by [@nyla.stonesb](https://www.tiktok.com/@nyla.stonesb) on TikTok, shown with TikTok's official embedded player (not copied)
 - Real SMS and spam: [UCI SMS Spam Collection](https://archive.ics.uci.edu/dataset/228/), Almeida & Hidalgo (2011), CC BY 4.0
 - Font: [Atkinson Hyperlegible](https://www.brailleinstitute.org/freefont/) by the Braille Institute (SIL Open Font License), via Google Fonts
 - Libraries: [@anthropic-ai/sdk](https://github.com/anthropics/anthropic-sdk-typescript), [sharp](https://sharp.pixelplumbing.com), [hyparquet](https://github.com/hyparam/hyparquet), ESLint, Prettier

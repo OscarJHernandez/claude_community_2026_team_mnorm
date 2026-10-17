@@ -31,16 +31,51 @@ test("offline scam check flags classic scams and passes normal messages", async 
 
 test("every feed file has 7 clips that exist", async () => {
   const { items } = await json("../dataset/items.json");
-  const ids = new Set(items.map((i) => i.id));
-  const showcase = new Set(["v1", "a2", "e3", "v6", "n7"]);
+  const { items: videos } = await json("../content/videos/videos.json");
+  const known = {
+    showcase: new Set(["v1", "a2", "e3", "v6", "n7"]),
+    dataset: new Set(items.map((i) => i.id)),
+    video: new Set(videos.map((v) => v.id)),
+  };
   for (const file of await readdir(new URL("../content/feed/", import.meta.url))) {
     const { clips } = await json(`../content/feed/${file}`);
     assert.equal(clips.length, 7, file);
     for (const entry of clips) {
       const [kind, key] = (typeof entry === "string" ? entry : entry.id).split(":");
-      assert.ok(kind === "showcase" ? showcase.has(key) : ids.has(key), `${file}: unknown clip ${kind}:${key}`);
+      assert.ok(known[kind]?.has(key), `${file}: unknown clip ${kind}:${key}`);
     }
   }
+});
+
+test("every video is complete, in English and German, with an embeddable https link", async () => {
+  const { items } = await json("../dataset/items.json");
+  const { items: videos } = await json("../content/videos/videos.json");
+  const ids = new Set(items.map((i) => i.id));
+  for (const v of videos) {
+    assert.match(v.id, /^vid-\d{4}$/, v.id);
+    assert.ok(!ids.has(v.id), `${v.id} clashes with a dataset id`);
+    ids.add(v.id);
+    assert.equal(v.modality, "video", v.id);
+    assert.equal(typeof v.is_real, "boolean", v.id);
+    assert.match(v.content, /^https:\/\//, v.id);
+    assert.doesNotMatch(v.content, /\/edit\b/, `${v.id}: use the embed link, not the edit link`);
+    assert.ok(v.subject && v.difficulty >= 1 && v.difficulty <= 5, v.id);
+    assert.ok(v.clues.length && v.explanation, v.id);
+    assert.ok(v.de?.clues.length && v.de?.explanation, `${v.id}: German text missing`);
+  }
+});
+
+test("the pair game gets 10 rounds, one kind per pair, including a real-vs-AI video pair", async () => {
+  const { getRound, getPair } = await import("../dataset/loader.js");
+  const { items } = await json("../dataset/items.json");
+  const { items: videos } = await json("../content/videos/videos.json");
+  const rounds = getRound(items, { count: 9, start: 1, end: 5 });
+  assert.equal(rounds.length, 9);
+  for (const p of rounds) assert.equal(p.left.modality, p.right.modality);
+  const pair = getPair(videos, { mode: "one-fake" });
+  assert.ok(pair, "no video pair");
+  assert.equal(pair.left.modality, "video");
+  assert.notEqual(pair.left.is_real, pair.right.is_real);
 });
 
 test("German dataset texts only reference real items", async () => {

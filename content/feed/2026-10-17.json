@@ -1,10 +1,10 @@
 {
   "date": "2026-10-17",
-  "note": "Today's 7 clips. 'showcase:' = hand-made clips in app/app.js, 'dataset:' = dataset/items.json. Mix 2-3 real items.",
+  "note": "Today's 7 clips. 'showcase:' = hand-made clips in app/app.js, 'dataset:' = dataset/items.json, 'video:' = content/videos/videos.json. Mix 2-3 real items. Slot 4 (bank email) and slot 5 (Max's photo challenge) are linked from Tasks.",
   "clips": [
     "showcase:v1",
-    { "id": "dataset:img-0034", "caption": "d4" },
-    "showcase:a2",
+    "video:vid-0003",
+    "video:vid-0002",
     "dataset:txt-0040",
     { "id": "dataset:img-0033", "caption": "d5" },
     "showcase:v6",
