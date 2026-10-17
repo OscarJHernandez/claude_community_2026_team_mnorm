@@ -3,6 +3,8 @@
 > ### 👉 Try it now: **[rs.neurorelations.tech:8444/fenster](https://rs.neurorelations.tech:8444/fenster/)**
 > It works on any phone or laptop, no app and no sign-up. Jump straight into the game: **[Real or Fake? game](https://rs.neurorelations.tech:8444/fenster/app/#/play)**
 
+<a href="https://drive.google.com/file/d/12CT2IY9n2VcVjZpE_yhppCOpvJvVRzJs/view"><img src="docs/demo-cover.jpg" width="640" alt="Watch the 2-minute demo video"></a>
+
 **One line:** A TikTok-style swipe game that helps older adults on WhatsApp spot AI fakes and scam messages and try using AI themselves.
 
 ## The problem
@@ -31,6 +33,8 @@ Needs Node.js 20.6+. More for developers: [AGENTS.md](AGENTS.md) and [dataset/RE
 **Live link (if any):** https://rs.neurorelations.tech:8444/fenster/
 
 ## Screenshots / demo
+🎬 **Demo video (2 min):** [watch on Google Drive](https://drive.google.com/file/d/12CT2IY9n2VcVjZpE_yhppCOpvJvVRzJs/view)
+
 | Onboarding | Feed: answer explained | "Real or Fake?" game | Scam checker |
 |---|---|---|---|
 | <img src="docs/screenshots/1-onboarding.jpg" width="200" alt="Onboarding: language and text size"> | <img src="docs/screenshots/2-feed-explained.jpg" width="200" alt="Feed item answered, with clues"> | <img src="docs/screenshots/3-real-or-fake-game.jpg" width="200" alt="Real or Fake? round with a scam SMS"> | <img src="docs/screenshots/4-scam-checker.jpg" width="200" alt="Scam checker result"> |
