@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { getPair, getRound, difficultyOf, loadDataset } from "../dataset/loader.js";
+import { getPair, getRound, getFixedPairs, difficultyOf, loadDataset } from "../dataset/loader.js";
 
 const item = (id, is_real, difficulty, extra = {}) => ({
   id,
@@ -51,6 +51,23 @@ test("returns null when nothing fits", () => {
 
 test("unknown mode throws a helpful error", () => {
   assert.throws(() => getPair(ITEMS, { mode: "nope" }), /Unknown mode/);
+});
+
+test("getFixedPairs joins items by their pair number and skips incomplete pairs", () => {
+  const vids = [
+    item("a-real", true, 2, { pair: 1 }),
+    item("b-ai", false, 3, { pair: 2 }),
+    item("a-ai", false, 2, { pair: 1 }),
+    item("b-real", true, 3, { pair: 2 }),
+    item("lonely", true, 3, { pair: 9 }),
+    item("no-pair", false, 3),
+  ];
+  const pairs = getFixedPairs(vids);
+  assert.equal(pairs.length, 2);
+  for (const p of pairs) {
+    assert.equal(p.left.pair, p.right.pair);
+    assert.equal(p.mode, "one-fake");
+  }
 });
 
 test("getRound ramps difficulty and never repeats an item", () => {

@@ -65,17 +65,32 @@ test("every video is complete, in English and German, with an embeddable https l
   }
 });
 
-test("the pair game gets 10 rounds, one kind per pair, including a real-vs-AI video pair", async () => {
-  const { getRound, getPair } = await import("../dataset/loader.js");
+test("every video Pair ID joins exactly one real and one AI clip", async () => {
+  const { items: videos } = await json("../content/videos/videos.json");
+  const pairs = {};
+  for (const v of videos) {
+    assert.ok(Number.isInteger(v.pair), `${v.id}: pair (the sheet's Pair ID) missing`);
+    (pairs[v.pair] ??= []).push(v);
+  }
+  for (const [id, clips] of Object.entries(pairs)) {
+    assert.equal(clips.length, 2, `Pair ID ${id} has ${clips.length} clips, needs 2`);
+    assert.notEqual(clips[0].is_real, clips[1].is_real, `Pair ID ${id} needs one real and one AI clip`);
+  }
+});
+
+test("the pair game gets 8 rounds plus real-vs-AI video pairs from their Pair ID", async () => {
+  const { getRound, getFixedPairs } = await import("../dataset/loader.js");
   const { items } = await json("../dataset/items.json");
   const { items: videos } = await json("../content/videos/videos.json");
-  const rounds = getRound(items, { count: 9, start: 1, end: 5 });
-  assert.equal(rounds.length, 9);
+  const rounds = getRound(items, { count: 8, start: 1, end: 5 });
+  assert.equal(rounds.length, 8);
   for (const p of rounds) assert.equal(p.left.modality, p.right.modality);
-  const pair = getPair(videos, { mode: "one-fake" });
-  assert.ok(pair, "no video pair");
-  assert.equal(pair.left.modality, "video");
-  assert.notEqual(pair.left.is_real, pair.right.is_real);
+  const pairs = getFixedPairs(videos);
+  assert.ok(pairs.length >= 2, "fewer than 2 video pairs");
+  for (const p of pairs) {
+    assert.equal(p.left.pair, p.right.pair);
+    assert.equal(p.mode, "one-fake");
+  }
 });
 
 test("German dataset texts only reference real items", async () => {

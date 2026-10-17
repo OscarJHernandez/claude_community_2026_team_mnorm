@@ -526,21 +526,21 @@ S.result = {
 
 // ---------- "Real or Fake?" pair game ----------
 // 10 rounds from easy to hard. Each round shows two items of the same kind (photos, messages or videos); the player
-// judges each one. A pair can be one real + one fake, both real or both fake. Pairs come from getRound/getPair in
-// dataset/loader.js; one video pair (content/videos/videos.json) is mixed in halfway.
+// judges each one. A pair can be one real + one fake, both real or both fake. Pairs come from getRound in
+// dataset/loader.js; two video pairs are mixed in. Videos are paired by their Pair ID (`pair` in
+// content/videos/videos.json, from the team's sheet) via getFixedPairs.
 const GAME_ROUNDS = 10;
+const VIDEO_ROUNDS = 2;
 let GAME = null;
 function newGame() {
-  const { getRound, getPair } = LOADER;
+  const { getRound, getFixedPairs } = LOADER;
+  const videoPairs = getFixedPairs(ITEMS.filter((i) => i.modality === "video")).slice(0, VIDEO_ROUNDS);
   const rounds = getRound(
     ITEMS.filter((i) => i.modality !== "video"),
-    { count: GAME_ROUNDS - 1, start: 1, end: 5 },
+    { count: GAME_ROUNDS - videoPairs.length, start: 1, end: 5 },
   );
-  const videoPair = getPair(
-    ITEMS.filter((i) => i.modality === "video"),
-    { difficulty: 3 },
-  );
-  if (videoPair) rounds.splice(Math.floor(rounds.length / 2), 0, videoPair);
+  // Spread the video pairs out: after about a third and two thirds of the game.
+  videoPairs.forEach((p, k) => rounds.splice(Math.round(((k + 1) * rounds.length) / (videoPairs.length + 1)), 0, p));
   return { rounds, n: 0, picks: [], right: 0 };
 }
 const truth = (item) => (item.is_real ? "real" : "fake");

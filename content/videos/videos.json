@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "note": "Real vs AI video clips. Written by hand from real_vs_ai_videos.xlsx (see README.md). Same shape as dataset items, so the game can pair them. Never renumber ids.",
+  "note": "Real vs AI video clips. Written by hand from real_vs_ai_videos.xlsx (see README.md). Same shape as dataset items, so the game can pair them. 'pair' = the sheet's Pair ID: a real and an AI clip with the same number are shown side by side. Never renumber ids.",
   "items": [
     {
       "id": "vid-0001",
@@ -8,6 +8,7 @@
       "is_real": true,
       "category": "ai-video",
       "subject": "book",
+      "pair": 1,
       "title": "Person flipping through a book",
       "content": "https://www.canva.com/design/DAHYQ-41ETE/aW2YhoPrndPUeFRKcQqktw/view?embed",
       "link": "https://canva.link/cfc47ntu4v1pzd3",
@@ -37,6 +38,7 @@
       "is_real": false,
       "category": "ai-video",
       "subject": "singing",
+      "pair": 2,
       "title": "AI singer Nyla Stone",
       "content": "https://www.tiktok.com/player/v1/7641332729954536726?description=0&music_info=0&rel=0",
       "link": "https://www.tiktok.com/@nyla.stonesb/video/7641332729954536726",
@@ -72,6 +74,7 @@
       "is_real": true,
       "category": "ai-video",
       "subject": "singing",
+      "pair": 2,
       "title": "Person singing",
       "content": "https://www.canva.com/design/DAHYROiwOXg/USQWTm0d9IsmV2sH6cieXw/view?embed",
       "link": "https://canva.link/xe99uhkpzjqa1xg",
@@ -103,6 +106,7 @@
       "is_real": false,
       "category": "ai-video",
       "subject": "book",
+      "pair": 1,
       "title": "AI person flipping through a book",
       "content": "https://www.canva.com/design/DAHYRG_YvoY/h6OZ_J2ukeO1k4XHdHSkOQ/view?embed",
       "link": "https://canva.link/2tssdsi9yqi3xu1",
@@ -120,6 +124,76 @@
           "achten Sie auf die Finger: zu viele oder zu wenige"
         ],
         "explanation": "Dieses Video wurde von KI erstellt. Halten Sie bei einer Seite an: Sind die Buchstaben Unsinn oder verschmelzen die Seiten, wurde es erzeugt, nicht gefilmt."
+      },
+      "source": {
+        "author": "Team Fenster",
+        "license": "shared by the team",
+        "dataset": "Canva"
+      },
+      "added_by": "nalius-sp"
+    },
+    {
+      "id": "vid-0005",
+      "modality": "video",
+      "is_real": true,
+      "category": "ai-video",
+      "subject": "vlog",
+      "pair": 3,
+      "title": "Vlogger speaking to camera",
+      "content": "https://www.canva.com/design/DAHYRHMV3XU/e2ElpE1yrfD7vLpVzqQu9w/view?embed",
+      "link": "https://canva.link/eejyx94bum8pdbv",
+      "difficulty": 3,
+      "clues": [
+        "the eyes blink and move naturally",
+        "the lips match every word",
+        "the background stays the same the whole time",
+        "the hand gestures look relaxed and natural"
+      ],
+      "explanation": "This is a real person filmed with a camera. Real faces blink at an irregular rhythm, the lips always match the words, and nothing in the background moves on its own.",
+      "de": {
+        "clues": [
+          "die Augen blinzeln und bewegen sich natürlich",
+          "die Lippen passen zu jedem Wort",
+          "der Hintergrund bleibt die ganze Zeit gleich",
+          "die Handbewegungen wirken locker und natürlich"
+        ],
+        "explanation": "Das ist ein echter Mensch, mit einer Kamera gefilmt. Echte Gesichter blinzeln unregelmäßig, die Lippen passen immer zu den Worten, und im Hintergrund bewegt sich nichts von allein."
+      },
+      "source": {
+        "author": "Team Fenster",
+        "license": "shared by the team",
+        "dataset": "Canva"
+      },
+      "added_by": "nalius-sp"
+    },
+    {
+      "id": "vid-0006",
+      "modality": "video",
+      "is_real": false,
+      "category": "ai-video",
+      "subject": "vlog",
+      "pair": 3,
+      "title": "AI vlogger speaking to camera",
+      "content": "https://www.canva.com/design/DAHYRFaz0xE/j0j5b88tUBEj4S8OLjPUnw/view?embed",
+      "link": "https://canva.link/xl4p0kvnk3abq24",
+      "difficulty": 3,
+      "clues": [
+        "the person hardly blinks, or blinks oddly",
+        "the lips are slightly out of sync with the voice",
+        "the skin looks too smooth, like a filter",
+        "objects in the background shift or change",
+        "the gestures are stiff or repeat"
+      ],
+      "explanation": "This vlogger was made by AI: the person does not exist. Watch the eyes and mouth for a few seconds. Missing blinks, lips that drift from the voice and a background that quietly changes are typical signs.",
+      "de": {
+        "clues": [
+          "die Person blinzelt kaum oder seltsam",
+          "die Lippen sind leicht verschoben zur Stimme",
+          "die Haut wirkt zu glatt, wie ein Filter",
+          "Gegenstände im Hintergrund verschieben oder verändern sich",
+          "die Gesten sind steif oder wiederholen sich"
+        ],
+        "explanation": "Diese Vloggerin oder dieser Vlogger wurde von KI erstellt: Diese Person gibt es nicht. Schauen Sie ein paar Sekunden auf Augen und Mund. Fehlendes Blinzeln, Lippen, die der Stimme davonlaufen, und ein Hintergrund, der sich leise verändert, sind typische Zeichen."
       },
       "source": {
         "author": "Team Fenster",
