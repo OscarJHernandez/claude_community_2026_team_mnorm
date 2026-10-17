@@ -42,8 +42,10 @@ Claude rate new dataset items, and lets it write new messages. Everything else w
 server.mjs         The app server (node:http): serves the app and /api/* routes. `npm start`.
 server/            routes/check.mjs (scam checker), lib/claude.mjs (Claude client for the app).
 app/               The Fenster PWA: index.html, app.js, i18n.js (English + German), styles.css, journey.html.
-content/           App content in git: feed/<date>.json (the 7 clips of the day: "showcase:" or "dataset:<id>"),
-                   dataset-de.json (German clues/explanations per dataset id, `npm run translate`), ai-fallback/.
+                   The "Real or Fake?" pair game is the `#/play` screen (S.play in app.js).
+content/           App content in git: feed/<date>.json (the 7 clips of the day: "showcase:", "dataset:<id>" or
+                   "video:<id>"), dataset-de.json (German clues/explanations per dataset id, `npm run translate`),
+                   videos/ (real vs AI video clips: the team's sheet + videos.json, see videos/README.md), ai-fallback/.
 docs/              PROPOSAL, ARCHITECTURE, DESIGN_PHILOSOPHY, BEST_PRACTICES. Read before changing the app.
 design/            Design system: tokens.css (use the --fs-* tokens) and index.html (visual reference).
 dataset/
