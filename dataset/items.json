@@ -1,0 +1,2160 @@
+{
+  "version": 1,
+  "generated_at": "2026-10-17T11:52:24.502Z",
+  "count": 94,
+  "items": [
+    {
+      "id": "txt-0001",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Ill be at yours in about 3 mins but look out for me",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "typo 'Ill' with no apostrophe",
+        "short and practical, like a real quick text"
+      ],
+      "explanation": "Real people text in a hurry: missing apostrophes and half sentences are a good sign of a human.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-5309"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0002",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "I walked an hour 2 c u! doesnt that show I care y wont u believe im serious?",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "'2 c u' and 'y wont u' text-speak",
+        "emotional and a bit messy"
+      ],
+      "explanation": "Strong, messy feelings and text-speak like '2 c u' are typical of real people, not polished AI.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-1050"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0003",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Okay. No no, just shining on. That was meant to be signing, but that sounds better.",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "jokes about its own autocorrect typo",
+        "quirky humour"
+      ],
+      "explanation": "People laugh at their own typos. AI rarely makes a typo and then jokes about it.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-244"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0004",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Quite lor. But dun tell him wait he get complacent...",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "Singlish 'lor' and 'dun'",
+        "refers to someone without explaining who"
+      ],
+      "explanation": "Local slang and references only the friend would understand are hard for AI to fake.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-4778"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0005",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Garbage bags, eggs, jam, bread, hannaford wheat chex",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "just a shopping list",
+        "specific shop brand"
+      ],
+      "explanation": "A bare list with no greeting is how people really text family. AI tends to add friendly sentences around it.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-5337"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0006",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Hmm...Bad news...Hype park plaza $700 studio taken...Only left 2 bedrm-$900...",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "ellipses everywhere",
+        "specific prices and place"
+      ],
+      "explanation": "Specific, slightly chaotic details (prices, a plaza name, lots of '...') point to a real person.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-2280"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0007",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Printer is cool. I mean groovy. Wine is groovying",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "silly made-up word 'groovying'",
+        "no context"
+      ],
+      "explanation": "Odd little jokes that only make sense in the moment are very human.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-2883"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0008",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Will it help if we propose going back again tomorrow",
+      "difficulty": 5,
+      "difficulty_source": "claude",
+      "clues": [
+        "neutral, correct sentence",
+        "could be anyone"
+      ],
+      "explanation": "Some real messages are plain and tidy. When there are no clues, it's fine to be unsure.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-1594"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0009",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Having lunch:)you are not in online?why?",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "no spaces after punctuation",
+        "':)' squeezed in"
+      ],
+      "explanation": "Rushed punctuation like 'lunch:)you' is a human habit. AI writes neatly spaced sentences.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-558"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0010",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "It's fine, imma get a drink or somethin. Want me to come find you?",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "'imma' and 'somethin'",
+        "relaxed slang"
+      ],
+      "explanation": "Casual slang and dropped letters are a sign of a real person typing fast.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-611"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0011",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Boo I'm on my way to my moms. She's making tortilla soup. Yummmm",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "'Boo' and 'Yummmm' with extra letters"
+      ],
+      "explanation": "Stretched words like 'Yummmm' are how people show feelings in texts.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-2245"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0012",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Just finished eating. Got u a plate. NOT leftovers this time.",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "inside joke 'NOT leftovers this time'"
+      ],
+      "explanation": "The capital 'NOT' points to a shared history only these two people know about.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-3275"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0013",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "I shall book chez jules for half eight, if that's ok with you?",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "British 'half eight'",
+        "specific restaurant",
+        "polite question"
+      ],
+      "explanation": "Polite and well written, but very specific plans like 'half eight' at a named place feel real.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-1582"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0014",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Tee hee. Off to lecture, cheery bye bye.",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "'Tee hee' and 'cheery bye bye'",
+        "playful"
+      ],
+      "explanation": "Playful sign-offs like 'cheery bye bye' are personal quirks that AI doesn't usually copy.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-1271"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0015",
+      "modality": "text",
+      "is_real": true,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Oh and by the way you do have more food in your fridge! Want to go out for a meal tonight?",
+      "difficulty": 5,
+      "difficulty_source": "claude",
+      "clues": [
+        "complete, friendly sentences with an exclamation mark"
+      ],
+      "explanation": "This one reads almost like AI because it's tidy, but it's real. Neat writing alone doesn't prove AI.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-304"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0016",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "prize",
+      "content": "URGENT! Your Mobile number has been awarded a <UKP>2000 prize GUARANTEED. Call 09061790125 from landline. Claim 3030. Valid 12hrs only 150ppm",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "URGENT in capitals",
+        "prize you never entered",
+        "premium 09 number"
+      ],
+      "explanation": "You can't win a prize you never entered. 'URGENT' plus 'call now' is a classic scam.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-4113"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0017",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "prize",
+      "content": "You have won a Nokia 7250i. This is what you get when you win our FREE auction. To take part send Nokia to 86021 now. HG/Suite342/2Lands Row/W1JHL 16+",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "'You have won'",
+        "asks you to text a short code"
+      ],
+      "explanation": "Winning something you never took part in is a red flag. Texting short codes can cost money.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-3676"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0018",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "phone-plan",
+      "content": "4mths half price Orange line rental & latest camera phones 4 FREE. Had your phone 11mths+? Call MobilesDirect free on 08000938767 to update now! or2stoptxt T&Cs",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "too-good-to-be-true deal",
+        "pressure to call"
+      ],
+      "explanation": "Unasked-for offers of free phones push you to call. Contact your provider through its official app instead.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-711"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0019",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "prize",
+      "content": "Txt: CALL to No: 86888 & claim your reward of 3 hours talk time to use from your phone now! Subscribe6GBP/mnth inc 3hrs 16 stop?txtStop www.gamb.tv",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "'claim your reward'",
+        "small print says you subscribe for 6GBP a month"
+      ],
+      "explanation": "Read the small print: 'Subscribe 6GBP/mnth' means the 'reward' costs you money every month.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-5465"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0020",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "prize",
+      "content": "Urgent! Please call 09061213237 from landline. £5000 cash or a luxury 4* Canary Islands Holiday await collection. T&Cs SAE PO Box 177. M227XY. 150ppm. 16+",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "'Urgent!'",
+        "£5000 cash or holiday",
+        "premium 09 number"
+      ],
+      "explanation": "Huge prizes and urgency are the oldest scam trick. Real companies don't hand out cash by text.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-5295"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0021",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "phone-plan",
+      "content": "December only! Had your mobile 11mths+? You are entitled to update to the latest colour camera mobile for Free! Call The Mobile Update Co FREE on 08002986906",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "'December only!' time pressure",
+        "free upgrade offer"
+      ],
+      "explanation": "Time pressure like 'December only!' is meant to stop you thinking. Check with your provider directly.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-320"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0022",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "prize",
+      "content": "Ur balance is now £600. Next question: Complete the landmark, Big, A. Bob, B. Barry or C. Ben ?. Text A, B or C to 83738. Good luck!",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "fake 'balance' of £600",
+        "quiz that charges per text"
+      ],
+      "explanation": "A pretend balance and an easy quiz keep you texting a paid number. The money is never real.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-4374"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "txt-0023",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "travel",
+      "content": "\"For the most sparkling shopping breaks from 45 per person; call 0121 2025050 or visit www.shortbreaks.org.uk\"",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "looks like an ad",
+        "unknown website and phone number"
+      ],
+      "explanation": "Unsolicited deals pointing to unknown sites are spam. Search the company yourself before you call.",
+      "source": {
+        "dataset": "UCI SMS Spam Collection",
+        "license": "CC BY 4.0",
+        "author": null,
+        "generator": null,
+        "original_id": "line-5459"
+      },
+      "added_by": "fetch-texts"
+    },
+    {
+      "id": "img-0001",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "landscape",
+      "content": "images/fake/img-0001.png",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "colours are extra bright, like a painting",
+        "leaves are smudgy blobs"
+      ],
+      "explanation": "Real forests have messy detail. Super bright, smooth colours often mean AI.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "alea31415/onimai-characters",
+        "original_id": "alea31415/onimai-characters/00000345.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0002",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "landscape",
+      "content": "images/real/img-0002.jpg",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "uneven grass and scattered trees",
+        "natural, slightly hazy light"
+      ],
+      "explanation": "Real landscapes are often a bit boring and messy. That ordinariness is a good sign.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY-SA 2.0",
+        "author": "Andrew Tryon",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:A_few_remaining_trees_in_Naver_Forest,_Sutherland_-_geograph.org.uk_-_7167752.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0003",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "bird",
+      "content": "images/fake/img-0003.png",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "the bird looks painted",
+        "wires cross and tangle in a way that makes no sense"
+      ],
+      "explanation": "Follow lines like wires or cables. In AI images they often start and stop in random places.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "lewdryuna/A-Rainier",
+        "original_id": "lewdryuna/A-Rainier/00000331.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0004",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "bird",
+      "content": "images/real/img-0004.jpg",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "every bird has a slightly different pose",
+        "wires sag naturally"
+      ],
+      "explanation": "This looks almost too graphic, but each bird is unique and the wires sag like real ones.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY-SA 3.0",
+        "author": "Birds_on_the_wire.jpg: Tomascastelazo\nderivative work: Colin",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Birds_on_the_wire_-_crop.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0005",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "landscape",
+      "content": "images/fake/img-0005.png",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "the town is a smudge",
+        "trees look like blurry brush strokes up close"
+      ],
+      "explanation": "Distant towns and trees are often mush in AI images. Real photos keep some detail.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "lewdryuna/A-Rainier",
+        "original_id": "lewdryuna/A-Rainier/00000339.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0006",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "landscape",
+      "content": "images/real/img-0006.jpg",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "clouds hide the peaks",
+        "trees look soft in the mist"
+      ],
+      "explanation": "Mist can make a real photo look painted. Check the forest: individual trees stay sharp.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY-SA 4.0",
+        "author": "Jakub Fryš (talk · contribs)",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Mountain_view_in_Robson_valley.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0007",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "animal",
+      "content": "images/fake/img-0007.png",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "very realistic puppy",
+        "the pink blob in the background has no clear shape"
+      ],
+      "explanation": "When the main subject looks perfect, check the background. Objects there often have no clear shape.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "tensor-diffusion/chilloutmix-NI",
+        "original_id": "tensor-diffusion/chilloutmix-NI/00000305.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0008",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "animal",
+      "content": "images/real/img-0008.jpg",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "natural fur, a slobbery toy, shallow background blur"
+      ],
+      "explanation": "Small real details like a chewed toy and individual hairs point to a real photo.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY 2.0",
+        "author": "Sendai Blog",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Boston_terrier_with_toy.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0009",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "animal",
+      "content": "images/fake/img-0009.png",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "the cage bars blend into the fur",
+        "the hand gripping the bar looks soft and melted"
+      ],
+      "explanation": "Look where two things touch, like a hand on a bar. AI often blurs or melts those edges.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "AACEE/textual_inversion_sksship",
+        "original_id": "AACEE/textual_inversion_sksship/00000303.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0010",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "building",
+      "content": "images/real/img-0010.jpg",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "straight, clean lines on the building",
+        "overcast, flat light"
+      ],
+      "explanation": "Straight lines that stay straight, and dull everyday weather, suggest a real photo.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY-SA 2.0",
+        "author": "N Chadwick",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Monkey_Cage_Gallery_-_geograph.org.uk_-_3112736.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0011",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "food",
+      "content": "images/fake/img-0011.png",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "the fruits melt into each other",
+        "some are half lime, half cucumber"
+      ],
+      "explanation": "AI mixes things together. Here the fruits blend into each other and don't look like one kind.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "TopdeckingLands/ArtOfMtg_V1",
+        "original_id": "TopdeckingLands/ArtOfMtg_V1/00000345.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0012",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "food",
+      "content": "images/real/img-0012.jpg",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "dry, torn leaves and dirt",
+        "small bananas are each slightly different"
+      ],
+      "explanation": "Natural decay like torn, brown leaves is hard for AI to fake well.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY-SA 4.0",
+        "author": "Johnnybam",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Banana_Plant_with_Developing_Fruits_(Musa).jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0013",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "bird",
+      "content": "images/fake/img-0013.png",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "the bird's legs are very thin and stiff",
+        "the waves repeat a pattern"
+      ],
+      "explanation": "Look at thin parts like legs and feet. AI often makes them too thin or not quite attached.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "MohitSK/RealisticComicBook",
+        "original_id": "MohitSK/RealisticComicBook/00000303.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0014",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "bird",
+      "content": "images/real/img-0014.jpg",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "small crow with a clear shape",
+        "foamy waves with natural detail"
+      ],
+      "explanation": "A small, ordinary subject in a plain scene is typical of real photos.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC0",
+        "author": "Golamrob",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Crow_bird_and_beach_22.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0015",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "bird",
+      "content": "images/fake/img-0015.png",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "feather pattern is messy noise",
+        "the wing shapes don't match"
+      ],
+      "explanation": "Patterns like feathers or fabric often turn into random noise in AI images.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "VegaKH/Ultraskin",
+        "original_id": "VegaKH/Ultraskin/00000345.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0016",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "animal",
+      "content": "images/real/img-0016.jpg",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "a young deer half-hidden in leaves",
+        "natural lighting"
+      ],
+      "explanation": "Animals half hidden behind plants are hard for AI to draw convincingly.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "Public domain",
+        "author": "NPS Photo",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Humming_bird_flying_toward_a_red_trumpet_vine_(9cadc883-1dd8-b71c-0783-e2593f1b57d9).JPG"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0017",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "bird",
+      "content": "images/fake/img-0017.png",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "it's clearly a drawing",
+        "the shop shelves are made-up shapes"
+      ],
+      "explanation": "This is an illustration, not a photo. A cartoon style is the easiest clue.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "Linaqruf/animagine-xl-2.0",
+        "original_id": "Linaqruf/animagine-xl-2.0/00000397.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0018",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "object",
+      "content": "images/real/img-0018.jpg",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "shiny product photo on white",
+        "tiny, precise mechanical parts"
+      ],
+      "explanation": "Studio product shots can look computer-made, but the tiny gears and fittings all make sense.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY-SA 3.0",
+        "author": "http://www.antiquorum.com/home/ Antiquorum",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Singing_bird_box_by_Fr%C3%A8res_Rochat,_circa_1810.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0019",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "building",
+      "content": "images/fake/img-0019.png",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "the roof lines go soft and wobbly",
+        "the fence fades into fuzz"
+      ],
+      "explanation": "Black and white can hide AI mistakes. Zoom in on straight lines like roofs and fences.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "dream-textures/texture-diffusion",
+        "original_id": "dream-textures/texture-diffusion/00000397.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0020",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "animal",
+      "content": "images/fake/img-0020.png",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "looks like a cartoon toy, not a real animal",
+        "flat, shiny colours"
+      ],
+      "explanation": "Some AI images are not even trying to be photos. Shiny, toy-like animals are easy to spot.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "haor/Evt_V4-preview",
+        "original_id": "haor/Evt_V4-preview/00000327.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0021",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "bird",
+      "content": "images/fake/img-0021.png",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "the ducks look like copies of each other",
+        "one duck is an odd yellow",
+        "reflections are too neat"
+      ],
+      "explanation": "When animals in a group look like clones, be suspicious. Real ducks all look a little different.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "1mohitmanoj/surya",
+        "original_id": "1mohitmanoj/surya/00000373.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0022",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "bird",
+      "content": "images/real/img-0022.jpg",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "ducks partly hidden by reeds",
+        "untidy branches in front"
+      ],
+      "explanation": "Real photos are often badly framed, with things in the way. AI usually makes a tidy picture.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY 4.0",
+        "author": "Struppig taucher",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:A_group_of_ducks_sitting_by_the_lake.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0023",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "object",
+      "content": "images/fake/img-0023.png",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "skin looks plastic",
+        "the legs merge into the bench"
+      ],
+      "explanation": "Bodies are hard for AI: check where legs, hands or fingers meet other things.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "EnD-Diffusers/Porcelain-Dusk-Mix-V1",
+        "original_id": "EnD-Diffusers/Porcelain-Dusk-Mix-V1/00000368.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0024",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "object",
+      "content": "images/real/img-0024.jpg",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "odd split-toe shape and faded colour",
+        "a museum label number"
+      ],
+      "explanation": "These look strange, but they're real ancient socks in a museum. Weird doesn't always mean fake.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY-SA 2.0 uk",
+        "author": "David Jackson",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:BLW_Pair_of_socks.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0025",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "landscape",
+      "content": "images/fake/img-0025.png",
+      "difficulty": 5,
+      "difficulty_source": "claude",
+      "clues": [
+        "very convincing",
+        "buildings on the shore melt into the water line"
+      ],
+      "explanation": "Sunsets are easy for AI. The only clue is the shoreline: the buildings don't have clear shapes.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "EnD-Diffusers/Porcelain-Dusk-Mix-V1",
+        "original_id": "EnD-Diffusers/Porcelain-Dusk-Mix-V1/00000351.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0026",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "landscape",
+      "content": "images/real/img-0026.jpg",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "ice and rocks with detailed texture",
+        "sun reflection breaks up naturally"
+      ],
+      "explanation": "Look at the texture: real ice and rocks have lots of tiny, random detail.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY-SA 4.0",
+        "author": "W.carter",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Sunset_over_the_ice_of_Brofjorden_1.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0027",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "vehicle",
+      "content": "images/fake/img-0027.png",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "the wings and engines don't line up",
+        "there are extra fins"
+      ],
+      "explanation": "AI often gets machines wrong. Count the wings, engines and wheels.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "IDK-ab0ut/Yiffymix_v40",
+        "original_id": "IDK-ab0ut/Yiffymix_v40/00000398.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0028",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "vehicle",
+      "content": "images/real/img-0028.jpg",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "museum hall with metal beams",
+        "a real old aircraft and a model figure"
+      ],
+      "explanation": "Complex structures like these beams stay consistent in real photos. AI usually tangles them.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY-SA 2.0",
+        "author": "David Dixon",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Those_Magnificent_Men_in_their_Flying_Machines_-_geograph.org.uk_-_3178952.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0029",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "object",
+      "content": "images/fake/img-0029.png",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "shoes float in the air",
+        "heels and straps bend in impossible ways"
+      ],
+      "explanation": "Objects that float and twist into impossible shapes are a giveaway of AI.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "briannlongzhao/2",
+        "original_id": "briannlongzhao/2/00000303.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0030",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "object",
+      "content": "images/real/img-0030.jpg",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "old shop window",
+        "many small, sharp objects",
+        "scratches on the glass"
+      ],
+      "explanation": "Lots of small objects that are all sharp and make sense usually means a real photo.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "Public domain",
+        "author": "Hines Studio",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Cook_Shoes_window_display.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0031",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "landscape",
+      "content": "images/fake/img-0031.png",
+      "difficulty": 5,
+      "difficulty_source": "claude",
+      "clues": [
+        "almost perfect",
+        "the sky is a smooth gradient and the sand has no tracks or texture"
+      ],
+      "explanation": "Very hard. Real deserts have footprints, stones and texture. Everything here is too clean.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "livingbox/modern-29-jan",
+        "original_id": "livingbox/modern-29-jan/00000303.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0032",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "landscape",
+      "content": "images/real/img-0032.jpg",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "cactus spines and rocks all different",
+        "uneven light on hills"
+      ],
+      "explanation": "Real nature is full of variety. No two cacti or rocks look the same.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY 2.0",
+        "author": "daveynin",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Mountain_view_from_Desert_View_Trail.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0033",
+      "modality": "image",
+      "is_real": false,
+      "category": "ai-image",
+      "subject": "animal",
+      "content": "images/fake/img-0033.png",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "eyes are unnaturally bright blue",
+        "fur looks painted",
+        "the paws are odd"
+      ],
+      "explanation": "Too-perfect, glowing eyes and painted-looking fur are common AI tells.",
+      "source": {
+        "dataset": "CommunityForensics-Small",
+        "license": "CC BY-NC-SA 4.0",
+        "author": null,
+        "generator": "livingbox/bugatti-evo-03",
+        "original_id": "livingbox/bugatti-evo-03/00000345.png"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "img-0034",
+      "modality": "image",
+      "is_real": true,
+      "category": "ai-image",
+      "subject": "animal",
+      "content": "images/real/img-0034.jpg",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "readable writing on the marker",
+        "real fur texture"
+      ],
+      "explanation": "Readable text is a strong sign of a real photo. AI often writes gibberish.",
+      "source": {
+        "dataset": "Wikimedia Commons",
+        "license": "CC BY-SA 4.0",
+        "author": "George E. Koronaios",
+        "generator": null,
+        "original_id": "https://commons.wikimedia.org/wiki/File:Black_marker_on_a_table_with_a_cat.jpg"
+      },
+      "added_by": "fetch-images"
+    },
+    {
+      "id": "txt-0024",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Hey! Just wanted to check in and see how your day is going. Let me know if you'd like to grab dinner later this week — I'm free Thursday or Friday! 😊",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "perfect punctuation and an em dash",
+        "generic 'check in' opener",
+        "neatly placed emoji"
+      ],
+      "explanation": "AI texts often sound like a friendly template: tidy, upbeat and with no personal detail.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0025",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Good morning! I hope you slept well. Don't forget to drink plenty of water and take some time for yourself today. You've got this! 💪",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "sounds like a wellness poster",
+        "every sentence is encouragement"
+      ],
+      "explanation": "Real friends rarely send a list of wellness tips. Motivational filler is a common AI habit.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0026",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Thanks so much for having us over last night! The food was absolutely delicious and we had such a wonderful time. Let's do it again soon!",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "'absolutely delicious', 'wonderful time'",
+        "nothing specific about the evening"
+      ],
+      "explanation": "Lots of praise but no details (which dish? what happened?) is a sign of AI writing.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0027",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Running a few minutes late, apologies for the inconvenience! I should be there in approximately 10 minutes.",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "'apologies for the inconvenience' and 'approximately' are too formal for a friend"
+      ],
+      "explanation": "Office-style phrases like 'apologies for the inconvenience' feel odd between friends.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0028",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Just picked up groceries! Got eggs, bread, milk, and some fresh veggies. Is there anything else you need while I'm out?",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "a complete, tidy list with an Oxford comma",
+        "cheerful exclamation"
+      ],
+      "explanation": "Compare it with a real shopping text: people just list items. AI wraps them in polite sentences.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0029",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Happy birthday!! 🎉 I hope your day is filled with joy, laughter, and everything that makes you smile. Can't wait to celebrate with you!",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "card-style wish 'filled with joy, laughter, and...'",
+        "list of three"
+      ],
+      "explanation": "Birthday wishes in a neat list of three sound like a greeting card, a typical AI pattern.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0030",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Oh no, I'm so sorry to hear that! That sounds really frustrating. Is there anything I can do to help? I'm here if you need to talk.",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "says all the 'right' supportive things in order",
+        "no reference to what happened"
+      ],
+      "explanation": "AI is good at sounding caring in general, but it doesn't mention the actual problem.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0031",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "omg yes!! that movie was so good, the ending totally caught me off guard. we should def watch the sequel together",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "uses casual style but still fully correct grammar",
+        "no movie name"
+      ],
+      "explanation": "Even when AI writes casually, it often avoids naming specifics. Who forgets to say which film?",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0032",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Heading to the gym now, then I'll swing by the store. Want me to pick anything up for dinner?",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "plain and useful",
+        "slightly too smooth"
+      ],
+      "explanation": "This could easily be human. Tidy, complete plans are only a weak clue for AI.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0033",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "haha that's hilarious 😂 can't believe he actually said that to the teacher",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "short and casual",
+        "laughs at something without any detail"
+      ],
+      "explanation": "Hard one. Short reactions are easy for AI to imitate. Look for details only a real friend would know.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0034",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Sorry, I missed your call! Was in a meeting. Can I call you back in about 20 mins?",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "realistic and short",
+        "'mins' looks casual"
+      ],
+      "explanation": "AI can write very normal messages. When nothing stands out, it's genuinely hard to tell.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0035",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "ugh traffic is awful today, stuck on the ring road. save me a seat?",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "realistic complaint",
+        "lowercase on purpose"
+      ],
+      "explanation": "AI can copy lowercase, casual texting. Be careful about trusting style alone.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0036",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "Did you end up finding your keys? I swear they were on the kitchen counter this morning",
+      "difficulty": 5,
+      "difficulty_source": "claude",
+      "clues": [
+        "follows up on something earlier",
+        "missing full stop"
+      ],
+      "explanation": "Very hard: it refers to earlier events and leaves out the full stop, just like a person would.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0037",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "k see u at 7. bring the charger pls mine died",
+      "difficulty": 5,
+      "difficulty_source": "claude",
+      "clues": [
+        "very short, abbreviations, no emoji"
+      ],
+      "explanation": "When AI is told to 'text like a person', it can be almost impossible to spot. That's why we check sources, not just style.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0038",
+      "modality": "text",
+      "is_real": false,
+      "category": "ai-vs-human",
+      "subject": "sms-casual",
+      "content": "mum says dinner's at 6 not 7, dont be late again lol",
+      "difficulty": 5,
+      "difficulty_source": "claude",
+      "clues": [
+        "family detail, 'again lol', missing apostrophe"
+      ],
+      "explanation": "Even small 'human' mistakes can be generated. Don't rely on one clue; think about who is likely to send it.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0039",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "delivery",
+      "content": "ParcelPost: Your package could not be delivered due to an unpaid fee of £1.99. Pay now to reschedule: parcel-track-help.info/pay",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "asks for a small fee",
+        "link is not the real courier website"
+      ],
+      "explanation": "Couriers don't text you for small fees. Check deliveries in the official app or website.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0040",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "bank",
+      "content": "SECURITY ALERT: A new device has signed in to your bank account. If this wasn't you, verify your identity immediately at secure-bank-verify.com",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "scary alert",
+        "urgent link to a look-alike website"
+      ],
+      "explanation": "Banks never ask you to 'verify' by clicking a link. Open your banking app yourself instead.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0041",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "family",
+      "content": "Hi Mum, this is my new number, my phone broke. Can you save it and message me on WhatsApp? I need a small favour x",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "unknown number claiming to be your child",
+        "'small favour' (usually money)"
+      ],
+      "explanation": "Before helping, call your child on their OLD number or ask a question only they would know.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0042",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "tax",
+      "content": "HMRC: You are eligible for a tax refund of £326.40. To claim, submit your details within 24 hours: gov-refund-claim.co",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "tax office doesn't text refund links",
+        "deadline pressure"
+      ],
+      "explanation": "Government tax offices don't send refund links by text. Real government sites end in .gov.uk.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0043",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "job",
+      "content": "Hi! We saw your CV online. Earn £300-£500 a day working from home, just 1 hour needed. Reply YES to learn more.",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "huge pay for little work",
+        "you never applied"
+      ],
+      "explanation": "If a job pays a lot for almost nothing and finds YOU, it's almost always a scam.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0044",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "account",
+      "content": "Your streaming subscription has been paused because we couldn't process your payment. Update your billing info to avoid losing access: stream-billing-update.net",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "looks routine",
+        "link is not the service's real website"
+      ],
+      "explanation": "This looks routine, which makes it convincing. Always update payments inside the app, never through a text link.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0045",
+      "modality": "text",
+      "is_real": false,
+      "category": "scam-vs-legit",
+      "subject": "delivery",
+      "content": "Royal Mail: Your parcel is being held at our depot. A redelivery can be booked here: royalmail.redelivery-uk.com Ref: RM8842",
+      "difficulty": 5,
+      "difficulty_source": "claude",
+      "clues": [
+        "real-sounding brand and reference number",
+        "the domain is not royalmail.com"
+      ],
+      "explanation": "Read links from right to left: this one belongs to 'redelivery-uk.com', not Royal Mail.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0046",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "delivery",
+      "content": "Your parcel from BookNook will be delivered today between 13:00 and 15:00. Track in the courier app. No action needed.",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "no payment request",
+        "says 'no action needed'"
+      ],
+      "explanation": "Real delivery updates just give information. Nothing to pay, nothing to click.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0047",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "appointment",
+      "content": "Reminder: You have a dental appointment on Tuesday at 10:30 at Riverside Dental. Reply C to confirm or call the practice to change.",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "matches an appointment you booked",
+        "no link"
+      ],
+      "explanation": "Reminders about something you booked yourself, with no links or payments, are normally safe.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0048",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "code",
+      "content": "Your verification code is 482913. It expires in 10 minutes. Never share this code with anyone, including our staff.",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "only a code",
+        "warns you never to share it"
+      ],
+      "explanation": "Genuine codes warn you not to share them. Only use one if YOU just asked for it.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0049",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "family",
+      "content": "Hi love, landed safely! Bit tired. Will ring you tomorrow after work x",
+      "difficulty": 2,
+      "difficulty_source": "claude",
+      "clues": [
+        "from a saved contact",
+        "asks for nothing"
+      ],
+      "explanation": "A message from a saved contact that asks for nothing is very unlikely to be a scam.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0050",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "bank",
+      "content": "Bank: You spent £42.10 at GreenGrocer Market. If you don't recognise this, open your banking app or call the number on the back of your card.",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "tells you to use your app or card number, not a link"
+      ],
+      "explanation": "Real banks send you to their app or the number on your card, never a link in the message.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0051",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "delivery",
+      "content": "We missed you! Your parcel is at the Corner Shop collection point. Bring this code: 7XQ2. Collect within 7 days.",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "'missed you' sounds like scams, but no fee and no link"
+      ],
+      "explanation": "This looks like a scam at first, but there's no money and no link. Real updates just tell you where to go.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0052",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "account",
+      "content": "Your password was changed. If this was you, you can ignore this message. If not, open the app and go to Settings > Security.",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "security alert, but sends you to the app, not a link"
+      ],
+      "explanation": "Real security alerts tell you to open the app yourself. Scam versions give you a link.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0053",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "appointment",
+      "content": "City Health: your flu vaccine is due. Book at reception or through your usual GP app. Reply STOP to opt out.",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "official-sounding, but nothing to click or pay"
+      ],
+      "explanation": "Health reminders that send you to your usual GP app or reception are safe to act on.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0054",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "phone-plan",
+      "content": "Your monthly bill of £18.00 is ready. It will be collected by Direct Debit on the 5th. View it any time in your account.",
+      "difficulty": 3,
+      "difficulty_source": "claude",
+      "clues": [
+        "bill reminder with no link and no pressure"
+      ],
+      "explanation": "Normal bills tell you the amount and when it will be paid. They don't threaten you or demand action now.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0055",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "bank",
+      "content": "URGENT: We've blocked a payment of £900 on your card. Please call us on the number on the back of your card.",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "says URGENT like a scam, but asks you to use the number on your own card"
+      ],
+      "explanation": "A tricky one: 'URGENT' feels scammy, but calling the number on your own card is exactly the safe thing to do.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0056",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "family",
+      "content": "Hey it's Sam from the running club, got your number from the group list. Are you coming Saturday?",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "unknown number, but explains where they got it",
+        "asks for nothing"
+      ],
+      "explanation": "Unknown numbers aren't always scams. This one asks for nothing and you can check in the group chat.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0057",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "delivery",
+      "content": "Courier: Your driver Alex is 5 stops away. Live tracking is in the app. Leave-safe instructions can be updated there.",
+      "difficulty": 4,
+      "difficulty_source": "claude",
+      "clues": [
+        "first name of driver and 'live tracking' look like phishing bait, but no link"
+      ],
+      "explanation": "Real couriers do share driver names. The safe sign: it sends you to the app, not to a link.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0058",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "code",
+      "content": "Someone tried to sign in to your account from a new device. If this was you, enter code 551904. If not, no action needed — your account is safe.",
+      "difficulty": 5,
+      "difficulty_source": "claude",
+      "clues": [
+        "looks like a scary alert, but nothing to click and no request"
+      ],
+      "explanation": "Very tricky: alerts can be real. The key is that it doesn't ask you to click, call or pay anything.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0059",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "tax",
+      "content": "Council Tax: your annual bill is now available. Log in to your council account through your local council website to view it.",
+      "difficulty": 5,
+      "difficulty_source": "claude",
+      "clues": [
+        "mentions tax and bills, but no link and no deadline"
+      ],
+      "explanation": "Tax messages make people nervous. This one is fine because it tells you to go to the website yourself.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    },
+    {
+      "id": "txt-0060",
+      "modality": "text",
+      "is_real": true,
+      "category": "scam-vs-legit",
+      "subject": "appointment",
+      "content": "Library: The book you reserved is ready to collect at Central Library. We'll keep it for 7 days.",
+      "difficulty": 1,
+      "difficulty_source": "claude",
+      "clues": [
+        "something you asked for",
+        "no link, no payment"
+      ],
+      "explanation": "Messages about something you asked for, with no link and no payment, are usually genuine.",
+      "source": {
+        "dataset": "claude-generated",
+        "license": "CC0 (team-generated)",
+        "author": null,
+        "generator": "claude-opus-5-5",
+        "original_id": null
+      },
+      "added_by": "claude-code"
+    }
+  ]
+}
