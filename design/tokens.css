@@ -1,42 +1,49 @@
-/* Fenster design tokens v0.1
+/* Fenster design tokens v0.2 · "calm editorial"
    Audience: adults 60+. Large type, calm colour, big targets, clear AI labelling.
-   The app imports this file; never hard-code a colour or size in a component. */
+   Feels like a well-made printed magazine or a trusted bank: warm paper, deep ink, one confident brand colour,
+   soft depth instead of heavy outlines. The app imports this file; never hard-code a colour or size in a component. */
 :root {
-  /* surfaces & text */
-  --fs-bg: #faf6ef; /* warm paper, less glare than pure white */
+  /* surfaces & text: warm paper, white cards that sit slightly above it, deep green-black ink (≥ 14:1) */
+  --fs-bg: #f6f2ea;
+  --fs-bg-deep: #efe8db; /* page edges, desktop backdrop */
   --fs-surface: #ffffff;
-  --fs-surface-2: #f3ede2;
-  --fs-line: #e2dacb;
-  --fs-ink: #1c1b19;
-  --fs-ink-2: #4a4740;
+  --fs-surface-2: #f8f5ef; /* quiet fill inside a card */
+  --fs-line: #e4ddcf; /* hairline: 1px borders */
+  --fs-line-strong: #cdc3b0; /* controls that must look tappable: inputs, outlined buttons */
+  --fs-ink: #14211f;
+  --fs-ink-2: #4b5552; /* secondary text, still ≥ 7:1 on --fs-bg */
+  --fs-ink-3: #6b7370; /* meta only, ≥ 4.5:1 */
 
   /* the three pillars: every screen belongs to one */
-  --fs-learn: #0b5d5b; /* Learn about AI · also the brand colour */
-  --fs-learn-soft: #e1efed;
-  --fs-ai: #5b3fa6; /* Use AI · anything Claude wrote or made */
-  --fs-ai-soft: #eee9fa;
-  --fs-protect: #1f4e79; /* Protect yourself · scam checks, safety rules */
-  --fs-protect-soft: #e3edf7;
+  --fs-learn: #0f4c47; /* Learn about AI · also the brand colour (deep forest teal) */
+  --fs-learn-deep: #0a3532;
+  --fs-learn-bright: #1b6b63;
+  --fs-learn-soft: #e3eeeb;
+  --fs-ai: #5a3ea8; /* Use AI · anything Claude wrote or made */
+  --fs-ai-soft: #efeafb;
+  --fs-protect: #1d4a73; /* Protect yourself · scam checks, safety rules */
+  --fs-protect-soft: #e5edf6;
 
   /* what keeps people going */
-  --fs-community: #a8326e; /* family, groups, sharing */
-  --fs-community-soft: #fbe7f0;
-  --fs-reward: #8a5300; /* points, levels, badges (text) */
-  --fs-reward-fill: #f6c453; /* stars, progress fill */
-  --fs-reward-soft: #fdf2d8;
+  --fs-community: #9c2f66; /* family, groups, sharing */
+  --fs-community-soft: #f9e8f0;
+  --fs-reward: #855000; /* points, levels, badges (text) */
+  --fs-reward-fill: #e5b04a; /* stars, progress fill: burnished gold, not toy yellow */
+  --fs-reward-soft: #fbf1dc;
 
   /* feedback: red only for real danger, never for "you got it wrong" */
-  --fs-success: #1d6b34;
-  --fs-success-soft: #e2f2e5;
+  --fs-success: #1b6532;
+  --fs-success-soft: #e4f2e7;
   --fs-gentle: #7a4e00; /* "not quite": warm, kind */
-  --fs-gentle-soft: #fff4d6;
-  --fs-danger: #a3261b; /* a scam, a risk out in the world */
-  --fs-danger-soft: #fbe5e1;
+  --fs-gentle-soft: #fdf3d9;
+  --fs-danger: #a2281e; /* a scam, a risk out in the world */
+  --fs-danger-soft: #fbe8e4;
   --fs-share: #177a40; /* "Share on WhatsApp", people recognise this green */
-  --fs-focus: #f2a900;
+  --fs-focus: #e8a400;
 
-  /* type: Atkinson Hyperlegible was designed for readers with low vision */
+  /* type: a calm serif for headings (newspaper trust), Atkinson Hyperlegible for everything people read */
   --fs-font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-font-display: "Newsreader", Georgia, "Times New Roman", serif;
   --fs-text-sm: 0.85rem; /* 17px: meta only, never body text */
   --fs-text: 1rem; /* 20px body */
   --fs-text-lg: 1.2rem; /* 24px */
@@ -44,6 +51,7 @@
   --fs-h1: 1.75rem; /* 35px */
   --fs-display: 2.6rem; /* 52px: scores, big moments */
   --fs-leading: 1.5;
+  --fs-leading-tight: 1.18;
 
   /* space, shape, size */
   --fs-space-1: 0.2rem;
@@ -53,11 +61,17 @@
   --fs-space-5: 1.2rem;
   --fs-space-6: 1.6rem;
   --fs-space-7: 2.4rem;
-  --fs-r-sm: 10px;
-  --fs-r: 18px;
+  --fs-r-sm: 12px;
+  --fs-r: 20px;
+  --fs-r-lg: 28px;
   --fs-r-pill: 999px;
   --fs-tap: 3rem; /* 60px minimum touch target */
-  --fs-shadow: 0 2px 0 rgba(28, 27, 25, 0.05), 0 8px 24px rgba(28, 27, 25, 0.08);
+
+  /* depth: soft, warm-tinted shadows. Cards float a little; the main button lifts a little more */
+  --fs-shadow-sm: 0 1px 2px rgba(31, 36, 30, 0.06), 0 1px 1px rgba(31, 36, 30, 0.04);
+  --fs-shadow: 0 1px 2px rgba(31, 36, 30, 0.05), 0 6px 20px -6px rgba(31, 36, 30, 0.12);
+  --fs-shadow-lg: 0 2px 4px rgba(31, 36, 30, 0.05), 0 24px 48px -16px rgba(31, 36, 30, 0.22);
+  --fs-shadow-brand: 0 1px 0 rgba(255, 255, 255, 0.18) inset, 0 8px 20px -8px rgba(15, 76, 71, 0.55);
 
   /* motion: calm by default, one bigger moment for celebrations */
   --fs-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
