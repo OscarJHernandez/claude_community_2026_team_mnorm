@@ -430,7 +430,8 @@ function clip(i) {
     ok = pick === F.answer,
     last = i === FEED.length;
   const sheet = `<div class="sheet ${ok ? "ok" : "no"}">
-      <p class="h">${ok ? "✅ " + t("f.right", { n: PTS }) : "💛 " + t("f.wrong")}</p>
+      <div class="sheet-top"><p class="h">${ok ? "✅ " + t("f.right", { n: PTS }) : "💛 " + t("f.wrong")}</p>
+        <button class="sheet-toggle" data-act="sheet" aria-expanded="true">${t("f.hide")}</button></div>
       <p style="margin-top:.4rem"><b>${t(F.answer === "fake" ? "f.wasFake" : "f.wasReal")}</b> ${t("g.why")}:</p>
       <ul class="why">${(F.ds && DS[F.ds] ? dsText(F.ds, "clues") : [1, 2, 3].map((w) => t(whyKey(F, w)))).map((c) => `<li>${c}</li>`).join("")}</ul>
       ${F.ds && DS[F.ds] ? `<p class="aha">💡 <b>Aha!</b> ${dsText(F.ds, "explanation")}</p>` : ""}
@@ -1106,6 +1107,13 @@ document.addEventListener("click", (e) => {
     render();
     document.getElementById("view").scrollTo?.(0, 0);
     return void window.scrollTo(0, 0);
+  }
+  // Hide or show the explanation so the clip is visible again. Only a class changes: a video keeps playing.
+  if (act === "sheet") {
+    const min = el.closest(".sheet").classList.toggle("min");
+    el.setAttribute("aria-expanded", String(!min));
+    el.textContent = t(min ? "f.show" : "f.hide");
+    return;
   }
   if (el.dataset.act === "next") {
     scrollToClip(+el.dataset.i + 1, true);
