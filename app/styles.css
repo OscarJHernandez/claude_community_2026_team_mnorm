@@ -1,38 +1,37 @@
-/* Temporary design tokens, tuned for older adults:
-   large type, high contrast, big tap targets, text labels on every icon.
-   The real design system replaces these values later. */
+/* Fenster app styles.
+   Colours, type, spacing and motion come from ../design/tokens.css (--fs-*). The short names below map onto
+   those tokens so the component styles further down stay readable. */
 :root {
-  --bg: #faf6ef;
-  --surface: #ffffff;
-  --ink: #1c1b19;
-  --ink-2: #4a4740;
-  --line: #e2dacb;
-  --primary: #0b5d5b;
+  --bg: var(--fs-bg);
+  --surface: var(--fs-surface);
+  --ink: var(--fs-ink);
+  --ink-2: var(--fs-ink-2);
+  --line: var(--fs-line);
+  --primary: var(--fs-learn);
   --primary-ink: #ffffff;
-  --primary-soft: #e1efed;
-  --accent: #9a4a08;
-  --accent-soft: #fcebd7;
-  --ok: #1d6b34;
-  --ok-soft: #e2f2e5;
-  --bad: #a3261b;
-  --bad-soft: #fbe5e1;
-  --radius: 18px;
-  --tap: 3rem; /* ≥ 60px minimum touch target */
-  --font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-
-html {
-  font-size: 20px;
-}
-html.big {
-  font-size: 23px;
+  --primary-soft: var(--fs-learn-soft);
+  --accent: var(--fs-reward);
+  --accent-soft: var(--fs-reward-soft);
+  --ok: var(--fs-success);
+  --ok-soft: var(--fs-success-soft);
+  --bad: var(--fs-danger);
+  --bad-soft: var(--fs-danger-soft);
+  --radius: var(--fs-r);
+  --tap: var(--fs-tap);
+  --font: var(--fs-font);
+  --sidebar-w: 300px;
+  --content-w: 640px;
 }
 * {
   box-sizing: border-box;
 }
+html,
+body {
+  height: 100%;
+}
 body {
   margin: 0;
-  background: #e9e3d8;
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--font);
   line-height: 1.5;
@@ -51,118 +50,27 @@ p {
   margin: 0;
 }
 :focus-visible {
-  outline: 4px solid #f2a900;
+  outline: 4px solid var(--fs-focus);
   outline-offset: 2px;
 }
 
-/* ---------- desktop stage: phone frame + prototype panel ---------- */
-.stage {
-  min-height: 100vh;
+/* ---------- app shell ---------- */
+.app {
+  position: relative;
   display: flex;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.proto-panel {
-  width: 260px;
-  font-size: 15px;
-  align-self: center;
-}
-.proto-brand {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--primary);
-}
-.proto-note {
-  color: var(--ink-2);
-  margin: 4px 0 18px;
-}
-.proto-panel h2 {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--ink-2);
-  margin-bottom: 8px;
-}
-.proto-replay {
-  margin-bottom: 10px;
-  padding: 6px 12px;
-  border: 2px solid var(--primary);
-  border-radius: 999px;
-  background: #fff;
-  color: var(--primary);
-  font: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-}
-#proto-links a {
-  display: block;
-  padding: 5px 10px;
-  border-radius: 8px;
-  color: var(--ink);
-  text-decoration: none;
-}
-#proto-links a:hover {
-  background: #fff;
-}
-#proto-links a.on {
-  background: var(--primary);
-  color: #fff;
-}
-.proto-journey {
-  display: inline-block;
-  margin-top: 18px;
-  font-weight: 700;
-  color: var(--primary);
-}
-
-.device {
-  width: 400px;
-  height: min(860px, calc(100vh - 40px));
-  background: var(--bg);
-  border-radius: 44px;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
-  box-shadow:
-    0 0 0 12px #1c1b19,
-    0 30px 60px rgba(0, 0, 0, 0.25);
+}
+.main {
+  position: relative;
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  position: relative;
 }
-@media (max-width: 760px) {
-  .stage {
-    padding: 0;
-    display: block;
-  }
-  .proto-panel {
-    display: none;
-  }
-  .device {
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    border-radius: 0;
-    box-shadow: none;
-  }
-}
-/* embedded in journey.html */
-html.embed body {
-  background: var(--bg);
-}
-html.embed .stage {
-  padding: 0;
-  display: block;
-}
-html.embed .proto-panel {
+.sidebar {
   display: none;
-}
-html.embed .device {
-  width: 100vw;
-  height: 100vh;
-  border-radius: 0;
-  box-shadow: none;
 }
 
 /* ---------- top bar ---------- */
@@ -170,9 +78,12 @@ html.embed .device {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1.4rem 1rem 0.6rem;
+  padding: 1.1rem 1rem 0.6rem;
   background: var(--bg);
   min-height: 4rem;
+}
+.topbar[hidden] {
+  display: none;
 }
 .topbar .title {
   flex: 1;
@@ -181,10 +92,17 @@ html.embed .device {
 }
 .logo {
   flex: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-weight: 700;
   font-size: 1.3rem;
   color: var(--primary);
-  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.logo svg {
+  width: 1.5rem;
+  height: 1.8rem;
 }
 .back {
   min-height: 2.4rem;
@@ -218,8 +136,183 @@ html.embed .device {
   color: var(--primary-ink);
 }
 
-.topbar[hidden] {
-  display: none;
+/* ---------- desktop: sidebar + centred content ---------- */
+@media (min-width: 900px) {
+  html {
+    font-size: 19px;
+  }
+  html.big {
+    font-size: 22px;
+  }
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: var(--sidebar-w);
+    flex: none;
+    padding: 1.4rem 1rem;
+    background: var(--surface);
+    border-right: 2px solid var(--line);
+    overflow-y: auto;
+  }
+  .app.focus .sidebar {
+    display: none;
+  }
+  .tabbar {
+    display: none !important;
+  }
+  .topbar {
+    padding: 1.4rem 2rem 0.6rem;
+    width: 100%;
+    max-width: calc(var(--content-w) + 4rem);
+    margin: 0 auto;
+  }
+  .topbar.plain {
+    display: none;
+  }
+  .topbar .lang {
+    display: none;
+  }
+  .view {
+    padding: 1.2rem 2rem 3rem !important;
+  }
+  .view > .stack {
+    max-width: var(--content-w);
+    margin: 0 auto;
+  }
+  /* onboarding: one calm card in the middle of the screen */
+  .app.focus .view > .stack {
+    max-width: 560px;
+    margin: 4vh auto;
+    padding: 2rem;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--fs-shadow);
+  }
+  .app.focus .topbar {
+    max-width: 624px;
+  }
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.2rem 0.6rem 0.6rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand svg {
+  width: 2.2rem;
+  height: 2.6rem;
+  flex: none;
+}
+.brand b {
+  display: block;
+  font-size: 1.4rem;
+  color: var(--primary);
+  line-height: 1.1;
+}
+.brand small {
+  color: var(--ink-2);
+  font-size: 0.8rem;
+}
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.side-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: var(--tap);
+  padding: 0 0.9rem;
+  border-radius: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+}
+.side-nav a svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--ink-2);
+}
+.side-nav a:hover {
+  background: var(--fs-surface-2);
+}
+.side-nav a.on {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.side-nav a.on svg {
+  color: var(--primary);
+}
+.side-card {
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+  background: var(--bg);
+}
+.side-card .label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.side-card .lvl {
+  font-weight: 700;
+  margin: 0.2rem 0 0.4rem;
+}
+.side-card .nums {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.6rem;
+  font-weight: 700;
+}
+.side-settings {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--ink-2);
+}
+.side-settings .row2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+/* ---------- toast: "+20 points", "New level!" ---------- */
+.toast {
+  position: absolute;
+  left: 50%;
+  top: 1rem;
+  z-index: 40;
+  transform: translate(-50%, -150%);
+  background: var(--ink);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transition:
+    transform var(--fs-dur) var(--fs-ease),
+    opacity var(--fs-dur) var(--fs-ease);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.toast.gold {
+  background: var(--fs-reward-fill);
+  color: var(--ink);
 }
 
 /* ---------- main view ---------- */
@@ -1596,4 +1689,93 @@ input.field {
 .btn[disabled] {
   opacity: 0.7;
   cursor: progress;
+}
+
+/* ---------- states that show real progress ---------- */
+.task.done,
+.tile.done {
+  background: var(--ok-soft);
+  border-color: #b9dcc1;
+}
+.task.done .badge-pts {
+  background: transparent;
+  color: var(--ok);
+}
+.aha-card {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: var(--fs-reward-soft);
+  border: 2px solid var(--fs-reward-fill);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+}
+.aha-card .chip {
+  flex: none;
+}
+
+/* ---------- AI helper chat ---------- */
+.chat-screen .bubble.ai {
+  background: var(--fs-ai-soft);
+  border: 2px solid var(--fs-ai);
+}
+.ai-text {
+  white-space: pre-wrap;
+}
+.share-chip {
+  margin-top: 0.6rem;
+  border-color: var(--fs-ai);
+  color: var(--fs-ai);
+}
+.ai-intro {
+  border-color: var(--fs-ai);
+  background: var(--fs-ai-soft);
+}
+.bubble.thinking {
+  color: var(--fs-ai);
+  font-weight: 700;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+.composer {
+  position: sticky;
+  bottom: 0;
+  background: var(--bg);
+  padding: 0.6rem 0;
+}
+.composer .btn {
+  width: auto;
+  padding: 0 1.4rem;
+}
+input.field {
+  min-height: var(--tap);
+  font-size: 1.1rem;
+}
+
+/* ---------- desktop: the feed is a centred column, like a phone held up in the middle ---------- */
+@media (min-width: 900px) {
+  .view.immersive {
+    padding: 0 !important;
+    background: radial-gradient(ellipse at 50% 30%, #2a2a2a, #121212 70%);
+  }
+  .view.immersive .feed-wrap {
+    max-width: 520px;
+    margin: 0 auto;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+  }
+  .feed-top .logo,
+  .feed-top .lang {
+    display: none;
+  }
+  .clip-media {
+    padding-top: 4.4rem;
+  }
+  .rail {
+    top: 4.8rem;
+  }
 }

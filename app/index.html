@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0B5D5B" />
-    <title>Fenster · prototype</title>
+    <title>Fenster</title>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,27 +13,22 @@
       href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=7" />
+    <link rel="stylesheet" href="../design/tokens.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="stage">
-      <aside class="proto-panel" aria-label="Prototype navigation">
-        <div class="proto-brand">Fenster</div>
-        <p class="proto-note" data-t="proto.note"></p>
-        <h2 data-t="proto.title"></h2>
-        <button class="proto-replay" data-act="splash">▶ Replay intro</button>
-        <nav id="proto-links"></nav>
-        <a class="proto-journey" href="journey.html" data-t="proto.journey"></a>
-      </aside>
-
-      <div class="device" id="device">
+    <!-- Phone: top bar + content + bottom tabs. Desktop (≥ 900px): sidebar + centred content. -->
+    <div class="app" id="device">
+      <aside class="sidebar" id="sidebar" aria-label="Fenster"></aside>
+      <div class="main">
         <header class="topbar" id="topbar"></header>
         <main class="view" id="view" tabindex="-1"></main>
         <nav class="tabbar" id="tabbar" aria-label="Main"></nav>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
       </div>
     </div>
 
-    <script src="i18n.js?v=7"></script>
-    <script src="app.js?v=7"></script>
+    <script src="i18n.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

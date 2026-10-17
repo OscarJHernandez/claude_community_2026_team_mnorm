@@ -77,7 +77,11 @@ fast and works even if the network is slow.
 
 ## What is built so far
 
-- `server.mjs`: static files (only `app/`, `dataset/`, `content/`, `design/`) + `POST /api/check`. `npm start`.
+- `server.mjs`: static files (only `app/`, `dataset/`, `content/`, `design/`) + `POST /api/check` (scam checker)
+  and `POST /api/helper` (AI helper chat, `prompts/helper.md`). `npm start`.
+- The app is a real app shell: onboarding for new users, desktop sidebar (≥ 900px) or phone tabs, progress saved
+  on the device (name, points, levels, streak with a rest day, answers, Aha notebook, lessons, badges), real
+  sharing via the share sheet or WhatsApp. "Start over" in Profile resets it for a demo.
 - `server/lib/claude.mjs`, `server/routes/check.mjs`, `prompts/check.md`: the scam checker, with a rule-based
   offline fallback (`content/ai-fallback/check.json`) that the UI labels as "without AI".
 - `app/`: the app, grown from the v0 prototype (still one `app.js` + `i18n.js`; split into `js/screens/` as it grows).

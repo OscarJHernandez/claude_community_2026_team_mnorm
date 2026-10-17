@@ -5,6 +5,7 @@ import { readFile, stat } from "node:fs/promises";
 import { extname, join, normalize, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { handleCheck, UserError } from "./server/routes/check.mjs";
+import { handleHelper } from "./server/routes/helper.mjs";
 import { claudeAvailable, MODEL } from "./server/lib/claude.mjs";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
@@ -13,6 +14,7 @@ const PORT = Number(process.env.PORT) || 3000;
 const PUBLIC_DIRS = new Set(["app", "dataset", "content", "design"]);
 const ROUTES = {
   "POST /api/check": handleCheck,
+  "POST /api/helper": handleHelper,
 };
 const TYPES = {
   ".html": "text/html; charset=utf-8",

@@ -1,37 +1,44 @@
-// Fenster clickable prototype. No backend: all data below is fake.
-// Routing is hash-based (#/home, #/home/3/fake, ...) so every screen has a link.
+// Fenster app. Hash routes (#/home, #/learn, ...). Progress is saved on this device (localStorage);
+// a database can replace load()/save() later without touching the screens.
 
 const params = new URLSearchParams(location.search);
-const store = {
-  get(k) {
-    try {
-      return localStorage.getItem("fenster." + k);
-    } catch {
-      return null;
-    }
-  },
-  set(k, v) {
-    try {
-      localStorage.setItem("fenster." + k, v);
-    } catch {
-      /* private mode */
-    }
-  },
+const EMBED = Boolean(params.get("embed")); // journey map iframes: never save
+const SAVE_KEY = "fenster.v1";
+const SAVED = {
+  name: "",
+  lang: (navigator.language || "en").slice(0, 2),
+  big: false,
+  onboarded: false,
+  level0: null,
+  points: 0,
+  streak: 0,
+  lastDay: null,
+  feedDay: null,
+  answers: {}, // today's feed: clip number -> "real" | "fake"
+  aha: [], // things learned, newest first
+  lessons: [], // finished lesson ids
+  chats: 0,
+  checks: 0,
 };
-
-const state = {
-  lang: params.get("lang") || store.get("lang") || (navigator.language || "en").slice(0, 2),
-  big: store.get("big") === "1",
-  name: "Anna",
-  points: 340,
-  streak: 5,
-  answers: {}, // round -> picked letter
-  level: null,
-  wa: true,
-  group: true,
-};
+function load() {
+  try {
+    return { ...SAVED, ...JSON.parse(localStorage.getItem(SAVE_KEY) || "{}") };
+  } catch {
+    return { ...SAVED };
+  }
+}
+function save() {
+  if (EMBED) return;
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify(Object.fromEntries(Object.keys(SAVED).map((k) => [k, state[k]]))));
+  } catch {
+    /* private mode: progress lasts until the tab closes */
+  }
+}
+const state = { ...load(), wa: true, group: true };
+if (params.get("lang")) state.lang = params.get("lang");
 if (!window.I18N[state.lang]) state.lang = "en";
-if (params.get("embed")) document.documentElement.classList.add("embed");
+if (EMBED) document.documentElement.classList.add("embed");
 
 function t(key, vars = {}) {
   let s = window.I18N[state.lang][key] ?? window.I18N.en[key] ?? key;
@@ -43,7 +50,49 @@ const go = (path) => {
   location.hash = "#/" + path;
 };
 
-// ---------- icons (inline so the prototype works offline) ----------
+// ---------- progress: points, levels, streak, toast ----------
+const LEVELS = [0, 100, 250, 500, 900];
+const levelOf = (pts) => LEVELS.filter((n) => pts >= n).length; // 1..5
+const today = () => new Date().toISOString().slice(0, 10);
+
+let toastTimer;
+function toast(text, gold) {
+  const el = document.getElementById("toast");
+  el.textContent = text;
+  el.classList.toggle("gold", !!gold);
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), gold ? 3200 : 1800);
+}
+function addPoints(n) {
+  const before = levelOf(state.points);
+  state.points += n;
+  const after = levelOf(state.points);
+  if (after > before) toast(t("toast.level", { level: t("lv." + after) }), true);
+  else toast(t("toast.pts", { n }));
+  save();
+  renderSidebar();
+}
+// A day you play counts for your streak. One missed day is forgiven (a "rest day").
+function markPlayedToday() {
+  const d = today();
+  if (state.lastDay === d) return;
+  const gap = state.lastDay ? Math.round((new Date(d) - new Date(state.lastDay)) / 864e5) : 0;
+  state.streak = state.lastDay && gap <= 2 ? state.streak + 1 : 1;
+  state.lastDay = d;
+}
+function learned(text) {
+  if (text && !state.aha.includes(text)) state.aha.unshift(text);
+}
+
+// Share with family: the phone's share sheet, or WhatsApp in a new tab on desktop.
+function share(text) {
+  if (navigator.share) return navigator.share({ text }).catch(() => {});
+  window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener");
+}
+const appUrl = () => location.origin;
+
+// ---------- icons (inline so the app works offline) ----------
 const ICON = {
   home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>',
   learn:
@@ -54,6 +103,7 @@ const ICON = {
   me: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>',
 };
 const TABS = ["home", "learn", "create", "rank", "me"];
+const LOGO = `<svg viewBox="0 0 60 72" aria-hidden="true"><path d="M4 70V22Q30 2 56 22V70Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M30 10V70M4 42H56" stroke="currentColor" stroke-width="3.5"/></svg>`;
 
 // ---------- the daily feed ----------
 // Home is a TikTok-style feed of 7 clips in different media. For each one: real or fake?
@@ -166,23 +216,25 @@ async function loadContent() {
   const items = await loadDataset();
   items.forEach((i) => (DS[i.id] = i));
   DS_DE = (await fetchJson("../content/dataset-de.json").catch(() => ({ items: {} }))).items;
-  const today = new Date().toISOString().slice(0, 10);
-  const day =
-    (await fetchJson(`../content/feed/${today}.json`).catch(() => null)) ||
+  const feed =
+    (await fetchJson(`../content/feed/${today()}.json`).catch(() => null)) ||
     (await fetchJson(`../content/feed/${DEMO_FEED_DATE}.json`).catch(() => null));
   const entries =
-    day?.clips ?? getRound(items, { count: 7, start: 1, end: 4 }).flatMap((p) => [`dataset:${p.left.id}`]);
+    feed?.clips ?? getRound(items, { count: 7, start: 1, end: 4 }).flatMap((p) => [`dataset:${p.left.id}`]);
   const clips = entries.map(toClip).filter(Boolean);
   if (clips.length) FEED = clips;
+  // A new day's feed starts with no answers.
+  const day = feed?.date ?? today();
+  if (state.feedDay !== day) Object.assign(state, { feedDay: day, answers: {} });
 }
 const score = () => FEED.filter((F, i) => state.answers[i + 1] === F.answer).length;
 
 const TASKS = [
-  { ico: "📧", key: "t.scam", pts: 20, to: "home/3" },
-  { ico: "☀️", key: "t.morning", pts: 15, to: "chat" },
-  { ico: "🛒", key: "t.ask", pts: 15, to: "chat" },
-  { ico: "🗣️", key: "t.explain", pts: 25, to: "lesson/what" },
-  { ico: "🌙", key: "t.evening", pts: 30, to: "evening" },
+  { ico: "📧", key: "t.scam", pts: 20, to: "home/4", done: () => !!state.answers[4] },
+  { ico: "☀️", key: "t.morning", pts: 15, to: "chat", done: () => state.chats >= 1 },
+  { ico: "🔍", key: "t.check", pts: 10, to: "check", done: () => state.checks >= 1 },
+  { ico: "🗣️", key: "t.explain", pts: 10, to: "lesson/what", done: () => state.lessons.includes("what") },
+  { ico: "🌙", key: "t.evening", pts: 30, to: "evening", done: () => false },
 ];
 
 const LESSONS = [
@@ -278,7 +330,8 @@ const steps = (n) =>
   `<div class="steps" aria-label="${t("ob.step", { n })}">${[1, 2, 3].map((i) => `<i class="${i <= n ? "on" : ""}"></i>`).join("")}</div><p class="muted small">${t("ob.step", { n })}</p>`;
 
 S.ob = {
-  back: (a) => (a[0] === "1" ? "wa" : "ob/" + (+a[0] - 1)),
+  focus: true,
+  back: (a) => (a[0] && a[0] !== "1" ? "ob/" + (+a[0] - 1) : null),
   render: ([n = "1"]) => {
     if (n === "1")
       return `<div class="stack">${steps(1)}
@@ -292,8 +345,9 @@ S.ob = {
       <button class="btn primary" data-go="ob/2">${t("c.continue")}</button></div>`;
     if (n === "2")
       return `<div class="stack">${steps(2)}
-      <h1 class="h1">${t("ob.hi", { name: state.name })}</h1>
-      <p>${t("ob.q")}</p>
+      <label for="obname" class="h1">${t("ob.name")}</label>
+      <input id="obname" class="field" data-field="name" autocomplete="given-name" placeholder="${t("ob.namePh")}" value="${esc(state.name)}">
+      <p class="h2">${t("ob.q")}</p>
       ${[
         ["o1", "🌱"],
         ["o2", "🌿"],
@@ -301,7 +355,7 @@ S.ob = {
       ]
         .map(
           ([k, ico]) =>
-            `<button class="choice" data-act="level" data-v="${k}" aria-pressed="${state.level === k}"><span class="ico">${ico}</span><span><b>${t("ob." + k)}</b><span class="sub">${t("ob." + k + "s")}</span></span></button>`,
+            `<button class="choice" data-act="level" data-v="${k}" aria-pressed="${state.level0 === k}"><span class="ico">${ico}</span><span><b>${t("ob." + k)}</b><span class="sub">${t("ob." + k + "s")}</span></span></button>`,
         )
         .join("")}
       <p class="muted small">${t("ob.note")}</p>
@@ -322,11 +376,11 @@ S.home = {
   tab: "home",
   immersive: true,
   render: ([i, pick]) => {
-    if (i && pick) state.answers[+i] = pick;
+    if (i && pick && EMBED) state.answers[+i] = pick;
     return `<div class="feed-wrap">
       <div class="feed-top">
-        <span class="logo">Fenster</span>${langToggle()}
-        <span class="pill">🔥 ${state.streak}</span><span class="pill">⭐ <span id="feed-pts">${state.points + score() * PTS}</span></span>
+        <span class="logo">${LOGO}Fenster</span>${langToggle()}
+        <span class="pill">🔥 <span id="feed-streak">${state.streak}</span></span><span class="pill">⭐ <span id="feed-pts">${state.points}</span></span>
         <a class="pill" href="#/tasks" style="margin-left:auto">☰ ${t("f.tasks")}</a>
       </div>
       <div class="reel" id="reel">
@@ -357,7 +411,7 @@ function clip(i) {
     </div>`;
   return `<div class="clip-media">${F.media()}</div>
     <div class="rail">
-      <button data-go="wa"><span>↗</span>${t("f.share")}</button>
+      <button data-act="share" data-v="clip"><span>↗</span>${t("f.share")}</button>
       <button data-go="lesson/${F.lesson}"><span>📖</span>${t("f.learn")}</button>
     </div>
     <div class="clip-meta"><span><b>${t(F.k + ".handle")}</b> · ${t(F.k + ".cap")}</span><span class="count">${t("f.count", { n: i, total: FEED.length })}</span></div>
@@ -373,11 +427,23 @@ function clip(i) {
 const whyKey = (F, w) => (({ e3: "r1.w", p5: "r3.w" })[F.k] || F.k + ".w") + w;
 
 function answer(i, v) {
+  if (state.answers[i]) return;
+  const F = FEED[i - 1];
   state.answers[i] = v;
+  markPlayedToday();
+  learned(F.ds && DS[F.ds] ? dsText(F.ds, "explanation") : t(whyKey(F, 1)));
+  if (v === F.answer) addPoints(PTS);
+  save();
+  renderSidebar();
   document.querySelector(`.clip[data-i="${i}"]`).innerHTML = clip(i);
   document.querySelector(".clip-result").innerHTML = resultHTML(score());
-  document.getElementById("feed-pts").textContent = state.points + score() * PTS;
+  document.getElementById("feed-pts").textContent = state.points;
+  document.getElementById("feed-streak").textContent = state.streak;
 }
+const currentClip = () => {
+  const reel = document.getElementById("reel");
+  return reel ? Math.round(reel.scrollTop / reel.clientHeight) + 1 : 1;
+};
 
 function scrollToClip(i, smooth) {
   const reel = document.getElementById("reel"),
@@ -389,14 +455,15 @@ function resultHTML(s) {
   const low = s < 4;
   return `<div class="stack center result-in">
       <p style="font-size:3rem;line-height:1">${low ? "🌱" : "🎉"}</p>
-      <h1 class="h1">${t("res.title", { name: state.name })}</h1>
+      <h1 class="h1">${state.name ? t("res.title", { name: esc(state.name) }) : t("res.title0")}</h1>
       <p class="big-num">${s}/${FEED.length}</p>
-      <p>${t("res.score", { n: s, total: FEED.length })} · <b>${t("res.earned", { n: s * PTS })}</b> · ${t("res.streak", { n: state.streak + 1 })}</p>
+      <p>${t("res.score", { n: s, total: FEED.length })} · <b>${t("res.earned", { n: s * PTS })}</b> · ${t("res.streak", { n: Math.max(state.streak, 1) })}</p>
+      <button class="btn ghost" data-go="aha">📒 ${t("aha.count", { n: state.aha.length })}</button>
       ${low ? `<div class="card" style="text-align:left"><p>${t("res.low")}</p><button class="btn primary" style="margin-top:.7rem" data-go="lesson/scams">${t("res.lowCta")}</button></div>` : ""}
       <div class="card stack" style="text-align:left">
         <h2 style="font-size:1.1rem">👨‍👩‍👧 ${t("res.shareT")}</h2>
         <p class="muted">${t("res.shareS")}</p>
-        <button class="btn wa" data-go="wa">${t("c.share")}</button>
+        <button class="btn wa" data-act="share" data-v="game">${t("c.share")}</button>
       </div>
     </div>`;
 }
@@ -412,22 +479,19 @@ S.tasks = {
   back: () => "home",
   title: () => t("f.tasks"),
   render: () => `<div class="stack">
-    <h1 class="h1">${t("home.hi", { name: state.name })} ☀️</h1>
-    <div class="stats">
-      <div class="stat"><b>🔥 ${state.streak}</b><span class="small muted">${t("home.streak", { n: state.streak })}</span></div>
-      <div class="stat pts"><b>⭐ ${state.points}</b><span class="small muted">${t("rk.points")}</span></div>
-    </div>
+    <h1 class="h1">${state.name ? t("home.hi", { name: esc(state.name) }) + " ☀️" : t("home.hi0")}</h1>
+    ${statsHTML()}
     <div class="card hero stack">
       <p class="small muted">${t("home.today")}</p>
       <h2 class="h1">${t("home.todayT")}</h2>
-      <p class="muted">${t("home.todayS")} · <b>+${FEED.length * PTS}</b></p>
-      <button class="btn light" data-go="home/1">${t("home.start")} →</button>
+      <p class="muted">${t("tk.progress", { n: Object.keys(state.answers).length, total: FEED.length })} · <b>+${FEED.length * PTS}</b></p>
+      <button class="btn light" data-go="home/${Math.min(Object.keys(state.answers).length + 1, FEED.length)}">${t("home.start")} →</button>
     </div>
     <h2 class="h2">${t("home.tasks")}</h2>
-    <div>${TASKS.map((x) => `<button class="task" data-go="${x.to}"><span class="ico">${x.ico}</span><span>${t(x.key)}</span><span class="badge-pts">+${x.pts}</span></button>`).join("")}</div>
+    <div>${TASKS.map((x) => `<button class="task ${x.done() ? "done" : ""}" data-go="${x.to}"><span class="ico">${x.done() ? "✅" : x.ico}</span><span>${t(x.key)}</span><span class="badge-pts">${x.done() ? t("tk.done") : "+" + x.pts}</span></button>`).join("")}</div>
     <h2 class="h2">${t("home.feed")}</h2>
     <div class="card feed"><div class="avatar" style="background:#2B6CB0">M</div><span style="flex:1">${t("f.max")}</span><button class="btn primary" data-go="home/5">${t("f.play")}</button></div>
-    <div class="card feed"><div class="avatar" style="background:#7A4FA0">I</div><span style="flex:1">${t("f.ingrid")}</span><button class="btn ghost">${t("f.cheer")}</button></div>
+    <div class="card feed"><div class="avatar" style="background:#7A4FA0">I</div><span style="flex:1">${t("f.ingrid")}</span><button class="btn ghost" data-act="cheer">${t("f.cheer")}</button></div>
   </div>`,
 };
 
@@ -435,7 +499,7 @@ S.learn = {
   tab: "learn",
   render: () => `<div class="stack">
     <h1 class="h1">${t("l.title")}</h1><p class="muted">${t("l.sub")}</p>
-    <div class="grid">${LESSONS.map((L) => `<button class="tile" data-go="lesson/${L.id}"><span class="ico">${L.ico}</span><b>${t("l." + L.id)}</b><span class="meta">${t(L.lvl === 1 ? "l.lvl1" : "l.lvl2")} · ${t("c.min", { n: L.min })}</span></button>`).join("")}</div>
+    <div class="grid">${LESSONS.map((L) => `<button class="tile ${state.lessons.includes(L.id) ? "done" : ""}" data-go="lesson/${L.id}"><span class="ico">${state.lessons.includes(L.id) ? "✅" : L.ico}</span><b>${t("l." + L.id)}</b><span class="meta">${t(L.lvl === 1 ? "l.lvl1" : "l.lvl2")} · ${t("c.min", { n: L.min })}</span></button>`).join("")}</div>
   </div>`,
 };
 
@@ -476,7 +540,7 @@ S.lesson = {
                 ? "border-color:var(--bad);background:var(--bad-soft)"
                 : ""
             : "";
-          return `<button class="choice" style="${st}" data-go="lesson/${L.id}/4/${k}"><b>${t("ls." + k)}</b></button>`;
+          return `<button class="choice" style="${st}" ${ans ? "" : `data-act="quiz" data-v="${L.id}/${k}"`}><b>${t("ls." + k)}</b></button>`;
         })
         .join("")}
       ${
@@ -494,23 +558,77 @@ S.create = {
   render: () => `<div class="stack">
     <h1 class="h1">${t("cr.title")}</h1><p class="muted">${t("cr.sub")}</p>
     <button class="choice" data-go="chat"><span class="ico">💬</span><span><b>${t("cr.chat")}</b><span class="sub">${t("cr.chatS")}</span></span></button>
-    <button class="choice" data-go="image"><span class="ico">🎨</span><span><b>${t("cr.img")}</b><span class="sub">${t("cr.imgS")}</span></span></button>
+    <button class="choice" data-go="home/1"><span class="ico">🪟</span><span><b>${t("home.todayT")}</b><span class="sub">${t("home.todayS")}</span></span></button>
     <button class="choice" data-go="check"><span class="ico">🔍</span><span><b>${t("cr.check")}</b><span class="sub">${t("cr.checkS")}</span></span></button>
   </div>`,
 };
 
+// AI helper: a real conversation with Claude via POST /api/helper.
+state.chat = { msgs: [], loading: false, error: null, draft: "" };
+
 S.chat = {
   back: () => "create",
   title: () => t("ch.title"),
-  render: () => `<div class="stack">
-    <div class="bubble me">${t("ch.u1")}</div>
-    <div class="bubble ai">${t("ch.a1")}<br><span class="claude-tag">✦ Claude</span></div>
-    <div class="chips"><button class="chip">${t("ch.shorter")}</button><button class="chip">${t("ch.funnier")}</button></div>
-    <button class="btn wa" data-go="wa">${t("ch.send")}</button>
+  render: () => {
+    const c = state.chat;
+    const bubbles = c.msgs
+      .map((m, i) =>
+        m.role === "user"
+          ? `<div class="bubble me">${esc(m.content)}</div>`
+          : `<div class="bubble ai"><p class="ai-label">✦ ${t("ck.aiLabel")}</p><div class="ai-text">${esc(m.content)}</div>
+            <button class="chip share-chip" data-act="share" data-v="chat:${i}">↗ ${t("ch.share")}</button></div>`,
+      )
+      .join("");
+    return `<div class="stack chat-screen">
+    ${
+      c.msgs.length
+        ? ""
+        : `<div class="card ai-intro"><p class="ai-label">✦ ${t("ck.aiLabel")}</p><p>${t("ch.intro")}</p></div>
+    <p class="muted small">${t("ck.examples")}</p>
+    <div class="chips">${["ch.s1", "ch.s2", "ch.s3"].map((k) => `<button class="chip" data-act="ask" data-v="${k}">${t(k)}</button>`).join("")}</div>`
+    }
+    ${bubbles}
+    ${c.loading ? `<div class="bubble ai thinking">✦ ${t("ch.thinking")}</div>` : ""}
+    ${c.error ? `<div class="feedback careful"><p>${esc(c.error)}</p></div>` : ""}
+    <form class="composer" data-form="chatform">
+      <textarea id="chatin" rows="2" data-field="chattext" placeholder="${t("ch.ph")}" ${c.loading ? "disabled" : ""}>${esc(c.draft)}</textarea>
+      <button class="btn primary" type="submit" ${c.loading ? "disabled" : ""}>${t("ch.go")}</button>
+    </form>
     <p class="muted small">${t("c.disclaimer")}</p>
-    <div class="composer"><textarea rows="2" placeholder="${t("ch.ph")}"></textarea><button class="btn ghost">🎤 ${t("ch.speak")}</button></div>
-  </div>`,
+  </div>`;
+  },
+  after: () => {
+    const v = document.getElementById("view");
+    v.scrollTop = v.scrollHeight;
+  },
 };
+
+async function runChat(text) {
+  const c = state.chat;
+  text = text.trim();
+  if (!text || c.loading) return;
+  c.msgs.push({ role: "user", content: text });
+  Object.assign(c, { draft: "", loading: true, error: null });
+  render();
+  try {
+    const res = await fetch("/api/helper", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: c.msgs, lang: state.lang }),
+      signal: AbortSignal.timeout(30_000),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || t("ck.error"));
+    c.msgs.push({ role: "assistant", content: data.text });
+    state.chats += 1;
+    if (state.chats <= 3) addPoints(15);
+  } catch (err) {
+    c.msgs.pop();
+    Object.assign(c, { draft: text, error: err.name === "Error" ? err.message : t("ck.error") });
+  }
+  c.loading = false;
+  if (parse().name === "chat") render();
+}
 
 S.image = {
   back: () => "create",
@@ -540,7 +658,7 @@ S.check = {
     const list = (items) => `<ul class="why">${items.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
     return `<div class="stack">
     <label for="ckt"><b>${t("ck.label")}</b></label>
-    <textarea id="ckt" class="field" rows="5" data-act="cktext">${esc(c.text ?? t("ck.sample"))}</textarea>
+    <textarea id="ckt" class="field" rows="5" data-field="cktext">${esc(c.text ?? t("ck.sample"))}</textarea>
     ${
       r
         ? ""
@@ -559,7 +677,7 @@ S.check = {
       <p style="margin-top:.5rem"><b>${t("ck.signs")}:</b></p>${list(r.signs)}</div>
     <div class="card"><p><b>${t("ck.todo")}:</b></p>${list(r.todo)}</div>
     <div class="card"><p><b>🚩 ${t("ck.report")}:</b> ${esc(r.report)}</p></div>
-    <button class="btn wa" data-go="wa">📣 ${t("ck.warn")}</button>
+    <button class="btn wa" data-act="share" data-v="warn">📣 ${t("ck.warn")}</button>
     <button class="btn ghost" data-act="ckagain">${t("ck.again")}</button>
     <p class="muted small">${t("c.disclaimer")}</p>`
         : ""
@@ -588,6 +706,8 @@ async function runCheck() {
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || t("ck.error"));
     Object.assign(c, { status: "done", result: data });
+    state.checks += 1;
+    if (state.checks <= 3) addPoints(10);
   } catch (err) {
     Object.assign(c, { status: "idle", error: err.name === "Error" ? err.message : t("ck.error") });
   }
@@ -597,7 +717,9 @@ async function runCheck() {
 S.rank = {
   tab: "rank",
   render: ([scope = "group", metric = "points"]) => {
-    const list = [...PEOPLE[scope]].sort((a, b) => (metric === "points" ? b[1] - a[1] : b[2] - a[2]));
+    const list = PEOPLE[scope]
+      .map((p) => (p[0] === "ME" ? ["ME", state.points, state.streak, p[3]] : p))
+      .sort((a, b) => (metric === "points" ? b[1] - a[1] : b[2] - a[2]));
     return `<div class="stack">
       <h1 class="h1">${t("rk.title")} 🏆</h1>
       <div class="seg"><button aria-pressed="${scope === "group"}" data-go="rank/group/${metric}">${t("rk.group")}</button><button aria-pressed="${scope === "all"}" data-go="rank/all/${metric}">${t("rk.all")}</button></div>
@@ -605,7 +727,7 @@ S.rank = {
       <div>${list
         .map(([n, p, s, col], i) => {
           const me = n === "ME";
-          return `<div class="row ${me ? "me" : ""}"><span class="rank">${["🥇", "🥈", "🥉"][i] || i + 1}</span><div class="avatar" style="background:${col}">${(me ? state.name : n)[0]}</div><span class="name">${me ? state.name + " (" + t("c.you") + ")" : n}</span><span class="val">${metric === "points" ? p : t("rk.days", { n: s })}</span></div>`;
+          return `<div class="row ${me ? "me" : ""}"><span class="rank">${["🥇", "🥈", "🥉"][i] || i + 1}</span><div class="avatar" style="background:${col}">${(me ? state.name || "?" : n)[0]}</div><span class="name">${me ? state.name + " (" + t("c.you") + ")" : n}</span><span class="val">${metric === "points" ? p : t("rk.days", { n: s })}</span></div>`;
         })
         .join("")}</div>
       <p class="muted small">${t("rk.reset")}</p>
@@ -613,36 +735,67 @@ S.rank = {
   },
 };
 
+const BADGES = [
+  ["🎮", "b.first", () => Object.keys(state.answers).length > 0 || state.aha.length > 0],
+  ["🔥", "b.streak", () => state.streak >= 3],
+  ["🕵️", "b.spotter", () => score() >= 5],
+  ["💬", "b.chat", () => state.chats >= 1],
+  ["🛡️", "b.checker", () => state.checks >= 1],
+  ["🎓", "b.teacher", () => state.lessons.includes("what")],
+];
+
 S.me = {
   tab: "me",
   render: () => `<div class="stack">
-    <div style="display:flex;gap:1rem;align-items:center"><div class="avatar" style="width:4rem;height:4rem;font-size:1.6rem">${state.name[0]}</div><div><h1 class="h1">${state.name}</h1><p class="muted">${t("me.level")}</p></div></div>
-    <div class="bar"><i style="width:68%"></i></div><p class="muted small">${t("me.next")}</p>
+    <div style="display:flex;gap:1rem;align-items:center"><div class="avatar" style="width:4rem;height:4rem;font-size:1.6rem">${esc((state.name || "?")[0])}</div><div><h1 class="h1">${esc(state.name || t("c.you"))}</h1><p class="muted">${t("me.level", { n: levelOf(state.points), level: t("lv." + levelOf(state.points)) })}</p></div></div>
+    ${levelBar()}
+    ${statsHTML()}
+    <button class="choice" data-go="aha"><span class="ico">📒</span><span><b>${t("me.aha")}</b><span class="sub">${t("aha.count", { n: state.aha.length })}</span></span></button>
     <h2 class="h2">${t("me.badges")}</h2>
-    <div class="badges">${[
-      ["🎮", "b.first"],
-      ["🔥", "b.streak"],
-      ["🕵️", "b.spotter"],
-      ["🎨", "b.artist", 1],
-      ["🎓", "b.teacher", 1],
-    ]
-      .map(
-        ([i, k, locked]) => `<div class="badge ${locked ? "locked" : ""}"><span class="ico">${i}</span>${t(k)}</div>`,
-      )
-      .join("")}</div>
+    <div class="badges">${BADGES.map(([i, k, got]) => `<div class="badge ${got() ? "" : "locked"}"><span class="ico">${i}</span>${t(k)}</div>`).join("")}</div>
     <h2 class="h2">${t("me.groups")}</h2>
     <div class="card feed"><div class="avatar">👨‍👩‍👧</div><span style="flex:1"><b>${t("me.g1")}</b><br><span class="small muted">${t("me.members", { n: 5 })}</span></span></div>
-    <div class="card feed"><div class="avatar" style="background:#7A4FA0">🎵</div><span style="flex:1"><b>${t("me.g2")}</b><br><span class="small muted">${t("me.members", { n: 12 })}</span></span></div>
-    <button class="btn ghost">${t("me.newGroup")}</button>
-    <button class="btn wa" data-go="wa">${t("me.invite")}</button>
+    <button class="btn wa" data-act="share" data-v="invite">${t("me.invite")}</button>
     <h2 class="h2">${t("me.settings")}</h2>
     <div class="card" style="padding:.2rem 1rem">
       <div class="setting"><b>${t("me.lang")}</b>${langToggle()}</div>
-      <div class="setting"><b>${t("me.size")}</b><div class="lang"><button data-act="big" data-v="0" aria-pressed="${!state.big}">${t("me.normal")}</button><button data-act="big" data-v="1" aria-pressed="${state.big}">${t("me.large")}</button></div></div>
-      <div class="setting"><b>${t("me.remind")}</b><span class="muted">${t("me.remindV")}</span></div>
+      <div class="setting"><b>${t("me.size")}</b>${sizeToggle()}</div>
     </div>
+    <button class="btn text" data-act="reset">${t("me.reset")}</button>
   </div>`,
 };
+
+S.aha = {
+  back: () => "me",
+  title: () => t("me.aha"),
+  render: () => `<div class="stack">
+    <h1 class="h1">📒 ${t("me.aha")}</h1>
+    <p class="muted">${t("aha.count", { n: state.aha.length })}</p>
+    ${
+      state.aha.length
+        ? state.aha
+            .map(
+              (a, i) =>
+                `<div class="aha-card"><p>💡 ${esc(a)}</p><button class="chip" data-act="share" data-v="aha:${i}">↗ ${t("f.share")}</button></div>`,
+            )
+            .join("")
+        : `<div class="card"><p>${t("aha.empty")}</p></div><button class="btn primary" data-go="home/1">${t("home.start")} →</button>`
+    }
+  </div>`,
+};
+
+const statsHTML = () => `<div class="stats">
+      <div class="stat"><b>🔥 ${state.streak}</b><span class="small muted">${t("home.streak", { n: state.streak })}</span></div>
+      <div class="stat pts"><b>⭐ ${state.points}</b><span class="small muted">${t("rk.points")}</span></div>
+    </div>`;
+function levelBar() {
+  const lv = levelOf(state.points);
+  if (lv >= LEVELS.length) return `<p class="muted small">${t("lv.max")}</p>`;
+  const from = LEVELS[lv - 1],
+    to = LEVELS[lv];
+  return `<div class="bar"><i style="width:${Math.round(((state.points - from) / (to - from)) * 100)}%"></i></div>
+    <p class="muted small">${t("lv.next", { n: to - state.points, level: t("lv." + (lv + 1)) })}</p>`;
+}
 
 S.evening = {
   back: () => "home",
@@ -667,11 +820,35 @@ S.evening = {
 const langToggle = () =>
   `<div class="lang" role="group" aria-label="Language"><button data-act="lang" data-v="en" aria-pressed="${state.lang === "en"}">EN</button><button data-act="lang" data-v="de" aria-pressed="${state.lang === "de"}">DE</button></div>`;
 
+const sizeToggle = () =>
+  `<div class="lang" role="group" aria-label="Text size"><button data-act="big" data-v="0" aria-pressed="${!state.big}">A</button><button data-act="big" data-v="1" aria-pressed="${state.big}" style="font-size:1.2em">A+</button></div>`;
+
+// New users start with onboarding; everyone else lands on today's game.
 function parse() {
   const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
   if (parts[0] === "game") parts[0] = "home"; // old links
-  const name = S[parts[0]] ? parts[0] : "wa";
-  return { name, args: parts.slice(1) };
+  const fallback = state.onboarded || EMBED ? "home" : "ob";
+  const name = S[parts[0]] ? parts[0] : fallback;
+  return { name, args: S[parts[0]] ? parts.slice(1) : [] };
+}
+
+function renderSidebar() {
+  const { name } = parse();
+  const tab = S[name].tab;
+  const lv = levelOf(state.points);
+  document.getElementById("sidebar").innerHTML = `
+    <a class="brand" href="#/home">${LOGO}<span><b>Fenster</b><small>${t("side.tag")}</small></span></a>
+    <nav class="side-nav">${TABS.map((id) => `<a href="#/${id}" class="${tab === id ? "on" : ""}" ${tab === id ? 'aria-current="page"' : ""}>${ICON[id]}${t("nav." + id)}</a>`).join("")}</nav>
+    <div class="side-card">
+      <p class="label">${t("side.progress")}</p>
+      <p class="lvl">${t("me.level", { n: lv, level: t("lv." + lv) })}</p>
+      ${levelBar()}
+      <div class="nums"><span>🔥 ${state.streak}</span><span>⭐ ${state.points}</span><a href="#/aha" style="color:inherit">📒 ${state.aha.length}</a></div>
+    </div>
+    <div class="side-settings">
+      <div class="row2"><span>${t("me.lang")}</span>${langToggle()}</div>
+      <div class="row2"><span>${t("me.size")}</span>${sizeToggle()}</div>
+    </div>`;
 }
 
 function render() {
@@ -680,14 +857,15 @@ function render() {
   document.documentElement.lang = state.lang;
   document.documentElement.classList.toggle("big", state.big);
   document.body.classList.toggle("wa", !!scr.bare);
+  document.getElementById("device").classList.toggle("focus", !!(scr.focus || scr.bare));
 
   const top = document.getElementById("topbar");
   top.hidden = !!(scr.bare || scr.immersive);
-  if (scr.back) {
-    top.innerHTML = `<button class="back" data-go="${scr.back(args)}">‹ ${t("c.back")}</button><span class="title">${scr.title ? scr.title(args) : ""}</span>${langToggle()}`;
-  } else {
-    top.innerHTML = `<span class="logo">Fenster</span>${langToggle()}`;
-  }
+  const back = scr.back && scr.back(args);
+  top.classList.toggle("plain", !back);
+  top.innerHTML = back
+    ? `<button class="back" data-go="${back}">‹ ${t("c.back")}</button><span class="title">${scr.title ? scr.title(args) : ""}</span>${langToggle()}`
+    : `<span class="logo">${LOGO}Fenster</span>${langToggle()}`;
 
   const view = document.getElementById("view");
   const keep = scr.immersive && document.getElementById("reel")?.scrollTop; // e.g. language switch mid-feed
@@ -703,43 +881,19 @@ function render() {
     (id) =>
       `<a href="#/${id}" class="${scr.tab === id ? "on" : ""}" ${scr.tab === id ? 'aria-current="page"' : ""}>${ICON[id]}${t("nav." + id)}</a>`,
   ).join("");
-
-  // prototype side panel (desktop only)
-  document.querySelectorAll("[data-t]").forEach((el) => {
-    el.textContent = t(el.dataset.t);
-  });
-  const here = location.hash.replace(/^#\/?/, "") || "wa";
-  document.getElementById("proto-links").innerHTML = PROTO_LINKS.map(
-    ([p, label]) => `<a href="#/${p}" class="${here === p ? "on" : ""}">${label}</a>`,
-  ).join("");
+  renderSidebar();
 }
 
-const PROTO_LINKS = [
-  ["wa", "0 · WhatsApp invite"],
-  ["ob/1", "1 · Language & text size"],
-  ["ob/2", "2 · About you"],
-  ["ob/3", "3 · Permissions → intro"],
-  ["home/1", "4 · Feed: AI bunny video"],
-  ["home/2", "5 · Feed: fake newspaper"],
-  ["home/3", "6 · Feed: scam email"],
-  ["home/4/fake", "7 · Feed: real photo (wrong answer)"],
-  ["home/5", "8 · Feed: AI image (dataset)"],
-  ["home/6", "9 · Feed: cloned voice note"],
-  ["home/7/real", "10 · Feed: real library news"],
-  ["home/8", "11 · Feed: result & share"],
-  ["tasks", "12 · Tasks & group"],
-  ["learn", "13 · Learn library"],
-  ["lesson/safety", "14 · Lesson cards"],
-  ["lesson/safety/4", "15 · Lesson quiz"],
-  ["create", "16 · Try AI"],
-  ["chat", "17 · AI helper chat"],
-  ["image", "18 · Make a picture"],
-  ["check", "19 · Scam checker"],
-  ["check/1", "20 · Scam checker result"],
-  ["rank", "21 · Weekly ranking"],
-  ["me", "22 · Profile & groups"],
-  ["evening", "23 · Evening game"],
-];
+function shareText(kind) {
+  const [k, i] = kind.split(":");
+  const url = appUrl();
+  if (k === "game") return t("share.game", { n: score(), total: FEED.length, url });
+  if (k === "clip") return t("share.clip", { url });
+  if (k === "warn") return t("share.warn", { headline: state.check.result?.headline ?? "", url });
+  if (k === "aha") return t("share.aha", { text: state.aha[+i], url });
+  if (k === "chat") return state.chat.msgs[+i]?.content ?? "";
+  return t("share.invite", { url });
+}
 
 document.addEventListener("click", (e) => {
   const el = e.target.closest("[data-go],[data-act]");
@@ -748,12 +902,33 @@ document.addEventListener("click", (e) => {
     go(el.dataset.go);
     return;
   }
-  if (el.dataset.act === "splash") {
-    showSplash();
-    return;
+  const act = el.dataset.act;
+  if (act === "share") return void share(shareText(el.dataset.v));
+  if (act === "cheer") return void toast("👏");
+  if (act === "ask") return void runChat(t(el.dataset.v));
+  if (act === "quiz") {
+    const [id, k] = el.dataset.v.split("/");
+    if (!state.lessons.includes(id)) {
+      state.lessons.push(id);
+      learned(t("ls.s1"));
+      addPoints(10);
+    }
+    return go(`lesson/${id}/4/${k}`);
+  }
+  if (act === "reset") {
+    if (!confirm(t("me.resetQ"))) return;
+    try {
+      localStorage.removeItem(SAVE_KEY);
+    } catch {
+      /* nothing saved */
+    }
+    location.hash = "";
+    return location.reload();
   }
   // Onboarding done → the window opens onto the Home feed.
-  if (el.dataset.act === "start") {
+  if (act === "start") {
+    state.onboarded = true;
+    save();
     go("home");
     showSplash();
     return;
@@ -779,14 +954,12 @@ document.addEventListener("click", (e) => {
   switch (el.dataset.act) {
     case "lang":
       state.lang = v;
-      store.set("lang", v);
       break;
     case "big":
       state.big = v === "1";
-      store.set("big", v);
       break;
     case "level":
-      state.level = v;
+      state.level0 = v;
       break;
     case "wa":
       state.wa = el.checked;
@@ -795,6 +968,7 @@ document.addEventListener("click", (e) => {
       state.group = el.checked;
       return;
   }
+  save();
   render();
 });
 
@@ -818,7 +992,28 @@ function showSplash() {
 }
 
 document.addEventListener("input", (e) => {
-  if (e.target.dataset.act === "cktext") state.check.text = e.target.value;
+  const act = e.target.dataset.field;
+  if (act === "cktext") state.check.text = e.target.value;
+  if (act === "chattext") state.chat.draft = e.target.value;
+  if (act === "name") {
+    state.name = e.target.value.trim().slice(0, 30);
+    save();
+  }
+});
+document.addEventListener("submit", (e) => {
+  if (e.target.dataset.form !== "chatform") return;
+  e.preventDefault();
+  runChat(state.chat.draft);
+});
+// Enter sends a chat message (Shift+Enter for a new line); arrow keys move through the feed on desktop.
+document.addEventListener("keydown", (e) => {
+  if (e.target.dataset?.field === "chattext" && e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    return void runChat(state.chat.draft);
+  }
+  if (parse().name !== "home" || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if (e.key === "ArrowDown" || e.key === "PageDown") scrollToClip(currentClip() + 1, true);
+  if (e.key === "ArrowUp" || e.key === "PageUp") scrollToClip(currentClip() - 1, true);
 });
 window.addEventListener("hashchange", render);
 loadContent()

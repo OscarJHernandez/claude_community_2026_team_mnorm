@@ -39,3 +39,24 @@ export async function askJson({ system, text, schema, maxTokens = 2000 }) {
   if (!out) throw new Error(`Empty response (stop_reason: ${res.stop_reason}).`);
   return JSON.parse(out);
 }
+
+/** A short chat answer in plain text (AI helper). `messages` alternate user/assistant and end with the user. */
+export async function askText({ system, messages, maxTokens = 1200 }) {
+  const res = await getClient().beta.messages.create({
+    model: MODEL,
+    max_tokens: maxTokens,
+    betas: ["server-side-fallback-2026-07-01"],
+    fallbacks: "default",
+    output_config: { effort: "low" },
+    system,
+    messages,
+  });
+  if (res.stop_reason === "refusal") throw new Error("Claude declined this request.");
+  const out = res.content
+    .filter((b) => b.type === "text")
+    .map((b) => b.text)
+    .join("")
+    .trim();
+  if (!out) throw new Error(`Empty response (stop_reason: ${res.stop_reason}).`);
+  return out;
+}
